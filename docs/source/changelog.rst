@@ -14,11 +14,15 @@ and this project tries its very best to adhere to
 
 Unreleased
 ===================
-:Date: 2025-02-25
+:Date: 2025-04-25
+
+**Added**
+
+* Added a 'closed issue log'
 
 **Changed**
 
-* a11ytables renamed to aftables throughout
+* a11ytables renamed to aftables
 
 Released (PyPI)
 ===============
