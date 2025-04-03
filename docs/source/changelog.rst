@@ -19,6 +19,7 @@ Unreleased
 **Changed**
 
 * a11ytables renamed to aftables throughout
+* Updated pull request template
 
 Released (PyPI)
 ===============
