@@ -32,7 +32,10 @@ Install
 gptables is available from `PyPI`_.
 
 As a user:
-- Run `pip install gptables` in a terminal. All done!
+- Using a virtual environment? Use `pip install gptables` in a terminal.
+- If you're not using a virtual environment, use `python -m pip install gptables` instead.
+
+All done!
 
 As a developer:
 - Navigate to the directory where this repo is cloned.
