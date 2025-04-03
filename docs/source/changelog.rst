@@ -19,6 +19,11 @@ Unreleased
 **Changed**
 
 * a11ytables renamed to aftables throughout
+* Updated README.
+
+**Added**
+
+* Requirements and installation steps to README.
 
 Released (PyPI)
 ===============
