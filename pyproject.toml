@@ -14,7 +14,7 @@ maintainers = [
   {name = "Analysis Standards and Pipelines", email = "ASAP@ons.gov.uk"}
 ]
 version = "1.2.0"
-requires-python = '>=3.7'
+requires-python = '>=3.9'
 description = 'Simplifying good practice in statistical tables.'
 readme = "README.rst"
 license = {text = "MIT License"}
