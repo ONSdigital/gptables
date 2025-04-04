@@ -32,15 +32,17 @@ Install
 gptables is available from `PyPI`_.
 
 As a user:
+
 - Using a virtual environment? Use `pip install gptables` in a terminal.
 - If you're not using a virtual environment, use `python -m pip install gptables` instead.
 
 All done!
 
 As a developer:
+
 - Navigate to the directory where this repo is cloned.
-- Use `pip install -e .`
-- Use `pip install .[testing]`
+- Use `pip install -e .` to install an editable version of the package.
+- Use `pip install .[testing]`to install the dependencies for testing.
 - For working on docs, also use `pip install .[docs]`
 
 Usage
@@ -73,5 +75,5 @@ Requests and fixes are managed according to resource capacity, and we aim to ack
 .. _`spreadsheet accessibility checklist`: https://analysisfunction.civilservice.gov.uk/policy-store/making-spreadsheets-accessible-a-brief-checklist-of-the-basics/
 .. _`PyPI`: https://pypi.org/project/gptables/
 .. _`aftables`: https://best-practice-and-impact.github.io/aftables/index.html
-.. _`csvcubed`: https://gss-cogs.github.io/csvcubed-docs/external/
+.. _`csvcubed`: https://onsdigital.github.io/csvcubed-docs/external/
 .. _`issue`: https://github.com/best-practice-and-impact/gptables/issues
