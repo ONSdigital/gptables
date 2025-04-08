@@ -20,6 +20,7 @@ Unreleased
 
 * a11ytables renamed to aftables throughout
 * Updated README.
+* Merged pull request templates to create new one
 
 **Added**
 
