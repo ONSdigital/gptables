@@ -153,5 +153,9 @@ jobs:
         - name: Build package
           run: |
             python -m build
+        - name: Run pre-commit hooks
+          run: |
+            cd example
+            pre-commit run --all-files
         - name: Publish
           uses: pypa/gh-action-pypi-publish@v1.12.3
