@@ -24,6 +24,7 @@ Unreleased
 **Added**
 
 * Requirements and installation steps to README.
+* Pre-commit hooks
 
 Released (PyPI)
 ===============

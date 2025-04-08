@@ -35,12 +35,13 @@ docs = [
     "sphinx>=2",
     "sphinx_rtd_theme"
 ]
-testing = [
+dev = [
     "sphinx>=2",
     "sphinx_rtd_theme",
     "coverage",
     "pytest>=6.2.5",
-    "pytest-cov"
+    "pytest-cov",
+    "pre-commit"
 ]
 
 [version]
