@@ -63,6 +63,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install wheel
         pip install --upgrade-strategy eager -e .[dev]
+    - name: Run pre-commit hooks
+      run: |
+        pre-commit run --all-files
     - name: Build
       run: |
         pip install build
@@ -97,6 +100,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install wheel
         pip install --upgrade-strategy eager -e .[dev]
+    - name: Run pre-commit hooks
+      run: |
+        pre-commit run --all-files
     - name: Build
       run: |
         pip install build
@@ -153,9 +159,5 @@ jobs:
         - name: Build package
           run: |
             python -m build
-        - name: Run pre-commit hooks
-          run: |
-            pip install .[dev]
-            pre-commit run --all-files
         - name: Publish
           uses: pypa/gh-action-pypi-publish@v1.12.3
