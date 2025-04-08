@@ -36,7 +36,6 @@ repos:
     hooks:
       - id: detect-secrets
         name: detect-secrets - Detect secrets in staged code
-        args: [ "--baseline", ".secrets.baseline" ]
         exclude: .*/tests/.*
   - repo: https://github.com/PyCQA/bandit
     rev: 1.8.3
