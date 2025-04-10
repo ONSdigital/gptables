@@ -50,3 +50,6 @@ file = "VERSION"
 [project.urls]
 Homepage = "https://github.com/best-practice-and-impact/gptables"
 Documentation = "https://gptables.readthedocs.io/en/latest/"
+
+[tool.bandit.assert_used]
+skips = ['*_test.py', '*/test_*.py']
