@@ -62,7 +62,7 @@ machine-readable CSV-W files.
 .. toctree::
    :maxdepth: 2
    :hidden:
-   
+
    doc.api.rst
    usage.rst
    doc.gptable.rst
@@ -72,4 +72,3 @@ machine-readable CSV-W files.
    checklist.rst
    changelog.rst
    contributers.rst
-   

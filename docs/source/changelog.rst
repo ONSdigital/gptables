@@ -238,7 +238,7 @@ v0.3.1
 
 **Fixed**
 
-* incorrect ``if __name__ == "__main__"`` in example files 
+* incorrect ``if __name__ == "__main__"`` in example files
 * minor typos in docs
 
 
@@ -290,7 +290,7 @@ v0.1.3
 
 * missing files in binary distribution. v0.1.1 and v0.1.2 will be deleted from
   PyPI to prevent use of broken distributions.
-  
+
 **Added**
 
 * this changelog to the documentation!

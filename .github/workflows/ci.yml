@@ -28,7 +28,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install wheel
         pip install -e .[dev]
-        
+
     - name: Run pytest
       run: |
         pytest --cov-config=.coveragerc --cov=gptables --cov-report=xml --cov-report=term-missing
@@ -51,7 +51,7 @@ jobs:
       matrix:
         python-version: ['3.9', '3.10', '3.11', '3.12']
 
-        
+
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
@@ -136,7 +136,7 @@ jobs:
     - name: Build the book
       run: |
         (cd docs && make clean && make html)
-        
+
   publish:
       name: Publish to PyPi
       needs: [linux, windows, test-with-cov]

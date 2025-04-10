@@ -153,7 +153,7 @@ Formatting
       - Desirable
       - Implemented
       - The gptables default theme does not apply a background fill.
-    * - Do not use colour as the only way to convey a message 
+    * - Do not use colour as the only way to convey a message
       - Essential
       - Implemented
       - The default theme without additional formatting does not apply colour.

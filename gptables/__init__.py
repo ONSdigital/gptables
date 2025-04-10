@@ -1,16 +1,12 @@
-from gptables.core.theme import Theme
+from gptables.core.api import (  # API functions
+    produce_workbook,
+    write_workbook,
+)
 from gptables.core.cover import Cover
 from gptables.core.gptable import GPTable
+from gptables.core.theme import Theme
 from gptables.core.wrappers import GPWorkbook
-
 from gptables.utils.unpickle_themes import gptheme
-
-
-from gptables.core.api import (
-        # API functions
-        produce_workbook,
-	    write_workbook,
-        )
 
 __doc__ = """
 *******************************
