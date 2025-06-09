@@ -1,4 +1,6 @@
-from gptables.core.api import (  # API functions
+# flake8: noqa
+
+from gptables.core.api import (
     produce_workbook,
     write_workbook,
 )
