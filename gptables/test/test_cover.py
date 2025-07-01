@@ -2,6 +2,7 @@ import pytest
 
 from gptables.core.cover import Cover
 
+
 class TestCover:
 
     @pytest.mark.parametrize(
