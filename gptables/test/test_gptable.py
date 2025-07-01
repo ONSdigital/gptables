@@ -1,6 +1,5 @@
 from contextlib import contextmanager
 
-import numpy as np
 import pandas as pd
 import pytest
 from pandas.testing import assert_frame_equal
@@ -71,16 +70,15 @@ def test_init_defaults(create_gptable_with_kwargs):
     assert_frame_equal(empty_gptable.table, pd.DataFrame().reset_index(drop=True))
 
     # Optional args
-    assert empty_gptable.scope == None
-    assert empty_gptable.source == None
-    assert empty_gptable.units == None
+    assert empty_gptable.scope is None
+    assert empty_gptable.source is None
+    assert empty_gptable.units is None
     assert empty_gptable.index_columns == {}
     assert empty_gptable.subtitles == []
     assert empty_gptable.legend == []
     assert empty_gptable.additional_formatting == []
     assert (
-        empty_gptable.instructions
-        == "This worksheet contains one table. Some cells may refer to notes, which can be found on the notes worksheet."
+        empty_gptable.instructions == "This worksheet contains one table. Some cells may refer to notes, which can be found on the notes worksheet."
     )
 
     # Other
@@ -238,7 +236,7 @@ class TestAttrValidationGPTable:
 
     @pytest.mark.parametrize("attr", gptable_optional_text_attrs)
     @pytest.mark.parametrize("text", valid_text_elements_incl_none)
-    def test_valid_text_in_compulsory_str_attrs(
+    def test_valid_text_in_optional_str_attrs(
         self, attr, text, create_gptable_with_kwargs
     ):
         """
@@ -370,13 +368,13 @@ class TestAttrValidationGPTable:
         """
         Test that units are placed correctly under column headers.
         """
-        table_with_notes = pd.DataFrame(columns=[f"columnA\n$$note_reference$$"])
+        table_with_notes = pd.DataFrame(columns=["columnA\n$$note_reference$$"])
 
         gptable = create_gptable_with_kwargs(
             {"table": pd.DataFrame(columns=["columnA"])}
         )
 
-        gptable.set_table_notes(new_table_notes={column_id: "$$note_reference$$"})
+        gptable.set_table_notes(new_table_notes={column_id: "$$note_reference$$"}) 
 
         assert gptable.table.columns == table_with_notes.columns
 
@@ -388,7 +386,7 @@ class TestAttrValidationGPTable:
         Test that units and notes are placed correctly under column headers.
         """
         table_with_units_and_notes = pd.DataFrame(
-            columns=[f"columnA\n(unit)\n$$note_reference$$"]
+            columns=["columnA\n(unit)\n$$note_reference$$"]
         )
 
         gptable = create_gptable_with_kwargs(

@@ -630,8 +630,9 @@ class GPTable:
                     int(self.scope is not None),
                     int(self.source is not None),
                 ]
-            ) + 1
-        )  # corresponds to instructions which are included by default
+            )
+            + 1
+        ) # corresponds to instructions which are included by default
 
         if self.subtitles is not None:
             row_offset += len(self.subtitles)

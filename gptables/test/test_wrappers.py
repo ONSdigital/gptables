@@ -9,7 +9,7 @@ import gptables
 from gptables import Theme, gptheme
 from gptables.core.gptable import FormatList
 from gptables.core.wrappers import GPWorkbook, GPWorksheet
-from gptables.test.test_gptable import create_gptable_with_kwargs, does_not_raise
+from gptables.test.test_gptable import does_not_raise
 
 Tb = namedtuple("Testbook", "wb ws")
 
@@ -192,7 +192,7 @@ class TestGPWorksheetWriting:
         assert got_lookup == exp_lookup
 
         format_obj = cell[1]
-        assert format_obj.underline == True
+        assert format_obj.underline is True
         assert format_obj.font_color == "#0000FF"  # aka Blue
 
     def test__smart_write_null_cell(self, testbook):

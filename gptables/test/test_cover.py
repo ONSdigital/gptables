@@ -1,8 +1,6 @@
 import pytest
 
 from gptables.core.cover import Cover
-from gptables.core.gptable import FormatList
-
 
 class TestCover:
 

@@ -13,7 +13,7 @@ import pandas as pd
 
 import gptables as gpt
 
-## Read data
+# Read data
 parent_dir = Path(__file__).parents[1]
 
 penguins_data = pd.read_csv(parent_dir / "test/data/penguins.csv")

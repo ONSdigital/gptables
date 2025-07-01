@@ -1,16 +1,15 @@
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
 import gptables as gpt
 
-## Read data and arrange
+# Read data and arrange
 parent_dir = Path(__file__).parent
 
 penguin_data = pd.read_csv(parent_dir / "data/penguins.csv")
 
-## Define table elements
+# Define table elements
 table_name = "penguin_statistics"
 title = "Penguins"
 subtitles = [
@@ -109,10 +108,10 @@ kwargs = {
     "additional_formatting": additional_formatting,
 }
 
-## Define our GPTable
+# Define our GPTable
 penguin_table = gpt.GPTable(table=penguin_data, **kwargs)
 
-## Use produce workbook to return GPWorkbook
+# Use produce workbook to return GPWorkbook
 if __name__ == "__main__":
     output_path = parent_dir / "test_additional_formatting_gptable.xlsx"
     wb = gpt.produce_workbook(filename=output_path, sheets={"Penguins": penguin_table})

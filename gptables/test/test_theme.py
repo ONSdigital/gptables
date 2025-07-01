@@ -1,4 +1,3 @@
-import os
 from contextlib import redirect_stdout
 from itertools import chain, combinations
 
