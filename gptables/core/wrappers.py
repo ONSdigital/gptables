@@ -884,7 +884,8 @@ class GPWorksheet(Worksheet):
         ]
 
         col_widths = [
-            self._excel_string_width(leng, f) for leng, f in zip(max_lengths, max_font_sizes)
+            self._excel_string_width(leng, f)
+            for leng, f in zip(max_lengths, max_font_sizes)
         ]
         return col_widths
 
