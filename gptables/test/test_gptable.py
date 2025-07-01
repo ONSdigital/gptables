@@ -78,7 +78,8 @@ def test_init_defaults(create_gptable_with_kwargs):
     assert empty_gptable.legend == []
     assert empty_gptable.additional_formatting == []
     assert (
-        empty_gptable.instructions == "This worksheet contains one table. Some cells may refer to notes, which can be found on the notes worksheet."
+        empty_gptable.instructions
+        == "This worksheet contains one table. Some cells may refer to notes, which can be found on the notes worksheet."
     )
 
     # Other
@@ -374,7 +375,7 @@ class TestAttrValidationGPTable:
             {"table": pd.DataFrame(columns=["columnA"])}
         )
 
-        gptable.set_table_notes(new_table_notes={column_id: "$$note_reference$$"}) 
+        gptable.set_table_notes(new_table_notes={column_id: "$$note_reference$$"})
 
         assert gptable.table.columns == table_with_notes.columns
 
