@@ -24,19 +24,18 @@ which can also be modified.
 
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
 import gptables as gpt
 
-## Read data and arrange
+# Read data and arrange
 parent_dir = Path(__file__).parents[1]
 
 penguins_data = pd.read_csv(parent_dir / "test/data/penguins.csv")
 
 # Any data processing could go here as long as you end with a Pandas dataframe that you want to write in a spreadsheet
 
-## Define table elements
+# Define table elements
 penguins_table_name = "penguins_statistics"
 penguins_title = "Penguins"
 
@@ -48,7 +47,7 @@ penguins_subtitles = [
 penguins_units = {key: "mm" for key in range(2, 5)}
 penguins_scope = "Penguins"
 
-## Define additional formatting
+# Define additional formatting
 # Columns can be referenced by name or number
 # Rows may only be referenced by number
 # Column and row numbers refer to the table elements, including indexes and column headings
@@ -86,10 +85,10 @@ kwargs = {
     "additional_formatting": penguins_additional_formatting,
 }
 
-## Define our GPTable
+# Define our GPTable
 penguins_table = gpt.GPTable(table=penguins_data, **kwargs)
 
-## Use produce workbook to return GPWorkbook
+# Use produce workbook to return GPWorkbook
 if __name__ == "__main__":
     output_path = parent_dir / "python_penguins_additional_formatting_gptable.xlsx"
     wb = gpt.produce_workbook(filename=output_path, sheets={"Penguins": penguins_table})

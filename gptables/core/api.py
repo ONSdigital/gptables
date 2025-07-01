@@ -1,9 +1,7 @@
 import warnings
 from pathlib import Path
 
-import pandas as pd
-
-from gptables import GPTable, GPWorkbook
+from gptables import GPWorkbook
 
 
 def produce_workbook(

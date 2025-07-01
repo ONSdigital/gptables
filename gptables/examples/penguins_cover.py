@@ -11,19 +11,18 @@ Text elements are defined as a ``gptables.Cover`` instance, which is passed to t
 
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
 import gptables as gpt
 
-## Read data
+# Read data
 parent_dir = Path(__file__).parents[1]
 
 penguins_data = pd.read_csv(parent_dir / "test/data/penguins.csv")
 
 # Any data processing could go here as long as you end with a Pandas dataframe that you want to write in a spreadsheet
 
-## Define table elements
+# Define table elements
 penguins_table_name = "penguins_statistics"
 penguins_title = "The Penguins Dataset"
 penguins_subtitles = ["This is the first subtitle", "Just another subtitle"]
@@ -41,7 +40,7 @@ kwargs = {
     },  # The level 2 index from our Pandas dataframe is put in the first (zeroth with Python indexing) column of the spreadsheet
 }
 
-## Define our GPTable
+# Define our GPTable
 penguins_table = gpt.GPTable(
     table=penguins_data, table_name="penguins_statistics", **kwargs
 )
@@ -60,7 +59,7 @@ penguins_cover = gpt.Cover(
     ],
 )
 
-## Use write_workbook to win!
+# Use write_workbook to win!
 if __name__ == "__main__":
     output_path = parent_dir / "python_penguins_cover_gptable.xlsx"
     gpt.write_workbook(

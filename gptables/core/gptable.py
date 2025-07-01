@@ -304,7 +304,7 @@ class GPTable:
         """
         Set the `scope` attribute.
         """
-        if new_scope == None:
+        if new_scope is None:
             new_scope = ""
             return
 
@@ -351,7 +351,7 @@ class GPTable:
             if len(self.additional_formatting) > 0:
                 self._update_column_names_in_additional_formatting(new_headers)
 
-        elif not new_units is None:
+        elif new_units is not None:
             msg = (
                 "`units` attribute must be a dictionary or None"
                 " ({column: units_text})"
@@ -422,7 +422,7 @@ class GPTable:
             if len(self.additional_formatting) > 0:
                 self._update_column_names_in_additional_formatting(new_headers)
 
-        elif not new_table_notes is None:
+        elif new_table_notes is not None:
             msg = (
                 "`table_notes` attribute must be a dictionary or None"
                 " ({column: '$$note_reference$$'})"
@@ -435,7 +435,7 @@ class GPTable:
         """
         Set the source attribute to the specified str.
         """
-        if new_source == None:
+        if new_source is None:
             new_source = ""
             return
 
@@ -630,8 +630,7 @@ class GPTable:
                     int(self.scope is not None),
                     int(self.source is not None),
                 ]
-            )
-            + 1
+            ) + 1
         )  # corresponds to instructions which are included by default
 
         if self.subtitles is not None:

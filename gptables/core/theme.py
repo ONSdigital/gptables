@@ -3,8 +3,6 @@ from functools import wraps
 import yaml
 from xlsxwriter.format import Format
 
-from gptables.core.gptable import GPTable
-
 
 def validate_single_format(f):
     @wraps(f)
@@ -79,7 +77,7 @@ class Theme:
         config : dict or .yaml/.yml file
           theme specification
         """
-        ## Formats
+        # Formats
         self._format_attributes = [
             "cover_title_format",
             "cover_subtitle_format",
@@ -100,7 +98,7 @@ class Theme:
         for attr in self._format_attributes:
             setattr(self, attr, {})
 
-        ## Other attributes
+        # Other attributes
         self.description_order = []
 
         # Valid Them format attributes

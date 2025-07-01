@@ -9,7 +9,6 @@ will auto-generate a table of contents.
 from copy import deepcopy
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
 import gptables as gpt
@@ -21,7 +20,7 @@ penguins_data = pd.read_csv(parent_dir / "test/data/penguins.csv")
 
 # Any data processing could go here as long as you end with a Pandas dataframe that you want to write in a spreadsheet
 
-## Define table elements
+# Define table elements
 penguins_table_name = "penguins_statistics"
 penguins_title = "The Penguins Dataset"
 penguins_subtitles = ["This is the first subtitle", "Just another subtitle"]
@@ -36,7 +35,7 @@ kwargs = {
     "source": penguins_source,
 }
 
-## Define our GPTable
+# Define our GPTable
 penguins_table = gpt.GPTable(
     table=penguins_data, table_name="penguins_statistics", **kwargs
 )
@@ -49,7 +48,7 @@ penguins_table_copy.set_table_name(
 
 penguins_sheets = {"Penguins": penguins_table, "Copy of Penguins": penguins_table_copy}
 
-## Use write_workbook to win!
+# Use write_workbook to win!
 if __name__ == "__main__":
     output_path = parent_dir / "python_penguins_cover_gptable.xlsx"
     gpt.write_workbook(filename=output_path, sheets=penguins_sheets)

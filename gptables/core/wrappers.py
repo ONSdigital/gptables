@@ -1,4 +1,3 @@
-import os
 import re
 import warnings
 from copy import deepcopy
@@ -491,7 +490,7 @@ class GPWorksheet(Worksheet):
         # Reset position to left col on next row
         pos[1] = 0
 
-        ## Create data array
+        # Create data array
         index_levels = gptable.index_levels
         index_columns = [col for col in gptable.index_columns.values()]
         data = pd.DataFrame(gptable.table, copy=True)
@@ -501,7 +500,7 @@ class GPWorksheet(Worksheet):
         data.index = data.index + 1
         data.sort_index(inplace=True)
 
-        ## Create formats array
+        # Create formats array
         # pandas.DataFrame did NOT want to hold dictionaries, so be wary
         formats = pd.DataFrame().reindex_like(data)
         dict_row = [{} for n in range(formats.shape[1])]
@@ -509,7 +508,7 @@ class GPWorksheet(Worksheet):
             dict_row = [{} for n in range(formats.shape[1])]
             formats.iloc[row] = dict_row
 
-        ## Add Theme formatting to formats dataframe
+        # Add Theme formatting to formats dataframe
         format_headings_from = 0
         self._apply_format(
             formats.iloc[0, format_headings_from:], theme.column_heading_format
@@ -530,15 +529,15 @@ class GPWorksheet(Worksheet):
 
         self._apply_column_alignments(data, formats, index_columns)
 
-        ## Add additional table-specific formatting from GPTable
+        # Add additional table-specific formatting from GPTable
         self._apply_additional_formatting(
             formats, gptable.additional_formatting, gptable.index_levels
         )
 
-        ## Write table
+        # Write table
         pos = self._write_array(pos, data, formats)
 
-        ## Set columns widths
+        # Set columns widths
         if auto_width:
             widths = self._calculate_column_widths(data, formats)
             self._set_column_widths(widths)
@@ -885,7 +884,7 @@ class GPWorksheet(Worksheet):
         ]
 
         col_widths = [
-            self._excel_string_width(l, f) for l, f in zip(max_lengths, max_font_sizes)
+            self._excel_string_width(leng, f) for leng, f in zip(max_lengths, max_font_sizes)
         ]
         return col_widths
 

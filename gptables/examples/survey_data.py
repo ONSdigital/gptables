@@ -7,12 +7,11 @@ example found at https://analysisfunction.civilservice.gov.uk/policy-store/furth
 
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
 import gptables as gpt
 
-## Read data and arrange
+# Read data and arrange
 parent_dir = Path(__file__).parent
 
 labour_market_data = pd.read_csv(parent_dir / "survey_data.csv")
@@ -37,7 +36,7 @@ col_names = [
 labour_market_data.columns = col_names
 
 
-## Define table elements
+# Define table elements
 table_name = "Labour_market_overview_accessibility_example_Nov21"
 title = "Number and percentage of population aged 16 and over in each labour market activity group, UK, seasonally adjusted"
 subtitles = [
@@ -90,7 +89,7 @@ kwargs = {
 }
 
 
-## Define our GPTable
+# Define our GPTable
 survey_table = gpt.GPTable(table=labour_market_data, **kwargs)
 
 sheets = {"sheet 1a": survey_table}
@@ -133,13 +132,13 @@ cover = gpt.Cover(
     ],
 )
 
-## Notesheet
+# Notesheet
 notes_table = pd.read_csv(parent_dir / "survey_data_notes.csv")
 notes_table.dropna(axis=0, how="all", inplace=True)  # Remove empty rows in the data
 notes_table.dropna(axis=1, how="all", inplace=True)  # Remove columns rows in the data
 notes_table.columns = ["Note reference", "Note text"]
 
-## Use write_workbook to win!
+# Use write_workbook to win!
 if __name__ == "__main__":
     output_path = parent_dir / "python_survey_data_gptable.xlsx"
     gpt.write_workbook(

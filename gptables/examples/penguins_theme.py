@@ -14,19 +14,18 @@ The yaml file used in this example can be found in the themes folder as ''pengui
 
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
 import gptables as gpt
 
-## Read data
+# Read data
 parent_dir = Path(__file__).parents[1]
 
 penguins_data = pd.read_csv(parent_dir / "test/data/penguins.csv")
 
 # Any data processing could go here as long as you end with a Pandas dataframe that you want to write in a spreadsheet
 
-## Define table elements
+# Define table elements
 penguins_table_name = "penguins_statistics"
 penguins_title = "The Penguins Dataset"
 penguins_subtitles = ["This is the first subtitle", "Just another subtitle"]
@@ -44,7 +43,7 @@ penguins_table = gpt.GPTable(table=penguins_data, **kwargs)
 
 penguins_sheets = {"Penguins": penguins_table}
 
-## Use write_workbook to win!
+# Use write_workbook to win!
 # Simply pass the filepath of the yaml file containing your theme to the GPTables Theme class and then to write_workbook
 if __name__ == "__main__":
     output_path = parent_dir / "python_penguins_gptable.xlsx"
