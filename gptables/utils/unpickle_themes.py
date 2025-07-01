@@ -1,4 +1,4 @@
-import pickle # nosec B403
+import pickle  # nosec B403
 
 from pkg_resources import resource_filename
 
