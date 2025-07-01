@@ -1,5 +1,5 @@
 import glob
-import pickle # nosec B403
+import pickle  # nosec B403
 from os.path import abspath, basename, dirname, join, splitext
 
 import gptables.core.theme
