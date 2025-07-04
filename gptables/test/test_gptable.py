@@ -4,8 +4,6 @@ import pandas as pd
 import pytest
 from pandas.testing import assert_frame_equal
 
-from gptables import GPTable
-
 # TODO: These should be stored in GPTable
 gptable_compulsory_text_attrs = ["title", "instructions"]
 
@@ -38,6 +36,7 @@ invalid_text_elements_incl_none.append(None)
 @contextmanager
 def does_not_raise():
     yield
+
 
 def test_init_defaults(create_gptable_with_kwargs):
     """
