@@ -118,7 +118,7 @@ class TestConfigInitTheme:
         """
         config_file = importlib_resources.files("gptables") / "themes/gptheme.yaml"
 
-        got = Theme(importlib_resources.as_file(config_file))
+        got = Theme(str(config_file))
 
         exp = gptheme
 
