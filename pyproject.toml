@@ -41,7 +41,7 @@ dev = [
     "coverage",
     "pytest>=6.2.5",
     "pytest-cov",
-    "pre-commit"
+    "pre-commit",
     "importlib_resources"
 ]
 
