@@ -42,6 +42,7 @@ dev = [
     "pytest>=6.2.5",
     "pytest-cov",
     "pre-commit"
+    "importlib_resources"
 ]
 
 [version]
