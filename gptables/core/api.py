@@ -1,7 +1,7 @@
 import warnings
 from pathlib import Path
 
-from gptables import GPWorkbook
+from gptables.core.wrappers import GPWorkbook
 
 
 def produce_workbook(

@@ -1,7 +1,6 @@
 import pickle  # nosec B403
 
-from pkg_resources import resource_filename
-
+import importlib_resources
 
 class ThemeUnpickler(pickle.Unpickler):
     """
@@ -16,7 +15,9 @@ class ThemeUnpickler(pickle.Unpickler):
             return Theme
         return super().find_class(module, name)
 
+file = importlib_resources.files("gptables") / "theme_pickles/gptheme.pickle"
 
-gptheme = ThemeUnpickler(
-    open(resource_filename("gptables", "theme_pickles/gptheme.pickle"), "rb")
-).load()
+with importlib_resources.as_file(file) as path:
+    gptheme = ThemeUnpickler(
+        open(path, "rb")
+    ).load()
