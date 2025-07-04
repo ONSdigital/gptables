@@ -1,6 +1,8 @@
-import pytest
 import pandas as pd
+import pytest
+
 from gptables.core.gptable import GPTable
+
 
 @pytest.fixture(scope="function")
 def create_gptable_with_kwargs():

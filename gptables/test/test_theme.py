@@ -3,6 +3,7 @@ from itertools import chain, combinations
 
 import importlib_resources
 import pytest
+
 from gptables import Theme, gptheme
 
 valid_description_elements = ["legend", "instructions", "scope", "source"]
