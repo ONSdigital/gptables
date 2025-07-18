@@ -6,4 +6,5 @@ env/
 *~lock*
 docs/build/**
 gptables/examples/*.xlsx
+gptables/test/actual_workbook.xlsx
 .vscode/
