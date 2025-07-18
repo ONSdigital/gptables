@@ -179,7 +179,7 @@ class TestGPWorksheetWriting:
         exp_string = {display_text: 0}
         assert got_string == exp_string
 
-        got_hyperlink = testbook.ws.hyperlinks[0][0]["url"]
+        got_hyperlink = testbook.ws.hyperlinks[0][0]._link
         exp_hyperlink = url
         assert got_hyperlink == exp_hyperlink
 
@@ -193,7 +193,7 @@ class TestGPWorksheetWriting:
 
         format_obj = cell[1]
         assert format_obj.underline is True
-        assert format_obj.font_color == "#0000FF"  # aka Blue
+        assert format_obj.font_color._rgb_hex_value() == "0000FF"  # aka Blue
 
     def test__smart_write_null_cell(self, testbook):
         testbook.ws._smart_write(0, 0, None, {})
