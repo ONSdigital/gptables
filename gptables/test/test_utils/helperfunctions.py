@@ -184,6 +184,10 @@ def _compare_xlsx_files(got_file, exp_file, ignore_files, ignore_elements):
                 r"<c:pageMargins[^>]*>", "<c:pageMargins/>", got_xml_str
             )
 
+        # Remove automatic color tags
+        exp_xml_str = re.sub(r'<color rgb="FFAUTOMATIC"\s*/>', '', exp_xml_str) #
+        got_xml_str = re.sub(r'<color rgb="FFAUTOMATIC"\s*/>', '', got_xml_str) #
+
         # Convert the XML string to lists for comparison.
         if re.search(".vml$", filename):
             got_xml = _xml_to_list(got_xml_str)
