@@ -14,18 +14,20 @@ and this project tries its very best to adhere to
 
 Unreleased
 ===================
-:Date: 2025-02-25
+:Date: 2025-08-06
+
+**Added**
+
+* Merged pull request templates to create new one
+* Added a 'closed issue log'
+* Requirements and installation steps to README
+* Pre-commit hooks
 
 **Changed**
 
 * a11ytables renamed to aftables throughout
-* Updated README.
-* Merged pull request templates to create new one
-
-**Added**
-
-* Requirements and installation steps to README.
-* Pre-commit hooks
+* Updated README
+* Updated pull request template
 
 Released (PyPI)
 ===============
