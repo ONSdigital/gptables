@@ -1,5 +1,5 @@
 ### Proposed Changes
-  - 
+  -
 
 ### Related Issues
   - Related to #
@@ -14,8 +14,9 @@ Please indicate items that aren't necessary and why, with comments around incomp
 - [ ] New features are tested
 - [ ] New features are documented using the [numpydoc][numpy-docstrings] docstring format
 - [ ] Other relevant package documentation is updated
-- [ ] For new functionality, examples are included in the docs or a [feature request][feature-request] has 
-been made for it/them.
+- [ ] For new functionality, examples are included in the docs or a [feature request][feature-request] has
+been made for it/them
+- [ ] Required workflows and pre-commits succeed
 
 [changelog]: [https://keepachangelog.com/en/1.0.0/]
 [feature-request]: [https://github.com/best-practice-and-impact/gptables/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=]

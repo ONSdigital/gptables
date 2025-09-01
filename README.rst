@@ -4,7 +4,7 @@ Good Practice Tables (gptables)
 .. image:: https://github.com/best-practice-and-impact/gptables/workflows/continuous-integration/badge.svg
     :target: https://github.com/best-practice-and-impact/gptables/actions
     :alt: Actions build status
-    
+
 .. image:: https://badge.fury.io/py/gptables.svg
     :target: https://badge.fury.io/py/gptables
     :alt: PyPI release
@@ -42,8 +42,9 @@ As a developer:
 
 - Navigate to the directory where this repo is cloned.
 - Use `pip install -e .` to install an editable version of the package.
-- Use `pip install .[testing]`to install the dependencies for testing.
-- For working on docs, also use `pip install .[docs]`
+- Use `pip install .[dev]`to install the dependencies for developers.
+- For working on docs, also use `pip install .[docs]`.
+- Set up pre-commit to run automatically with `pre-commit install`.
 
 Usage
 -----

@@ -1,8 +1,9 @@
-import pytest
-import pandas as pd
-import gptables as gpt
 from pathlib import Path
 
+import pandas as pd
+import pytest
+
+import gptables as gpt
 from gptables.test.test_utils.excel_comparison_test import ExcelComparisonTest
 
 
@@ -26,31 +27,33 @@ def create_gpworkbook():
             source="My imagination",
             units={0: "Latin alphabet", "columnB": "real numbers"},
             table_notes={1: "$$ref2$$"},
-            index_columns={2:0},
-            additional_formatting=[{
-                "column":{
-                    "columns": ["columnA"],
-                    "format": {"bold": True}
-                }
-            }]
+            index_columns={2: 0},
+            additional_formatting=[
+                {"column": {"columns": ["columnA"], "format": {"bold": True}}}
+            ],
         )
 
-        notes_table = pd.DataFrame({
-            "Note reference": ["ref1", "ref2"],
-            "Note text": ["Some text", "Some more text"],
-            "Link": ["[gov.uk](https://www.gov.uk)", "[Wikipedia](https://en.wikipedia.org)"]
-        })
+        notes_table = pd.DataFrame(
+            {
+                "Note reference": ["ref1", "ref2"],
+                "Note text": ["Some text", "Some more text"],
+                "Link": [
+                    "[gov.uk](https://www.gov.uk)",
+                    "[Wikipedia](https://en.wikipedia.org)",
+                ],
+            }
+        )
 
         cover = gpt.Cover(
             title="Cover title",
             intro=["Introduction"],
             about=["About"],
             contact=["Me", "[please.dont@contact.me](mailto:please.dont@contact.me)"],
-            cover_label="Cover"
+            cover_label="Cover",
         )
 
-        gpt.write_workbook( # Use defaults for theme and autowidth
-            filename=output_path/"actual_workbook.xlsx",
+        gpt.write_workbook(  # Use defaults for theme and autowidth
+            filename=output_path / "actual_workbook.xlsx",
             sheets={"Label": gptable},
             cover=cover,
             contentsheet_label="Table of contents",
@@ -59,7 +62,7 @@ def create_gpworkbook():
             notesheet_label="Notes table",
             notesheet_options={"title": "Table with notes"},
             gridlines="show_all",
-            cover_gridlines=False
+            cover_gridlines=False,
         )
 
     return generate_gpworkbook

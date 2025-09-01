@@ -139,7 +139,7 @@ Formatting methods
 ^^^^^
 
 The following tables show the Excel format categories, along with an example demonstrating the syntax required
-for use in gptables. Some formatting methods use indexing to map to Excel's built-in formats. This information 
+for use in gptables. Some formatting methods use indexing to map to Excel's built-in formats. This information
 can be found in the applicable sections below.
 
 ^^^^
@@ -175,12 +175,12 @@ for `underline styles in the XlsxWriter documentation`_.
     * - Super/Subscript
       - | {"font_script": 1} # Superscript
         | {"font_script": 2} # Subscript
-..  
+..
 ^^^^^^
 Number formatting
 ^^^^^^
 
-This table demonstrates how to set the numeric format using indexing and string arguments. You can find all 
+This table demonstrates how to set the numeric format using indexing and string arguments. You can find all
 options for `numeric formats in the XlsxWriter documentation`_.
 
 .. _`numeric formats in the XlsxWriter documentation`: https://xlsxwriter.readthedocs.io/format.html#format-set-num-format
@@ -193,9 +193,9 @@ options for `numeric formats in the XlsxWriter documentation`_.
     * - Description
       - Example usage
     * - Numeric format
-      - | {"num_format": 1} # Format index 
+      - | {"num_format": 1} # Format index
         | {"num_format": "d mmm yyyy"} # Format string
-.. 
+..
 
 ^^^^^^^^^^^
 Protection formatting
@@ -214,13 +214,13 @@ This table demonstrates the protection methods available.
       - {"locked": True}
     * - Hide formulas
       - {"hidden": True}
-.. 
+..
 
 ^^^^^^^^^^^^
 Alignment formatting
 ^^^^^^^^^^^^
 
-This table demonstrates the alignment formatting options available. You can find all options for 
+This table demonstrates the alignment formatting options available. You can find all options for
 `horizontal and vertical alignment in the XlsxWriter documentation`_.
 
 .. _`horizontal and vertical alignment in the XlsxWriter documentation`: https://xlsxwriter.readthedocs.io/format.html#format-set-align
@@ -246,7 +246,7 @@ This table demonstrates the alignment formatting options available. You can find
       - {"indentation":2}
     * - Shrink to fit
       - {"shrink": True}
-.. 
+..
 
 ^^^^^^^^^^^^^^^^
 Pattern formatting
@@ -260,20 +260,20 @@ This table demonstrates the pattern formatting options available.
     :align: left
 
     * - Description
-      - Example usage  
+      - Example usage
     * - Cell pattern
       - {"pattern": 1}
     * - Background colour
       - {"bg_color": "white"}
     * - Foreground colour
       - {"fg_color": "white"}
-.. 
+..
 
 ^^^^^^^^^^^^^^^^^^
 Border formatting
 ^^^^^^^^^^^^^^^^^^
 
-This table demonstrates the border formatting options available. You can find all options 
+This table demonstrates the border formatting options available. You can find all options
 for `border styles in the XlsxWriter documentation`_.
 
 .. _`border styles in the XlsxWriter documentation`: https://xlsxwriter.readthedocs.io/format.html#format-set-border
@@ -285,14 +285,14 @@ for `border styles in the XlsxWriter documentation`_.
 
     * - Description
       - Example usage
-    * - Cell border 
+    * - Cell border
       - {"border": 1}
     * - Bottom border
       - {"bottom": 1}
     * - Top border
       - {"top": 1}
     * - Left border
-      - {"left": 1} 
+      - {"left": 1}
     * - Right border
       - {"right": 1}
     * - Border colour

@@ -14,7 +14,7 @@ maintainers = [
   {name = "Analysis Standards and Pipelines", email = "ASAP@ons.gov.uk"}
 ]
 version = "1.2.0"
-requires-python = '>=3.7'
+requires-python = '>=3.9'
 description = 'Simplifying good practice in statistical tables.'
 readme = "README.rst"
 license = {text = "MIT License"}
@@ -26,7 +26,7 @@ classifiers = [
 dependencies = [
     "pandas>=0.25.3",
     "xlrd>=1.2.0",
-    "XlsxWriter>=1.2.6",
+    "XlsxWriter>=3.2.5",
     "pyyaml>=3.12"
 ]
 
@@ -35,12 +35,14 @@ docs = [
     "sphinx>=2",
     "sphinx_rtd_theme"
 ]
-testing = [
+dev = [
     "sphinx>=2",
     "sphinx_rtd_theme",
     "coverage",
     "pytest>=6.2.5",
-    "pytest-cov"
+    "pytest-cov",
+    "pre-commit",
+    "importlib_resources"
 ]
 
 [version]
@@ -49,3 +51,6 @@ file = "VERSION"
 [project.urls]
 Homepage = "https://github.com/best-practice-and-impact/gptables"
 Documentation = "https://gptables.readthedocs.io/en/latest/"
+
+[tool.bandit.assert_used]
+skips = ['*_test.py', '*/test_*.py']

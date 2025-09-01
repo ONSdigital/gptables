@@ -12,14 +12,14 @@
 #
 import os
 import sys
-import alabaster
-sys.path.insert(0, os.path.abspath('../'))
+
+sys.path.insert(0, os.path.abspath("../"))
 
 # -- Project information -----------------------------------------------------
 
-project = 'gptables'
-copyright = ' Crown Copyright'
-author = 'David Foster, Alexander Newton, Rowan Hemsi, Jacob Cole, Dan Shiloh and Jaehee Ryoo'
+project = "gptables"
+copyright = " Crown Copyright"
+author = "David Foster, Alexander Newton, Rowan Hemsi, Jacob Cole, Dan Shiloh and Jaehee Ryoo"
 
 # The full version, including alpha/beta/rc tags
 with open(os.path.abspath("../../VERSION")) as f:
@@ -31,18 +31,18 @@ with open(os.path.abspath("../../VERSION")) as f:
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-        'sphinx.ext.autodoc',
-        'sphinx.ext.viewcode',
-        'sphinx.ext.todo',
-        'sphinx.ext.githubpages',
-        'sphinx.ext.napoleon'
-        ]
+    "sphinx.ext.autodoc",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.todo",
+    "sphinx.ext.githubpages",
+    "sphinx.ext.napoleon",
+]
 
 
 todo_include_todos = False
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -51,21 +51,23 @@ exclude_patterns = []
 
 
 # The master toctree document.
-master_doc = 'index'
+master_doc = "index"
 
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'alabaster'
+html_theme = "alabaster"
 
-custom_fonts = '"Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif'
+custom_fonts = (
+    '"Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif'
+)
 html_theme_options = {
     "description": "An opinionated python package for spreadsheet production.",
-    'fixed_sidebar': 'true',
-    'caption_font_family': custom_fonts,
-    'font_family': custom_fonts,
-    'head_font_family': custom_fonts,
+    "fixed_sidebar": "true",
+    "caption_font_family": custom_fonts,
+    "font_family": custom_fonts,
+    "head_font_family": custom_fonts,
     "github_user": "best-practice-and-impact",
     "github_repo": "gptables",
     "github_button": True,
@@ -75,21 +77,14 @@ html_theme_options = {
     "show_relbar_bottom": True,
     "page_width": "60rem",
     "sidebar_width": "15rem",
-    }
+}
 
 html_show_sourcelink = False
 
 
 html_sidebars = {
-        '**': [
-            'about.html',
-            'navigation.html',
-            'relations.html',
-            'searchbox.html'
-            ]
-
-        }
-
+    "**": ["about.html", "navigation.html", "relations.html", "searchbox.html"]
+}
 
 
 # Add any paths that contain custom static files (such as style sheets) here,
