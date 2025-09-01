@@ -1,8 +1,8 @@
 from contextlib import redirect_stdout
 from itertools import chain, combinations
 
+import importlib_resources
 import pytest
-from pkg_resources import resource_filename
 
 from gptables import Theme, gptheme
 
@@ -117,8 +117,9 @@ class TestConfigInitTheme:
         """
         Test initialisation of Theme using default theme yaml config file.
         """
-        config_file = resource_filename("gptables", "themes/gptheme.yaml")
-        got = Theme(config_file)
+        config_file = importlib_resources.files("gptables") / "themes/gptheme.yaml"
+
+        got = Theme(str(config_file))
 
         exp = gptheme
 

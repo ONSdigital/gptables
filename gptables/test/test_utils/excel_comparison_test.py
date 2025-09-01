@@ -19,9 +19,10 @@ class ExcelComparisonTest(unittest.TestCase):
 
     """
 
+    maxDiff = None
+
     def set_filename(self, filename):
         # Set the filename and paths for the test xlsx files.
-        self.maxDiff = None
         self.got_filename = ""
         self.exp_filename = ""
         self.ignore_files = []

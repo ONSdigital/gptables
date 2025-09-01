@@ -95,7 +95,9 @@ def _sort_rel_file_data(xml_elements):
     return xml_elements
 
 
-def _compare_xlsx_files(got_file, exp_file, ignore_files, ignore_elements):
+def _compare_xlsx_files(
+    got_file, exp_file, ignore_files, ignore_elements, ignore_auto_colour=True
+):
     # Compare two XLSX files by extracting the XML files from each
     # zip archive and comparing them.
     #
@@ -104,6 +106,7 @@ def _compare_xlsx_files(got_file, exp_file, ignore_files, ignore_elements):
     #
     # In order to compare the XLSX files we convert the data in each
     # XML file into an list of XML elements.
+    #
     try:
         # Open the XlsxWriter as a zip file for testing.
         got_zip = ZipFile(got_file, "r")
@@ -183,6 +186,11 @@ def _compare_xlsx_files(got_file, exp_file, ignore_files, ignore_elements):
             got_xml_str = re.sub(
                 r"<c:pageMargins[^>]*>", "<c:pageMargins/>", got_xml_str
             )
+
+        # Remove automatic color tags
+        if ignore_auto_colour:
+            exp_xml_str = re.sub(r'<color rgb="FFAUTOMATIC"\s*/>', "", exp_xml_str)
+            got_xml_str = re.sub(r'<color rgb="FFAUTOMATIC"\s*/>', "", got_xml_str)
 
         # Convert the XML string to lists for comparison.
         if re.search(".vml$", filename):
