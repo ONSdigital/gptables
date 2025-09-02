@@ -10,3 +10,9 @@ Section 13 of the guidance, 'Worksheets with multiple tables', dissuades this.\w
 
 [guidance]: https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/
 [issue-180]: https://github.com/best-practice-and-impact/gptables/issues/180
+
+## [265][issue-265]: Rounding decimals
+A user requested the ability to round a column to a given number of decimal places. This issue was closed because it can be handled by pandas.
+
+[pandas]: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.round.html
+[issue-265]: https://github.com/best-practice-and-impact/gptables/issues/265
