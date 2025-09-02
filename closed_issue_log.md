@@ -6,7 +6,7 @@ These issues may be re-opened in future if guidance changes - please contribute 
 the GitHub issue.
 
 ## [180][issue-180]: Multiple tables in a single spreadsheet
-Section 13 of the guidance, 'Worksheets with multiple tables', dissuades this.\w
+Section 13 of the guidance, 'Worksheets with multiple tables', dissuades this.
 
 [guidance]: https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/
 [issue-180]: https://github.com/best-practice-and-impact/gptables/issues/180
