@@ -16,7 +16,13 @@ A user requested the ability to round a column to a given number of decimal plac
 Section 7 of the guidance, under 'Making hyperlinks accessible' says links should be underlined and in a colour of suitable
 contrast. Further advice was sought from the Presentation Champions group, with the feedback that users expect links to be blue.
 
+## [104][issue-104]: Support tabel formatting as one unit (05/09/2025)
+Interpreted as requesting the ability to add a line above and below a table. Section 7 of the guidance, under
+'Other pointers for formatting that should be followed in terms of best practice', mentions that gridlines and borders
+should be avoided in favour of keeping things simple. This is also on advice from the Presentation Champions.
+
 [guidance]: https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/
+[issue-104]: https://github.com/best-practice-and-impact/gptables/issues/104
 [issue-136]: https://github.com/best-practice-and-impact/gptables/issues/136
 [issue-180]: https://github.com/best-practice-and-impact/gptables/issues/180
 [issue-265]: https://github.com/best-practice-and-impact/gptables/issues/265
