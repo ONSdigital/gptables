@@ -4,6 +4,7 @@ from copy import deepcopy
 
 import numpy as np
 import pandas as pd
+from xlsxwriter.utility import cell_autofit_width
 from xlsxwriter.workbook import Workbook
 from xlsxwriter.worksheet import Worksheet
 
@@ -873,16 +874,13 @@ class GPWorksheet(Worksheet):
             width to apply to Excel columns
         """
         cols = table.shape[1]
-        wb = self._workbook
         col_widths = []
         for col in range(cols):
             cell_widths = []
             for row in range(table.shape[0]):
                 cell_val = table.iloc[row, col]
-                cell_format_dict = formats_table.iloc[row, col]
-                fmt = wb.add_format(cell_format_dict)
                 cell_val_str = self._cell_string_for_width(cell_val)
-                width = wb.cell_autofit_width(cell_val_str, fmt)
+                width = cell_autofit_width(cell_val_str)
                 cell_widths.append(width)
             col_widths.append(max(cell_widths) if cell_widths else 0)
         return col_widths
