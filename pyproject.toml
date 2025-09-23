@@ -24,22 +24,22 @@ classifiers = [
         "Operating System :: OS Independent"
 ]
 dependencies = [
-    "pandas>=0.25.3",
-    "xlrd>=1.2.0",
-    "XlsxWriter>=3.2.5",
-    "pyyaml>=3.12"
+    "pandas>=2.3.2",
+    "xlrd>=2.0.2",
+    "XlsxWriter>=3.2.9",
+    "pyyaml>=6.0.2"
 ]
 
 [project.optional-dependencies]
 docs = [
-    "sphinx>=2",
+    "sphinx>=4",
     "sphinx_rtd_theme"
 ]
 dev = [
-    "sphinx>=2",
+    "sphinx>=4",
     "sphinx_rtd_theme",
     "coverage",
-    "pytest>=6.2.5",
+    "pytest>=8.4.2",
     "pytest-cov",
     "pre-commit",
     "importlib_resources"
