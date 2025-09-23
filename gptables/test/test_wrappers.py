@@ -4,6 +4,7 @@ import pandas as pd
 import pytest
 import xlsxwriter
 from pandas.testing import assert_frame_equal, assert_series_equal
+from xlsxwriter.utility import cell_autofit_width
 
 import gptables
 from gptables import Theme, gptheme
@@ -446,25 +447,6 @@ class TestGPWorksheetTable:
             assert got_heading_format.__dict__ == exp_heading_format.__dict__
 
     @pytest.mark.parametrize(
-        "cell_val,exp_length",
-        [
-            ("string", 6),
-            (42, 2),
-            (3.14, 4),
-            ({"gov.uk": "https://www.gov.uk"}, 6),
-            (FormatList(["Partially ", {"bold": True}, "bold", " string"]), 21),
-            (["string", "another string"], 14),
-            ("string\nwith\nnewlines", 8),
-            (FormatList(["string\r\n", {"bold": True}, "bold string"]), 11),
-            (set(), 0),
-        ],
-    )
-    def test__longest_line_length(self, testbook, cell_val, exp_length):
-        got_length = testbook.ws._longest_line_length(cell_val)
-
-        assert got_length == exp_length
-
-    @pytest.mark.parametrize(
         "data",
         [
             ["string", "longer string"],
@@ -484,7 +466,7 @@ class TestGPWorksheetTable:
         table_format = pd.DataFrame({"col": format})
 
         got_width = testbook.ws._calculate_column_widths(table, table_format)
-        exp_width = [testbook.ws._excel_string_width(string_len=13, font_size=12)]
+        exp_width = [max(cell_autofit_width(s) for s in data)]
 
         assert got_width == exp_width
 
