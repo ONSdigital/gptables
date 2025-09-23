@@ -857,8 +857,8 @@ class GPWorksheet(Worksheet):
 
     def _calculate_column_widths(self, table, formats_table):
         """
-        Calculate Excel column widths using maximum length of strings
-        and the maximum font size in each column of the data table.
+        Calculate Excel column widths using xlsxwriter's cell_autofit_width for each cell,
+        and take the maximum per column.
 
         Parameters
         ----------
@@ -867,93 +867,58 @@ class GPWorksheet(Worksheet):
         formats_table: pd.DataFrame
             formats table to retrieve font size from
 
-        Returns
+        Returns 
         -------
         col_widths : list
             width to apply to Excel columns
         """
         cols = table.shape[1]
-        max_lengths = [
-            table.iloc[:, col].apply(self._longest_line_length).max()
-            for col in range(cols)
-        ]
-
-        max_font_sizes = [
-            formats_table.iloc[:, col].apply(lambda x: x.get("font_size") or 10).max()
-            for col in range(cols)
-        ]
-
-        col_widths = [
-            self._excel_string_width(leng, f)
-            for leng, f in zip(max_lengths, max_font_sizes)
-        ]
+        wb = self._workbook
+        col_widths = []
+        for col in range(cols):
+            cell_widths = []
+            for row in range(table.shape[0]):
+                cell_val = table.iloc[row, col]
+                cell_format_dict = formats_table.iloc[row, col]
+                fmt = wb.add_format(cell_format_dict)
+                cell_val_str = self._cell_string_for_width(cell_val)
+                width = wb.cell_autofit_width(cell_val_str, fmt)
+                cell_widths.append(width)
+            col_widths.append(max(cell_widths) if cell_widths else 0)
         return col_widths
 
-    @staticmethod
-    def _excel_string_width(string_len, font_size):
+    def _cell_string_for_width(self, cell_val):
         """
-        Calculate the rough length of a string in Excel character units.
-        This crude estimate does not account for font name or other font format
-        (e.g. wrapping).
+        Return a string representation of a cell value suitable for width calculation.
+        Handles strings, numbers, dicts (display text), FormatList, and lists (joins strings with newlines).
 
         Parameters
         ----------
-        string_len : int
-            length of string to calculate width in Excel for
-        font_size : int
-            size of font
-
-        Returns
-        -------
-        excel_width : float
-            width of equivalent string in Excel
-        """
-        if string_len == 0:
-            excel_width = 0
-        else:
-            excel_width = string_len * ((font_size * 0.12) - 0.09)
-
-        return excel_width
-
-    def _longest_line_length(self, cell_val):
-        """
-        Calculate the length of the longest line within a cell.
-        If the cell contains a string, the longest length between line breaks is returned.
-        If the cell contains a float or integer, the longest length is calculated from the cell_value cast to a string.
-        If the cell contains a link formatted as {display_text: link}, the longest length is calculated from the display text.
-        If the cell contains a list of strings, the length of the longest string in the list is returned.
-        Expects new lines to be marked with "\n", "\r\n" or new lines in multiline strings.
-
-        Parameters
-        ----------
-        cell_val:
+        cell_val: 
             cell value
 
         Returns
         -------
-        max_length: int
-            the length of the longest line within the string
+        str
+            String representation for width calculation
         """
-        split_strings = """
-|\r\n|\n"""
-
         if isinstance(cell_val, str):
-            max_length = max([len(line) for line in re.split(split_strings, cell_val)])
+            return cell_val
         elif isinstance(cell_val, (float, int)):
-            max_length = self._longest_line_length(str(cell_val))
+            return str(cell_val)
         elif isinstance(cell_val, dict):
-            max_length = self._longest_line_length(list(cell_val)[0])
+            return list(cell_val.keys())[0]
         elif isinstance(cell_val, FormatList):
-            max_length = self._longest_line_length(cell_val.string)
+            return str(cell_val.string)
         elif isinstance(cell_val, list):
-            if isinstance(cell_val[0], (dict, FormatList)):
-                max_length = self._longest_line_length(cell_val[0])
+            if all(isinstance(x, str) for x in cell_val):
+                return "\n".join(cell_val)
+            elif isinstance(cell_val[0], (dict, FormatList)):
+                return str(cell_val[0])
             else:
-                max_length = max([len(line) for line in cell_val])
+                return str(cell_val)
         else:
-            max_length = 0
-
-        return max_length
+            return str(cell_val) if cell_val is not None else ""
 
 
 class GPWorkbook(Workbook):
