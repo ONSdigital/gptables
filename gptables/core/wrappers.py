@@ -867,7 +867,7 @@ class GPWorksheet(Worksheet):
         formats_table: pd.DataFrame
             formats table to retrieve font size from
 
-        Returns 
+        Returns
         -------
         col_widths : list
             width to apply to Excel columns
@@ -894,7 +894,7 @@ class GPWorksheet(Worksheet):
 
         Parameters
         ----------
-        cell_val: 
+        cell_val:
             cell value
 
         Returns
