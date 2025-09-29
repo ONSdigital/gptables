@@ -4,7 +4,6 @@ import pandas as pd
 import pytest
 import xlsxwriter
 from pandas.testing import assert_frame_equal, assert_series_equal
-from xlsxwriter.utility import cell_autofit_width
 
 import gptables
 from gptables import Theme, gptheme
@@ -447,28 +446,91 @@ class TestGPWorksheetTable:
             assert got_heading_format.__dict__ == exp_heading_format.__dict__
 
     @pytest.mark.parametrize(
-        "data",
+        "data,format,exp_width",
         [
-            ["string", "longer string"],
-            ["longer string", "longer string"],
-            ["string\nstring\nstring", "longer string"],
+            # Single column, normal case
+            (["string", "longer string"], [{"font_size": 12}, {"font_size": 12}], [93]),
+            # Multiple columns
+            (
+                pd.DataFrame({"col1": ["a", "bb"], "col2": ["ccc", "dddd"]}),
+                pd.DataFrame(
+                    {
+                        "col1": [{"font_size": 11}, {"font_size": 12}],
+                        "col2": [{"font_size": 10}, {"font_size": 14}],
+                    }
+                ),
+                [26, 50],
+            ),
+            # Bold formatting
+            (
+                ["bold", "bolder"],
+                [{"font_size": 11, "bold": True}, {"font_size": 12, "bold": True}],
+                [58],
+            ),
+            # Multi-line cell
+            (
+                ["short\nlongest\nmid", "tiny"],
+                [{"font_size": 11}, {"font_size": 11}],
+                [53],
+            ),
+            # Empty string
+            (["", ""], [{"font_size": 11}, {"font_size": 11}], [0]),
+            # Number cell
+            ([123, 4567], [{"font_size": 11}, {"font_size": 11}], [35]),
         ],
     )
-    @pytest.mark.parametrize(
-        "format",
-        [
-            [{"font_size": 12}, {"font_size": 12}],
-            [{"font_size": 10}, {"font_size": 12}],
-        ],
-    )
-    def test__calculate_column_widths(self, testbook, data, format):
-        table = pd.DataFrame({"col": data})
-        table_format = pd.DataFrame({"col": format})
+    def test__calculate_column_widths(self, testbook, data, format, exp_width):
+        if isinstance(data, pd.DataFrame):
+            table = data
+            table_format = format
+        else:
+            table = pd.DataFrame({"col": data})
+            table_format = pd.DataFrame({"col": format})
 
         got_width = testbook.ws._calculate_column_widths(table, table_format)
-        exp_width = [max(cell_autofit_width(s) for s in data)]
-
         assert got_width == exp_width
+        assert all(isinstance(w, int) for w in got_width)
+
+    @pytest.mark.parametrize(
+        "format_dict,expected",
+        [
+            ({"font_size": 11, "bold": False}, 1.0),
+            ({"font_size": 12, "bold": False}, 12 / 11),
+            ({"font_size": 11, "bold": True}, 1.1),
+            ({"font_size": 12, "bold": True}, (12 / 11) * 1.1),
+            ({}, 1.0),
+        ],
+    )
+    def test__get_scaling_factor(self, testbook, format_dict, expected):
+        got = testbook.ws._get_scaling_factor(format_dict)
+        assert got == expected
+
+    @pytest.mark.parametrize(
+        "cell_val,expected",
+        [
+            ("short\nlongest\nmid", "longest"),
+            ("one line", "one line"),
+            (["a", "bb", "ccc"], "ccc"),
+            ("a\nbb\nccc", "ccc"),
+        ],
+    )
+    def test__get_longest_line(self, testbook, cell_val, expected):
+        got = testbook.ws._get_longest_line(cell_val)
+        assert got == expected
+
+    @pytest.mark.parametrize(
+        "cell_val,expected",
+        [
+            ("abc", "abc"),
+            (123, "123"),
+            (["a", "b", "c"], "a\nb\nc"),
+            ({"x": 1, "y": 2}, "x\ny"),
+        ],
+    )
+    def test__get_cell_string(self, testbook, cell_val, expected):
+        # Patch FormatList handling if needed
+        got = testbook.ws._get_cell_string(cell_val)
+        assert got == expected
 
 
 class TestGPWorkbookStatic:

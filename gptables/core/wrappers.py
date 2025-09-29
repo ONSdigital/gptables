@@ -1,6 +1,7 @@
 import re
 import warnings
 from copy import deepcopy
+from math import ceil
 
 import numpy as np
 import pandas as pd
@@ -854,7 +855,7 @@ class GPWorksheet(Worksheet):
         Set the column widths using a list of widths.
         """
         for col_number in range(len(widths)):
-            self.set_column(col_number, col_number, widths[col_number])
+            self.set_column_pixels(col_number, col_number, widths[col_number])
 
     def _calculate_column_widths(self, table, formats_table):
         """
@@ -879,44 +880,43 @@ class GPWorksheet(Worksheet):
             cell_widths = []
             for row in range(table.shape[0]):
                 cell_val = table.iloc[row, col]
-                cell_val_str = self._cell_string_for_width(cell_val)
-                width = cell_autofit_width(cell_val_str)
+                longest_line = self._get_longest_line(cell_val)
+                format_dict = formats_table.iloc[row, col]
+                scaling_factor = self._get_scaling_factor(format_dict)
+                width = ceil(cell_autofit_width(longest_line) * scaling_factor)
                 cell_widths.append(width)
             col_widths.append(max(cell_widths) if cell_widths else 0)
         return col_widths
 
-    def _cell_string_for_width(self, cell_val):
-        """
-        Return a string representation of a cell value suitable for width calculation.
-        Handles strings, numbers, dicts (display text), FormatList, and lists (joins strings with newlines).
+    def _get_scaling_factor(self, format_dict):
+        """Return scaling factor for width based on font size and bold formatting."""
+        font_size = (
+            format_dict.get("font_size", 11) if isinstance(format_dict, dict) else 11
+        )
+        bold = (
+            format_dict.get("bold", False) if isinstance(format_dict, dict) else False
+        )
+        return (font_size / 11) * (1.1 if bold else 1.0)
 
-        Parameters
-        ----------
-        cell_val:
-            cell value
+    def _get_longest_line(self, cell_val):
+        """Return the longest line in a cell value split by newline."""
+        cell_val_str = self._get_cell_string(cell_val)
+        return max(cell_val_str.split("\n"), key=len)
 
-        Returns
-        -------
-        str
-            String representation for width calculation
-        """
+    def _get_cell_string(self, cell_val):
+        """Return the contents from any cell value as a string."""
         if isinstance(cell_val, str):
             return cell_val
         elif isinstance(cell_val, (float, int)):
             return str(cell_val)
         elif isinstance(cell_val, dict):
-            return list(cell_val.keys())[0]
+            return "\n".join([self._get_cell_string(k) for k in cell_val.keys()])
         elif isinstance(cell_val, FormatList):
-            return str(cell_val.string)
+            return self._get_cell_string(cell_val.string)
         elif isinstance(cell_val, list):
-            if all(isinstance(x, str) for x in cell_val):
-                return "\n".join(cell_val)
-            elif isinstance(cell_val[0], (dict, FormatList)):
-                return str(cell_val[0])
-            else:
-                return str(cell_val)
+            return "\n".join([self._get_cell_string(item) for item in cell_val])
         else:
-            return str(cell_val) if cell_val is not None else ""
+            return str(cell_val) if cell_val else ""
 
 
 class GPWorkbook(Workbook):
