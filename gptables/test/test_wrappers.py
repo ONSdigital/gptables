@@ -525,6 +525,7 @@ class TestGPWorksheetTable:
             (123, "123"),
             (["a", "b", "c"], "a\nb\nc"),
             ({"x": 1, "y": 2}, "x\ny"),
+            (pd.Timestamp("2023-09-30 12:34:56"), "2023-09-30 12:34:56"),
         ],
     )
     def test__get_cell_string(self, testbook, cell_val, expected):
