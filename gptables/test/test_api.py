@@ -53,7 +53,7 @@ def create_gpworkbook():
         )
 
         gpt.write_workbook(  # Use defaults for theme and autowidth
-            filename=output_path / "actual_workbook.xlsx",
+            filename=output_path / "test_end_to_end.obtained.xlsx",
             sheets={"Label": gptable},
             cover=cover,
             contentsheet_label="Table of contents",
@@ -68,21 +68,32 @@ def create_gpworkbook():
     return generate_gpworkbook
 
 
-def test_end_to_end(create_gpworkbook):
+def test_end_to_end(create_gpworkbook, file_regression):
     """
-    Test that runs the API functions with example input to check for errors and
-    expected output.
+    Test that runs the API functions with example input and checks the generated Excel
+    file using a manually managed expected_workbook.xlsx and ExcelComparisonTest.
     """
-    output_path = Path(__file__).parent
-
+    output_path = Path(__file__).parent / "test_api"
+    output_path.mkdir(parents=True, exist_ok=True)
     create_gpworkbook(output_path)
+    actual_file = output_path / "test_end_to_end.obtained.xlsx"
+
+    # Use file_regression to manage the regression file, but ignore its assertion
+    try:
+        file_regression.check(actual_file.read_bytes(), extension=".xlsx", binary=True)
+    except AssertionError:
+        pass
+
+    regression_file = output_path / "test_end_to_end.xlsx"
+    if not regression_file.exists():
+        raise FileNotFoundError(
+            f"Could not find regression file for comparison: {regression_file}"
+        )
 
     ect = ExcelComparisonTest()
-
-    ect.exp_filename = output_path / "expected_workbook.xlsx"
-    ect.got_filename = output_path / "actual_workbook.xlsx"
+    ect.got_filename = str(actual_file)
+    ect.exp_filename = str(regression_file)
     ect.ignore_files = []
     ect.ignore_elements = {}
-
     ect.assertExcelEqual()
     ect.tearDown()

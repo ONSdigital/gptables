@@ -42,7 +42,8 @@ dev = [
     "pytest>=8.4.2",
     "pytest-cov",
     "pre-commit",
-    "importlib_resources"
+    "importlib_resources",
+    "pytest-regressions"
 ]
 
 [version]
