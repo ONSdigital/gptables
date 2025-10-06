@@ -882,21 +882,29 @@ class GPWorksheet(Worksheet):
                 cell_val = table.iloc[row, col]
                 longest_line = self._get_longest_line(cell_val)
                 format_dict = formats_table.iloc[row, col]
-                scaling_factor = self._get_scaling_factor(format_dict)
+                scaling_factor = self._get_scaling_factor(format_dict, longest_line)
                 width = ceil(cell_autofit_width(longest_line) * scaling_factor)
                 cell_widths.append(width)
             col_widths.append(max(cell_widths) if cell_widths else 0)
         return col_widths
 
-    def _get_scaling_factor(self, format_dict):
-        """Return scaling factor for width based on font size and bold formatting."""
+    def _get_scaling_factor(self, format_dict, text):
+        """Return scaling factor for width based on font size, bold formatting,
+        and capitalisation."""
         font_size = (
             format_dict.get("font_size", 11) if isinstance(format_dict, dict) else 11
         )
         bold = (
             format_dict.get("bold", False) if isinstance(format_dict, dict) else False
         )
-        return (font_size / 11) * (1.1 if bold else 1.0)
+
+        if text and isinstance(text, str):
+            num_upper = sum(1 for c in text if c.isupper())
+            upper_ratio = num_upper / len(text) if len(text) > 0 else 0
+        else:
+            upper_ratio = 0
+        capitalisation_factor = 1.0 + 0.15 * upper_ratio
+        return (font_size / 11) * (1.1 if bold else 1.0) * capitalisation_factor
 
     def _get_longest_line(self, cell_val):
         """Return the longest line in a cell value split by newline."""

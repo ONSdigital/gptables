@@ -492,17 +492,26 @@ class TestGPWorksheetTable:
         assert all(isinstance(w, int) for w in got_width)
 
     @pytest.mark.parametrize(
-        "format_dict,expected",
+        "format_dict,longest_line,expected",
         [
-            ({"font_size": 11, "bold": False}, 1.0),
-            ({"font_size": 12, "bold": False}, 12 / 11),
-            ({"font_size": 11, "bold": True}, 1.1),
-            ({"font_size": 12, "bold": True}, (12 / 11) * 1.1),
-            ({}, 1.0),
+            ({"font_size": 11, "bold": False}, "abc", 1.0),
+            ({"font_size": 12, "bold": False}, "abc", 12 / 11),
+            ({"font_size": 11, "bold": True}, "abc", 1.1),
+            ({"font_size": 12, "bold": True}, "abc", (12 / 11) * 1.1),
+            ({}, "abc", 1.0),
+            ({"font_size": 11, "bold": False}, "ABC", 1.0 * (1 + 0.15 * 1)),
+            ({"font_size": 11, "bold": False}, "AbC", 1.0 * (1 + 0.15 * (2 / 3))),
+            ({"font_size": 11, "bold": True}, "ALLCAPS", 1.1 * (1 + 0.15 * 1)),
+            (
+                {"font_size": 12, "bold": True},
+                "MiXeD",
+                (12 / 11) * 1.1 * (1 + 0.15 * (3 / 5)),
+            ),
+            ({"font_size": 11, "bold": False}, "lower", 1.0),
         ],
     )
-    def test__get_scaling_factor(self, testbook, format_dict, expected):
-        got = testbook.ws._get_scaling_factor(format_dict)
+    def test__get_scaling_factor(self, testbook, format_dict, longest_line, expected):
+        got = testbook.ws._get_scaling_factor(format_dict, longest_line)
         assert got == expected
 
     @pytest.mark.parametrize(
