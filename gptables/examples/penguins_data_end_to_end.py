@@ -28,7 +28,12 @@ cols_to_check = [col for col in penguins_data.columns if col != "Comments"]
 cleaned = penguins_data.dropna(subset=cols_to_check)
 
 # Rename columns
-cleaned = cleaned.rename(columns={"Culmen Length (mm)": "Bill Length (mm)", "Culmen Depth (mm)": "Bill Depth (mm)"})
+cleaned = cleaned.rename(
+    columns={
+        "Culmen Length (mm)": "Bill Length (mm)",
+        "Culmen Depth (mm)": "Bill Depth (mm)",
+    }
+)
 
 # Recode Sex column
 cleaned["Sex"] = cleaned["Sex"].replace({"MALE": "M", "FEMALE": "F"})
@@ -39,7 +44,7 @@ measurement_cols = [
     "Bill Length (mm)",
     "Bill Depth (mm)",
     "Flipper Length (mm)",
-    "Body Mass (g)"
+    "Body Mass (g)",
 ]
 for col in measurement_cols:
     if col in cleaned.columns:
@@ -50,27 +55,25 @@ for col in measurement_cols:
 long_df = pd.melt(
     cleaned,
     id_vars=["Species", "Island", "Sex"],
-    value_vars=["Bill Length (mm)", "Bill Depth (mm)", "Flipper Length (mm)", "Body Mass (g)"],
+    value_vars=[
+        "Bill Length (mm)",
+        "Bill Depth (mm)",
+        "Flipper Length (mm)",
+        "Body Mass (g)",
+    ],
     var_name="Measurement",
-    value_name="Value"
+    value_name="Value",
 )
 # --- Prepare for gptables ---
 table_name = "penguins_long_format"
 title = "Penguins Dataset (Long Format Example)"
-subtitles = [
-    "Demonstrates data cleaning, rounding, and wide-to-long conversion."
-]
+subtitles = ["Demonstrates data cleaning, rounding, and wide-to-long conversion."]
 scope = "Penguins"
 source = "Palmer Station, Antarctica"
 
 # Additional formatting: highlight 'Value' column
 additional_formatting = [
-    {
-        "column": {
-            "columns": ["Value"],  
-            "format": {"bg_color": "#DDEEFF"}
-        }
-    }
+    {"column": {"columns": ["Value"], "format": {"bg_color": "#DDEEFF"}}}
 ]
 
 penguins_table = gpt.GPTable(
@@ -80,7 +83,7 @@ penguins_table = gpt.GPTable(
     subtitles=subtitles,
     scope=scope,
     source=source,
-    additional_formatting=additional_formatting
+    additional_formatting=additional_formatting,
 )
 
 if __name__ == "__main__":
@@ -88,6 +91,6 @@ if __name__ == "__main__":
     gpt.write_workbook(
         filename=output_path,
         sheets={"Penguins (Long Format)": penguins_table},
-        contentsheet_options={"additional_elements": ["subtitles", "scope"]}
+        contentsheet_options={"additional_elements": ["subtitles", "scope"]},
     )
     print("Output written at: ", output_path)
