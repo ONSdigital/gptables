@@ -5,7 +5,7 @@
 The `GPTable` Class is used to map your data and metadata to table elements.
 The supported table elements are represented like this in the output .xlsx file:
 
-![Cells A1 to A6 contain the title, subtitles, instructions, legend, source and scope. These parameters are mapped individually. The next row contains the column headings. Within the same row but on a new line are the units. The table note references are within the same row on a new line under the units. In columns 1, 2 and 3 of the next row down are index levels 1, 2 and 3. In the next columns are the data. Column headings, indices and data are supplied as a pandas DataFrame. Units and table note references are mapped individually.](static/table_mapping.png)
+![Cells A1 to A6 contain the title, subtitles, instructions, legend, source and scope. These parameters are mapped individually. The next row contains the column headings. Within the same row but on a new line are the units. The table note references are within the same row on a new line under the units. In columns 1, 2 and 3 of the next row down are index levels 1, 2 and 3. In the next columns are the data. Column headings, indices and data are supplied as a pandas DataFrame. Units and table note references are mapped individually.](imgs/table_mapping.png)
 
 ## Notes
 
@@ -57,7 +57,7 @@ parameter, you can instead provide a list of strings and dictionaries.
 Dictionaries in this list should contain valid [XlsxWriter format properties](https://xlsxwriter.readthedocs.io/format.html#format-methods-and-format-properties)
 and values. The formatting defined in these dictionaries will be applied to the
 next string in the list. This formatting is applied in addition to the
-formatting of that element specified in the [`Theme`](doc.theme.md#gptables.core.theme.Theme).
+formatting of that element specified in the [`Theme`](theme.md#theme-class).
 
 `["It is ", {"bold": True}, "inevitable"]` would give you “It is **inevitable**”.
 
@@ -208,7 +208,7 @@ for [border styles in the XlsxWriter documentation](https://xlsxwriter.readthedo
 
 For any formatting beyond this, if the package should support it then please raise an issue
 or create a pull request. Otherwise, you will need to modify the underlying
-[`GPWorkbook`](doc.wrappers.md#gptables.core.wrappers.GPWorkbook) or [`GPWorksheet`](doc.wrappers.md#gptables.core.wrappers.GPWorksheet) objects
+[`GPWorkbook`](wrappers.md#gpworkbook-class) or [`GPWorksheet`](wrappers.md#gpworksheet-class) objects
 before they are written to Excel.
 
 See this in practice under [Example Usage](usage.md#example-usage).

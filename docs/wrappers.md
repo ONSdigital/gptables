@@ -1,8 +1,8 @@
 # XlsxWriter wrappers
 
 These Classes are only likely used following use
-of the [`produce_workbook()`](doc.api.md#gptables.core.api.produce_workbook) API function,
-which returns a [`GPWorkbook`](#gptables.core.wrappers.GPWorkbook) object.
+of the [`produce_workbook()`](api.md#produce_workbook-function) API function,
+which returns a [`GPWorkbook`](wrappers.md#gpworkbook-class) object.
 
 You may use these objects to carry out modification of any aspects of the
 workbook or individual worksheets that are outside of the scope of `GPTables`.

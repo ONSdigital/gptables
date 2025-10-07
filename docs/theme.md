@@ -15,7 +15,7 @@ options for your formatting.
 
 `global` refers to the base format that all others will be built upon.
 Any format parameter that is repeated for a specific element will override the global format for that element.
-The three `cover_` format names refer to elements of the cover page generated from a [`Cover`](doc.cover.md#gptables.core.cover.Cover).
+The three `cover_` format names refer to elements of the cover page generated from a [`Cover`](cover.md#cover-class).
 
 #### NOTE
 All top levels names must exist in the config file. Where no properties need to be passed, leave empty after the colon.

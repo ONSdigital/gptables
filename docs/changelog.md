@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to the master branch of this project should be documented
+All notable changes to the main branch of this project should be documented
 clearly in this file. In progress (or intended changes) can also be listed
 below under Unreleased.
 

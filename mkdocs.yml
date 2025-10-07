@@ -1,13 +1,13 @@
 site_name: gptables
 nav:
-  - Home: markdown\index.md
+  - Home: index.md
   - Navigation:
-    - API functions: markdown\doc.api.md
-    - Example usage: markdown\usage.md
-    - GPTable: markdown\doc.gptable.md
-    - Theme: markdown\doc.theme.md
-    - Cover: markdown\doc.cover.md
-    - XlsxWriter wrappers: markdown\doc.wrappers.md
-    - Accessibility checklist: markdown\checklist.md
-    - Changelog: markdown\changelog.md
-    - Contributors: markdown\contributors.md
+    - API functions: api.md
+    - Example usage: usage.md
+    - GPTable: gptable.md
+    - Theme: theme.md
+    - Cover: cover.md
+    - XlsxWriter wrappers: wrappers.md
+    - Accessibility checklist: checklist.md
+    - Changelog: changelog.md
+    - Contributors: contributors.md
