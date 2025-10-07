@@ -1,8 +1,8 @@
 # XlsxWriter wrappers
 
 These Classes are only likely used following use
-of the [`produce_workbook()`](api.md#produce_workbook-function) API function,
-which returns a [`GPWorkbook`](wrappers.md#gpworkbook-class) object.
+of the [`produce_workbook()`](api.md#gptables.core.api.produce_workbook) API function,
+which returns a [`GPWorkbook`](wrappers.md#gptables.core.wrappers.GPWorkbook) object.
 
 You may use these objects to carry out modification of any aspects of the
 workbook or individual worksheets that are outside of the scope of `GPTables`.
@@ -13,10 +13,12 @@ which are super-classses of those below, for details on further modfication.
 The methods which we’ve extended these Classes with are not shown here, but feel
 free to check out the source code to see how `gptables` works under the hood.
 
-## `GPWorkbook` Class
-
 ::: gptables.core.wrappers.GPWorkbook
+    options:
+        heading: "GPWorkbook"
 
-## `GPWorksheet` Class
+&nbsp;
 
 ::: gptables.core.wrappers.GPWorksheet
+    options:
+        heading: "GPWorksheet"

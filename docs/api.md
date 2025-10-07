@@ -43,10 +43,12 @@ If a `notes_table` is not provided, the notes sheet will not be generated.
 
 See this in practice under [Example Usage](usage.md#example-usage).
 
-## `write_workbook` function
-
 ::: gptables.core.api.write_workbook
+    options:
+        heading: "write_workbook()"
 
-## `produce_workbook` function
+&nbsp;
 
 ::: gptables.core.api.produce_workbook
+    options:
+        heading: "produce_workbook()"

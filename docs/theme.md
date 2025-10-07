@@ -15,7 +15,7 @@ options for your formatting.
 
 `global` refers to the base format that all others will be built upon.
 Any format parameter that is repeated for a specific element will override the global format for that element.
-The three `cover_` format names refer to elements of the cover page generated from a [`Cover`](cover.md#cover-class).
+The three `cover_` format names refer to elements of the cover page generated from a [`Cover`](cover.md#gptables.core.cover.Cover).
 
 #### NOTE
 All top levels names must exist in the config file. Where no properties need to be passed, leave empty after the colon.
@@ -99,5 +99,6 @@ structure as the configuration files.
 
 An example using a personalised theme YAML file can be found under [Example Usage](usage.md#example-usage).
 
-## `Theme` Class
 ::: gptables.core.theme.Theme
+    options:
+        heading: "Theme"

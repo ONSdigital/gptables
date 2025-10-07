@@ -57,7 +57,7 @@ parameter, you can instead provide a list of strings and dictionaries.
 Dictionaries in this list should contain valid [XlsxWriter format properties](https://xlsxwriter.readthedocs.io/format.html#format-methods-and-format-properties)
 and values. The formatting defined in these dictionaries will be applied to the
 next string in the list. This formatting is applied in addition to the
-formatting of that element specified in the [`Theme`](theme.md#theme-class).
+formatting of that element specified in the [`Theme`](theme.md#gptables.core.theme.Theme).
 
 `["It is ", {"bold": True}, "inevitable"]` would give you “It is **inevitable**”.
 
@@ -208,11 +208,11 @@ for [border styles in the XlsxWriter documentation](https://xlsxwriter.readthedo
 
 For any formatting beyond this, if the package should support it then please raise an issue
 or create a pull request. Otherwise, you will need to modify the underlying
-[`GPWorkbook`](wrappers.md#gpworkbook-class) or [`GPWorksheet`](wrappers.md#gpworksheet-class) objects
+[`GPWorkbook`](wrappers.md#gptables.core.wrappers.GPWorkbook) or [`GPWorksheet`](wrappers.md#gptables.core.wrappers.GPWorksheet) objects
 before they are written to Excel.
 
 See this in practice under [Example Usage](usage.md#example-usage).
 
-## `GPTable` Class
-
 ::: gptables.core.gptable.GPTable
+      options:
+            heading: "GPTable"
