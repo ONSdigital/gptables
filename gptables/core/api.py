@@ -158,7 +158,7 @@ def write_workbook(
         dictionary of contentsheet customisation parameters. Valid keys are
         `additional_elements`, `column_names`, `table_name`, `title`,
         `subtitles` and `instructions`
-    note_table : pd.DataFrame, optional
+    notes_table : pd.DataFrame, optional
         table with notes reference, text and (optional) link columns. If None,
         notes sheet will not be generated.
     notesheet_label : str, optional

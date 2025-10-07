@@ -17,48 +17,4 @@ Formatting of cover sheet text is managed by the `cover_` attributes of the Work
 
 ## `Cover` Class
 
-### *class* gptables.core.cover.Cover(title: str, intro: List = None, about: List = None, contact: List = None, cover_label: str = 'Cover', width: int = 85)
-
-dataclass for storing cover sheet text.
-
-#### title
-
-cover page title
-
-* **Type:**
-  str
-
-#### intro
-
-introductory text
-
-* **Type:**
-  List[str, list], optional
-
-#### about
-
-about/notes text
-
-* **Type:**
-  List[str, list], optional
-
-#### contact
-
-contact details text
-
-* **Type:**
-  List[str, list], optional
-
-#### cover_label
-
-cover page tab label, defaults to Cover
-
-* **Type:**
-  str
-
-#### width
-
-width of the column, defaults to 85
-
-* **Type:**
-  int
+::: gptables.core.cover.Cover

@@ -75,7 +75,7 @@ class Theme:
         Parameters
         ----------
         config : dict or .yaml/.yml file
-          theme specification
+            theme specification
         """
         # Formats
         self._format_attributes = [

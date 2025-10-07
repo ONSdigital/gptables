@@ -15,14 +15,8 @@ free to check out the source code to see how `gptables` works under the hood.
 
 ## `GPWorkbook` Class
 
-### *class* gptables.core.wrappers.GPWorkbook(filename=None, options={})
-
-Wrapper for and XlsxWriter Workbook object. The Worksheets class has been
-replaced by an alternative with a method for writting GPTable objects.
+::: gptables.core.wrappers.GPWorkbook
 
 ## `GPWorksheet` Class
 
-### *class* gptables.core.wrappers.GPWorksheet
-
-Wrapper for an XlsxWriter Worksheet object. Provides a method for writing
-a good practice table (GPTable) to a Worksheet.
+::: gptables.core.wrappers.GPWorksheet
