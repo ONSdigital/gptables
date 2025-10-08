@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install reqs
-        run: pip install -r requirements.txt
+        run: pip install .[docs]
       - name: Build docs
         run: mkdocs build
       - name: Deploy to GitHub Pages
