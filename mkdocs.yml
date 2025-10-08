@@ -1,0 +1,27 @@
+site_name: gptables
+nav:
+  - Home: index.md
+  - Navigation:
+    - API functions: api.md
+    - Example usage: usage.md
+    - GPTable: gptable.md
+    - Theme: theme.md
+    - Cover: cover.md
+    - XlsxWriter wrappers: wrappers.md
+    - Accessibility checklist: checklist.md
+    - Changelog: changelog.md
+    - Contributors: contributors.md
+
+plugins:
+- mkdocstrings:
+    handlers:
+      python:
+        options:
+          docstring_style: numpy
+          show_source: false
+          show_signature: true
+          show_root_heading: true
+
+          filters:
+              - "!^__" # Hide methods like __init__()
+              - "!^_" # Hide non-public facing methods

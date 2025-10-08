@@ -978,9 +978,9 @@ class GPWorkbook(Workbook):
         name : str (optional)
             name of the the worksheet to be created
         gridlines : string, optional
-        option to hide or show gridlines on worksheets. "show_all" - don't
-        hide gridlines, "hide_printed" - hide printed gridlines only, or
-        "hide_all" - hide screen and printed gridlines.
+            option to hide or show gridlines on worksheets. "show_all" - don't
+            hide gridlines, "hide_printed" - hide printed gridlines only, or
+            "hide_all" - hide screen and printed gridlines.
 
         Returns
         -------
