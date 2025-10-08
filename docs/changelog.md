@@ -13,7 +13,7 @@ and this project tries its very best to adhere to
 ## Unreleased
 
 * **Date:**
-  2025-08-06
+  2025-10-08
 
 **Added**
 
@@ -27,6 +27,7 @@ and this project tries its very best to adhere to
 * a11ytables renamed to aftables throughout
 * Updated README
 * Updated pull request template
+* Docs moved from readthedocs to mkdocs
 
 ## Released (PyPI)
 
