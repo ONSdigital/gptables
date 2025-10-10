@@ -40,6 +40,7 @@ penguins_subtitles = [
 penguins_table_notes = {
     "species": "$$noteaboutx$$",
     2: "$$noteaboutz$$",
+    "Comments": "$$noteaboutw$$",
 }  # Columns can be referenced either by index or by name
 penguins_units = {
     2: "mm",
@@ -67,20 +68,30 @@ penguins_sheets = {"Penguins": penguins_table}
 
 # Notesheet - Note that the ordering of each list only matters with respect to the other lists in the "notes" dictionary.
 # GPTables will use the "Note reference" list to ensure the "Note text" is assigned correctly
+# All lists must be the same length. If a note has no link, use an empty string or None for that entry.
 notes = {
-    "Note reference": ["noteaboutz", "noteaboutx", "noteabouty"],
+    "Note reference": ["noteaboutz", "noteaboutx", "noteabouty", "noteaboutw"],
     "Note text": [
         "This is a note about z linking to google.",
         "This is a note about x linking to duckduckgo.",
         "This is a note about y linking to the ONS website.",
+        "This is a note about w with no link.",
     ],
     "Useful link": [
         "[google](https://www.google.com)",
         "[duckduckgo](https://duckduckgo.com/)",
         "[ONS](https://www.ons.gov.uk)",
+        None
     ],
 }
-penguins_notes_table = pd.DataFrame.from_dict(notes)
+
+try:
+    penguins_notes_table = pd.DataFrame.from_dict(notes)
+except ValueError as e:
+    raise ValueError(
+        "Error creating notes table. Check that all lists in 'notes' are the same length."
+        "If a note has no link, use an empty string or None for that entry."
+    )from e
 
 # Use write_workbook to win!
 if __name__ == "__main__":
