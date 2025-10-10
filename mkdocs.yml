@@ -1,14 +1,20 @@
 site_name: gptables
+repo_url: https://github.com/ONSdigital/gptables
+
 nav:
   - Home: index.md
-  - Navigation:
-    - API functions: api.md
+  - Getting started:
+#  - How to:
     - Example usage: usage.md
-    - GPTable: gptable.md
+  - API:
+    - API functions: api.md
     - Theme: theme.md
     - Cover: cover.md
     - XlsxWriter wrappers: wrappers.md
+    - GPTable: gptable.md
+  - Reference:
     - Accessibility checklist: checklist.md
+  - About GPTables:
     - Changelog: changelog.md
     - Contributors: contributors.md
 
