@@ -28,6 +28,7 @@ and this project tries its very best to adhere to
 * Updated README
 * Updated pull request template
 * Docs moved from readthedocs to mkdocs
+* Docs are restructured
 
 ## Released (PyPI)
 
