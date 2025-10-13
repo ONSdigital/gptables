@@ -601,10 +601,7 @@ class GPWorksheet(Worksheet):
                 for row, col in cell_ilocs:
                     formats_table_slice = formats_table.iloc[row, col]
 
-                    self._apply_format(formats_table_slice, formatting)
-                return None
-
-            if fmt_type == "column":
+            elif fmt_type == "column":
                 cols_iloc = [
                     formats_table.columns.get_loc(col) if isinstance(col, str) else col
                     for col in format_desc["columns"]
