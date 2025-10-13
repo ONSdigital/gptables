@@ -602,7 +602,7 @@ class GPWorksheet(Worksheet):
                     formats_table_slice = formats_table.iloc[row, col]
 
                     self._apply_format(formats_table_slice, formatting)
-                return None
+                continue
 
             if fmt_type == "column":
                 cols_iloc = [
