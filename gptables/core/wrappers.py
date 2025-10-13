@@ -603,10 +603,7 @@ class GPWorksheet(Worksheet):
                 for row, col in cell_ilocs:
                     formats_table_slice = formats_table.iloc[row, col]
 
-                    self._apply_format(formats_table_slice, formatting)
-                return None
-
-            if fmt_type == "column":
+            elif fmt_type == "column":
                 cols_iloc = [
                     formats_table.columns.get_loc(col) if isinstance(col, str) else col
                     for col in format_desc["columns"]
@@ -949,9 +946,9 @@ class GPWorkbook(Workbook):
         name : str (optional)
             name of the the worksheet to be created
         gridlines : string, optional
-        option to hide or show gridlines on worksheets. "show_all" - don't
-        hide gridlines, "hide_printed" - hide printed gridlines only, or
-        "hide_all" - hide screen and printed gridlines.
+            option to hide or show gridlines on worksheets. "show_all" - don't
+            hide gridlines, "hide_printed" - hide printed gridlines only, or
+            "hide_all" - hide screen and printed gridlines.
 
         Returns
         -------

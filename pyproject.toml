@@ -32,17 +32,19 @@ dependencies = [
 
 [project.optional-dependencies]
 docs = [
-    "sphinx>=4",
-    "sphinx_rtd_theme"
+  "mkdocs",
+  "mkdocs-material",
+  "mkdocs-git-revision-date-localized-plugin",
+  "mkdocs-print-site-plugin",
+  "mkdocstrings-python"
 ]
 dev = [
-    "sphinx>=4",
-    "sphinx_rtd_theme",
     "coverage",
     "pytest>=8.4.2",
     "pytest-cov",
     "pre-commit",
-    "importlib_resources"
+    "importlib_resources",
+    "pytest-regressions"
 ]
 
 [version]
