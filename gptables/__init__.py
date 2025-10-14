@@ -1,16 +1,14 @@
-from gptables.core.theme import Theme
-from gptables.core.cover import Cover
-from gptables.core.gptable import GPTable
-from gptables.core.wrappers import GPWorkbook
-
-from gptables.utils.unpickle_themes import gptheme
-
+# flake8: noqa
 
 from gptables.core.api import (
-        # API functions
-        produce_workbook,
-	    write_workbook,
-        )
+    produce_workbook,
+    write_workbook,
+)
+from gptables.core.cover import Cover
+from gptables.core.gptable import GPTable
+from gptables.core.theme import Theme
+from gptables.core.wrappers import GPWorkbook
+from gptables.utils.unpickle_themes import gptheme
 
 __doc__ = """
 *******************************
