@@ -14,7 +14,7 @@ A clear and concise description of what the problem is. Ex. I'm always frustrate
 **Describe the solution you'd like**
 A clear and concise description of what you want to happen.
 
-**Please confirm you've checked our [won't fix][https://github.com/ONSdigital/gptables/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22wontfix%20%3Acry%3A%22] issues**:
+**Please confirm you've checked our [won't fix](https://github.com/ONSdigital/gptables/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22wontfix%20%3Acry%3A%22) issues**:
 - [ ]
 
 **Describe alternatives you've considered**
