@@ -81,7 +81,7 @@ notes = {
         "[google](https://www.google.com)",
         "[duckduckgo](https://duckduckgo.com/)",
         "[ONS](https://www.ons.gov.uk)",
-        None
+        None,
     ],
 }
 
@@ -91,7 +91,7 @@ except ValueError as e:
     raise ValueError(
         "Error creating notes table. Check that all lists in 'notes' are the same length."
         "If a note has no link, use an empty string or None for that entry."
-    )from e
+    ) from e
 
 # Use write_workbook to win!
 if __name__ == "__main__":
