@@ -5,7 +5,7 @@
 The `GPTable` Class is used to map your data and metadata to table elements.
 The supported table elements are represented like this in the output .xlsx file:
 
-![Cells A1 to A6 contain the title, subtitles, instructions, legend, source and scope. These parameters are mapped individually. The next row contains the column headings. Within the same row but on a new line are the units. The table note references are within the same row on a new line under the units. In columns 1, 2 and 3 of the next row down are index levels 1, 2 and 3. In the next columns are the data. Column headings, indices and data are supplied as a pandas DataFrame. Units and table note references are mapped individually.](imgs/table_mapping.png)
+![Cells A1 to A6 contain the title, subtitles, instructions, legend, source and scope. These parameters are mapped individually. The next row contains the column headings. Within the same row but on a new line are the units. The table note references are within the same row on a new line under the units. In columns 1, 2 and 3 of the next row down are index levels 1, 2 and 3. In the next columns are the data. Column headings, indices and data are supplied as a pandas DataFrame. Units and table note references are mapped individually.](../static/table_mapping.png)
 
 ## Notes
 
@@ -22,7 +22,7 @@ referenced as `"My table title $$Reference$$"`.
 References in text are replaced with numbers, in increasing order from the top-
 left corner of the first sheet containing a data table.
 
-See this in practice under [Example Usage](usage.md#example-usage).
+See this in practice in the Tutorial(../getting_started/usage.md#example-usage).
 
 #### NOTE
 Deprecated in v1.1.0: Ability to reference notes within
@@ -61,7 +61,7 @@ formatting of that element specified in the [`Theme`](theme.md#gptables.core.the
 
 `["It is ", {"bold": True}, "inevitable"]` would give you “It is **inevitable**”.
 
-See this in practice under [Example Usage](usage.md#example-usage).
+Examples of additional formatting are found in [How-to: Additional formatting](../how_to/additional_formatting.md).
 
 #### NOTE
 Rich text is not currently supported if the cell also contains note
@@ -211,7 +211,7 @@ or create a pull request. Otherwise, you will need to modify the underlying
 [`GPWorkbook`](wrappers.md#gptables.core.wrappers.GPWorkbook) or [`GPWorksheet`](wrappers.md#gptables.core.wrappers.GPWorksheet) objects
 before they are written to Excel.
 
-See this in practice under [Example Usage](usage.md#example-usage).
+Examples of additional formatting are found in [How-to: Additional formatting](../how_to/additional_formatting.md).
 
 ::: gptables.core.gptable.GPTable
       options:

@@ -97,7 +97,7 @@ For minor adjustments to a theme, a deepcopy can be taken before using the
 `Theme` objects can altenatively be configured using dictionaries, with the same
 structure as the configuration files.
 
-An example using a personalised theme YAML file can be found under [Example Usage](usage.md#example-usage).
+An example using a personalised theme YAML file can be found under [How-to: Custom Theme](../how_to/custom_theme.md).
 
 ::: gptables.core.theme.Theme
     options:

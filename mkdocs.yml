@@ -1,16 +1,38 @@
 site_name: gptables
+repo_url: https://github.com/ONSdigital/gptables
+
+theme:
+  name: material
+  features:
+    - toc.integrate
+
 nav:
   - Home: index.md
-  - Navigation:
-    - API functions: api.md
-    - Example usage: usage.md
-    - GPTable: gptable.md
-    - Theme: theme.md
-    - Cover: cover.md
-    - XlsxWriter wrappers: wrappers.md
-    - Accessibility checklist: checklist.md
-    - Changelog: changelog.md
-    - Contributors: contributors.md
+  - Getting started:
+    - Tutorial: getting_started/usage.md
+    - Table elements: getting_started/elements.md
+  - How to:
+    - Multiple sheets: how_to/multiple_sheets.md
+    #- Customise sheets: how_to/customisation.md
+    - Add additional formatting: how_to/additional_formatting.md
+    - Add a custom theme: how_to/custom_theme.md
+    - Use in R: how_to/in_r.md
+  - API:
+    - Functions: api/functions.md
+    - Table of contents: api/table_of_contents.md
+    - Cover: api/cover.md
+    - Notes sheet: api/notes_sheet.md
+    - Theme: api/theme.md
+    - GPTable: api/gptable.md
+    - XlsxWriter wrappers: api/wrappers.md
+  - Reference:
+    - Accessibility checklist: reference/checklist.md
+    #- Glossary: reference/glossary.md
+  - About GPTables:
+    - Contributing guidance: info/contributing.md
+    - Changelog: info/changelog.md
+    - Contributors: info/contributors.md
+    # - gptables in use: info/examples.md
 
 plugins:
 - mkdocstrings:
@@ -25,3 +47,7 @@ plugins:
           filters:
               - "!^__" # Hide methods like __init__()
               - "!^_" # Hide non-public facing methods
+
+markdown_extensions:
+- toc:
+   toc_depth: 1-3

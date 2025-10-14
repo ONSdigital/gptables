@@ -1,15 +1,20 @@
-<a id="example-usage"></a>
+# Getting started with gptables
 
-# Example Usage
+## Installation
+To install gptables, simply use:
+
+```
+pip install gptables
+```
+
+## Tutorial
 
 This section demonstrates usage of the gptables API functions and core Classes.
 
-For source code and data used in these examples, please see the
-[examples](https://github.com/best-practice-and-impact/gptables/tree/main/gptables/examples) directory of the package.
+For source code and data used in examples, please see the
+[examples](https://github.com/ONSdigital/gptables/tree/main/gptables/examples) directory of the package.
 
-<a id="module-gptables.examples.penguins_minimal"></a>
-
-## Penguins - Minimal Example
+### Penguins - Minimal Example
 
 This example demonstrates use of the `gptables.write_workbook` function.
 This API function is designed for production of consistently structured and formatted tables.
@@ -66,11 +71,9 @@ if __name__ == "__main__":
     print("Output written at: ", output_path)
 ```
 
-<a id="module-gptables.examples.penguins_minimal_alternate"></a>
+### Penguins - Alternative Minimal Example
 
-## Penguins - Minimal Example
-
-This example demonstrates  another way to use the `gptables.write_workbook` function.
+This example demonstrates another way to use the `gptables.write_workbook` function.
 This code is equivalent to that in the above example.
 
 ```python
@@ -155,127 +158,7 @@ if __name__ == "__main__":
     print("Output written at: ", output_path)
 ```
 
-<a id="module-gptables.examples.penguins_theme"></a>
-
-## Penguins - Theme Example
-
-This example demonstrates how to use a custom theme in the production of a workbook.
-
-Summary statistics from the penguins dataset are used to build a `gptables.GPTable`
-object. Elements of metadata are provided to the corresponding parameters of the class.
-Where you wish to provide no metadata in required parameters, use `None`.
-
-The theme parameter must take either a directory or a yaml file in the `gptables.write_workbook` function.
-The yaml file used in this example can be found in the themes folder as ‘’penguins_test_theme.yaml’’.
-
-```python
-
-import pandas as pd
-
-import gptables as gpt
-
-# Read data
-parent_dir = Path(__file__).parents[1]
-
-penguins_data = pd.read_csv(parent_dir / "test/data/penguins.csv")
-
-# Any data processing could go here as long as you end with a Pandas dataframe that you want to write in a spreadsheet
-
-# Define table elements
-penguins_table_name = "penguins_statistics"
-penguins_title = "The Penguins Dataset"
-penguins_subtitles = ["This is the first subtitle", "Just another subtitle"]
-penguins_scope = "Penguins"
-penguins_source = "Palmer Station, Antarctica"
-
-kwargs = {
-    "table_name": penguins_table_name,
-    "title": penguins_title,
-    "subtitles": penguins_subtitles,
-    "scope": penguins_scope,
-    "source": penguins_source,
-}
-penguins_table = gpt.GPTable(table=penguins_data, **kwargs)
-
-penguins_sheets = {"Penguins": penguins_table}
-
-# Use write_workbook to win!
-# Simply pass the filepath of the yaml file containing your theme to the GPTables Theme class and then to write_workbook
-if __name__ == "__main__":
-    output_path = parent_dir / "python_penguins_gptable.xlsx"
-    theme_path = str(Path(__file__).parent.parent / "themes/penguins_test_theme.yaml")
-    gpt.write_workbook(
-        filename=output_path,
-        sheets=penguins_sheets,
-        theme=gpt.Theme(theme_path),
-        contentsheet_options={"additional_elements": ["subtitles", "scope"]},
-    )
-    print("Output written at: ", output_path)
-```
-
-```python
-import pandas as pd
-
-import gptables as gpt
-
-# Read data
-parent_dir = Path(__file__).parents[1]
-
-penguins_data = pd.read_csv(parent_dir / "test/data/penguins.csv")
-
-# Any data processing could go here as long as you end with a Pandas dataframe that you want to write in a spreadsheet
-
-# Define table elements
-penguins_table_name = "penguins_statistics"
-penguins_title = "The Penguins Dataset"
-penguins_subtitles = ["This is the first subtitle", "Just another subtitle"]
-penguins_scope = "Penguins"
-penguins_source = "Palmer Station, Antarctica"
-
-kwargs = {
-    "table_name": penguins_table_name,
-    "title": penguins_title,
-    "subtitles": penguins_subtitles,
-    "scope": penguins_scope,
-    "source": penguins_source,
-    "index_columns": {
-        2: 0
-    },  # The level 2 index from our Pandas dataframe is put in the first (zeroth with Python indexing) column of the spreadsheet
-}
-
-# Define our GPTable
-penguins_table = gpt.GPTable(
-    table=penguins_data, table_name="penguins_statistics", **kwargs
-)
-
-penguins_sheets = {"Penguins": penguins_table}
-
-penguins_cover = gpt.Cover(
-    cover_label="Cover",
-    title="A Workbook containing two copies of the data",
-    intro=["This is some introductory information", "And some more"],
-    about=["Even more info about my data", "And a little more"],
-    contact=[
-        "John Doe",
-        "Tel: 345345345",
-        "Email: [john.doe@snailmail.com](mailto:john.doe@snailmail.com)",
-    ],
-)
-
-# Use write_workbook to win!
-if __name__ == "__main__":
-    output_path = parent_dir / "python_penguins_cover_gptable.xlsx"
-    gpt.write_workbook(
-        filename=output_path,
-        sheets=penguins_sheets,
-        cover=penguins_cover,
-    )
-    print("Output written at: ", output_path)
-```
-
-<a id="module-gptables.examples.penguins_notes"></a>
-
-## Penguins - Notes Example
+### Penguins - Notes Example
 
 This example demonstrates how to include notes in a GPTable. Notes cannot
 be included in data cells but may appear either in column headers or in text such
@@ -369,127 +252,11 @@ if __name__ == "__main__":
     print("Output written at: ", output_path)
 ```
 
-<a id="module-gptables.examples.penguins_additional_formatting"></a>
+### Cover Page Example
 
-## Penguins - Additional Formatting Example
-
-This example demonstrates additional formatting that is not supported in
-the `gptable.Theme`.
-
-Specific columns, rows and cells of the table elements (indexes, column headings and data)
-can be formatted using the `gptable.GPTable(..., additional_formatting = ...)` parameter.
-This parameter takes a list of dictionaries, allowing you to select as many rows, columns
-or cells as you like.
-
-As with all formatting, supported arguments are desribed in the
-[XlsxWriter documentation](https://xlsxwriter.readthedocs.io/format.html#format-methods-and-format-properties).
-
-Any formatting not possible through this means can be achieved using
-`XlsxWriter` [Workbook](https://xlsxwriter.readthedocs.io/workbook.html)
-and [Worksheet](https://xlsxwriter.readthedocs.io/worksheet.html) functionality.
-A `gptable.GPWorkbook` object is returned when using the
-`gptables.produce_workbook` API function.
-The `GPWorkbook.worksheets()` function returns a list of `GPWorksheet` objects,
-which can also be modified.
-
-```python
-from pathlib import Path
-
-import pandas as pd
-
-import gptables as gpt
-
-# Read data and arrange
-parent_dir = Path(__file__).parents[1]
-
-penguins_data = pd.read_csv(parent_dir / "test/data/penguins.csv")
-
-# Any data processing could go here as long as you end with a Pandas dataframe that you want to write in a spreadsheet
-
-# Define table elements
-penguins_table_name = "penguins_statistics"
-penguins_title = "Penguins"
-
-# Individual words/phrases can have formatting applied without the use of the additional_formatting argument
-penguins_subtitles = [
-    "The first subtitle",
-    [{"bold": True}, "Just", " another subtitle"],
-]
-penguins_units = {key: "mm" for key in range(2, 5)}
-penguins_scope = "Penguins"
-
-# Define additional formatting
-# Columns can be referenced by name or number
-# Rows may only be referenced by number
-# Column and row numbers refer to the table elements, including indexes and column headings
-penguins_additional_formatting = [
-    {
-        "column": {
-            "columns": ["Species", "Island"],  # str, int or list of either
-            "format": {
-                "align": "center",
-                "italic": True,
-            },  # The "Species" and "Island" columns are centre-aligned and made italic
-        }
-    },
-    {
-        "column": {"columns": [3], "format": {"left": 1}}
-    },  # Gives the fourth column a left border
-    {
-        "row": {
-            "rows": -1,  # Numbers only, but can refer to last row using -1
-            "format": {
-                "bottom": 1,
-                "indent": 2,
-            },  # Give the last row a border at the bottom of each cell and indents two levels
-        }
-    },
-]
-
-kwargs = {
-    "table_name": penguins_table_name,
-    "title": penguins_title,
-    "subtitles": penguins_subtitles,
-    "units": penguins_units,
-    "scope": penguins_scope,
-    "source": None,
-    "additional_formatting": penguins_additional_formatting,
-}
-
-# Define our GPTable
-penguins_table = gpt.GPTable(table=penguins_data, **kwargs)
-
-# Use produce workbook to return GPWorkbook
-if __name__ == "__main__":
-    output_path = parent_dir / "python_penguins_additional_formatting_gptable.xlsx"
-    wb = gpt.produce_workbook(filename=output_path, sheets={"Penguins": penguins_table})
-
-    # Carry out additional modifications on the GPWorkbook or GPWorksheets
-    # This supports all `XlsxWriter` package functionality
-    ws = wb.worksheets()[0]
-    ws.set_row(0, 30)  # Set the height of the first row
-
-    # To format cells using the set_row or set_column functions we must use a workbook to create a format object
-    italic_format = wb.add_format({"italic": True})
-    ws.set_column(
-        2, 3, 10, italic_format
-    )  # Sets the width of the third and fourth column and makes them italic
-
-    # Note that the first two arguments of set_column are the first and last columns (inclusive) you want to format as opposed
-    # to set_row which only affects a single row at a time (the first argument).
-
-    # Finally use the close method to save the output
-
-    wb.close()
-    print("Output written at: ", output_path)
-```
-
-<a id="module-gptables.examples.survey_data"></a>
-
-## Labour market overview, UK: December 2020 - Real Survey Data Example
-
-This example demonstrates how to replicate the Labour Market overview accessible
-example found at [https://analysisfunction.civilservice.gov.uk/policy-store/further-resources-for-releasing-statistics-in-spreadsheets/](https://analysisfunction.civilservice.gov.uk/policy-store/further-resources-for-releasing-statistics-in-spreadsheets/)
+This example replicates the [Labour Market overview accessible
+spreadsheet](https://analysisfunction.civilservice.gov.uk/policy-store/further-resources-for-releasing-statistics-in-spreadsheets/) example by the Analysis Function, based
+on data from December 2020.
 
 ```python
 from pathlib import Path
@@ -640,10 +407,3 @@ if __name__ == "__main__":
     )
     print("Output written at: ", output_path)
 ```
-
-## R Usage
-
-Use of `gptables` in R requires use of python via the [reticulate](https://rstudio.github.io/reticulate/) package.
-
-However we recommend use of the [aftables](https://github.com/best-practice-and-impact/aftables)
-R package, maintained by the Presentation Champions Data Visualisation Tools subgroup.

@@ -1,9 +1,11 @@
 import re
 import warnings
 from copy import deepcopy
+from math import ceil
 
 import numpy as np
 import pandas as pd
+from xlsxwriter.utility import cell_autofit_width
 from xlsxwriter.workbook import Workbook
 from xlsxwriter.worksheet import Worksheet
 
@@ -850,12 +852,12 @@ class GPWorksheet(Worksheet):
         Set the column widths using a list of widths.
         """
         for col_number in range(len(widths)):
-            self.set_column(col_number, col_number, widths[col_number])
+            self.set_column_pixels(col_number, col_number, widths[col_number])
 
     def _calculate_column_widths(self, table, formats_table):
         """
-        Calculate Excel column widths using maximum length of strings
-        and the maximum font size in each column of the data table.
+        Calculate Excel column widths using xlsxwriter's cell_autofit_width for each cell,
+        and take the maximum per column.
 
         Parameters
         ----------
@@ -870,87 +872,56 @@ class GPWorksheet(Worksheet):
             width to apply to Excel columns
         """
         cols = table.shape[1]
-        max_lengths = [
-            table.iloc[:, col].apply(self._longest_line_length).max()
-            for col in range(cols)
-        ]
-
-        max_font_sizes = [
-            formats_table.iloc[:, col].apply(lambda x: x.get("font_size") or 10).max()
-            for col in range(cols)
-        ]
-
-        col_widths = [
-            self._excel_string_width(leng, f)
-            for leng, f in zip(max_lengths, max_font_sizes)
-        ]
+        col_widths = []
+        for col in range(cols):
+            cell_widths = []
+            for row in range(table.shape[0]):
+                cell_val = table.iloc[row, col]
+                longest_line = self._get_longest_line(cell_val)
+                format_dict = formats_table.iloc[row, col]
+                scaling_factor = self._get_scaling_factor(format_dict, longest_line)
+                width = ceil(cell_autofit_width(longest_line) * scaling_factor)
+                cell_widths.append(width)
+            col_widths.append(max(cell_widths) if cell_widths else 0)
         return col_widths
 
-    @staticmethod
-    def _excel_string_width(string_len, font_size):
-        """
-        Calculate the rough length of a string in Excel character units.
-        This crude estimate does not account for font name or other font format
-        (e.g. wrapping).
+    def _get_scaling_factor(self, format_dict, text):
+        """Return scaling factor for width based on font size, bold formatting,
+        and capitalisation."""
+        font_size = (
+            format_dict.get("font_size", 11) if isinstance(format_dict, dict) else 11
+        )
+        bold = (
+            format_dict.get("bold", False) if isinstance(format_dict, dict) else False
+        )
 
-        Parameters
-        ----------
-        string_len : int
-            length of string to calculate width in Excel for
-        font_size : int
-            size of font
-
-        Returns
-        -------
-        excel_width : float
-            width of equivalent string in Excel
-        """
-        if string_len == 0:
-            excel_width = 0
+        if text and isinstance(text, str):
+            num_upper = sum(1 for c in text if c.isupper())
+            upper_ratio = num_upper / len(text) if len(text) > 0 else 0
         else:
-            excel_width = string_len * ((font_size * 0.12) - 0.09)
+            upper_ratio = 0
+        capitalisation_factor = 1.0 + 0.15 * upper_ratio
+        return (font_size / 11) * (1.1 if bold else 1.0) * capitalisation_factor
 
-        return excel_width
+    def _get_longest_line(self, cell_val):
+        """Return the longest line in a cell value split by newline."""
+        cell_val_str = self._get_cell_string(cell_val)
+        return max(cell_val_str.split("\n"), key=len)
 
-    def _longest_line_length(self, cell_val):
-        """
-        Calculate the length of the longest line within a cell.
-        If the cell contains a string, the longest length between line breaks is returned.
-        If the cell contains a float or integer, the longest length is calculated from the cell_value cast to a string.
-        If the cell contains a link formatted as {display_text: link}, the longest length is calculated from the display text.
-        If the cell contains a list of strings, the length of the longest string in the list is returned.
-        Expects new lines to be marked with "\n", "\r\n" or new lines in multiline strings.
-
-        Parameters
-        ----------
-        cell_val:
-            cell value
-
-        Returns
-        -------
-        max_length: int
-            the length of the longest line within the string
-        """
-        split_strings = """
-|\r\n|\n"""
-
+    def _get_cell_string(self, cell_val):
+        """Return the contents from any cell value as a string."""
         if isinstance(cell_val, str):
-            max_length = max([len(line) for line in re.split(split_strings, cell_val)])
+            return cell_val
         elif isinstance(cell_val, (float, int)):
-            max_length = self._longest_line_length(str(cell_val))
+            return str(cell_val)
         elif isinstance(cell_val, dict):
-            max_length = self._longest_line_length(list(cell_val)[0])
+            return "\n".join([self._get_cell_string(k) for k in cell_val.keys()])
         elif isinstance(cell_val, FormatList):
-            max_length = self._longest_line_length(cell_val.string)
+            return self._get_cell_string(cell_val.string)
         elif isinstance(cell_val, list):
-            if isinstance(cell_val[0], (dict, FormatList)):
-                max_length = self._longest_line_length(cell_val[0])
-            else:
-                max_length = max([len(line) for line in cell_val])
+            return "\n".join([self._get_cell_string(item) for item in cell_val])
         else:
-            max_length = 0
-
-        return max_length
+            return str(cell_val) if cell_val else ""
 
 
 class GPWorkbook(Workbook):

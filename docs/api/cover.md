@@ -8,7 +8,7 @@ This is important when applying additional formatting to other Worksheets by the
 
 ## Mapping
 
-To include a cover sheet, map your text elements to the attributes of a `Cover` object and pass this object to the `cover` parameter of either [`produce_workbook()`](api.md#gptables.core.api.produce_workbook) or [`write_workbook()`](api.md#gptables.core.api.write_workbook).
+To include a cover sheet, map your text elements to the attributes of a `Cover` object and pass this object to the `cover` parameter of either [`produce_workbook()`](functions.md#gptables.core.api.produce_workbook) or [`write_workbook()`](functions.md#gptables.core.api.write_workbook).
 Text attributes which take a list (most except for title) will write one element per cell vertically in the Worksheet.
 
 ## Formatting

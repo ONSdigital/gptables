@@ -446,47 +446,101 @@ class TestGPWorksheetTable:
             assert got_heading_format.__dict__ == exp_heading_format.__dict__
 
     @pytest.mark.parametrize(
-        "cell_val,exp_length",
+        "data,format,exp_width",
         [
-            ("string", 6),
-            (42, 2),
-            (3.14, 4),
-            ({"gov.uk": "https://www.gov.uk"}, 6),
-            (FormatList(["Partially ", {"bold": True}, "bold", " string"]), 21),
-            (["string", "another string"], 14),
-            ("string\nwith\nnewlines", 8),
-            (FormatList(["string\r\n", {"bold": True}, "bold string"]), 11),
-            (set(), 0),
+            # Single column, normal case
+            (["string", "longer string"], [{"font_size": 12}, {"font_size": 12}], [93]),
+            # Multiple columns
+            (
+                pd.DataFrame({"col1": ["a", "bb"], "col2": ["ccc", "dddd"]}),
+                pd.DataFrame(
+                    {
+                        "col1": [{"font_size": 11}, {"font_size": 12}],
+                        "col2": [{"font_size": 10}, {"font_size": 14}],
+                    }
+                ),
+                [26, 50],
+            ),
+            # Bold formatting
+            (
+                ["bold", "bolder"],
+                [{"font_size": 11, "bold": True}, {"font_size": 12, "bold": True}],
+                [58],
+            ),
+            # Multi-line cell
+            (
+                ["short\nlongest\nmid", "tiny"],
+                [{"font_size": 11}, {"font_size": 11}],
+                [53],
+            ),
+            # Empty string
+            (["", ""], [{"font_size": 11}, {"font_size": 11}], [0]),
+            # Number cell
+            ([123, 4567], [{"font_size": 11}, {"font_size": 11}], [35]),
         ],
     )
-    def test__longest_line_length(self, testbook, cell_val, exp_length):
-        got_length = testbook.ws._longest_line_length(cell_val)
-
-        assert got_length == exp_length
-
-    @pytest.mark.parametrize(
-        "data",
-        [
-            ["string", "longer string"],
-            ["longer string", "longer string"],
-            ["string\nstring\nstring", "longer string"],
-        ],
-    )
-    @pytest.mark.parametrize(
-        "format",
-        [
-            [{"font_size": 12}, {"font_size": 12}],
-            [{"font_size": 10}, {"font_size": 12}],
-        ],
-    )
-    def test__calculate_column_widths(self, testbook, data, format):
-        table = pd.DataFrame({"col": data})
-        table_format = pd.DataFrame({"col": format})
+    def test__calculate_column_widths(self, testbook, data, format, exp_width):
+        if isinstance(data, pd.DataFrame):
+            table = data
+            table_format = format
+        else:
+            table = pd.DataFrame({"col": data})
+            table_format = pd.DataFrame({"col": format})
 
         got_width = testbook.ws._calculate_column_widths(table, table_format)
-        exp_width = [testbook.ws._excel_string_width(string_len=13, font_size=12)]
-
         assert got_width == exp_width
+        assert all(isinstance(w, int) for w in got_width)
+
+    @pytest.mark.parametrize(
+        "format_dict,longest_line,expected",
+        [
+            ({"font_size": 11, "bold": False}, "abc", 1.0),
+            ({"font_size": 12, "bold": False}, "abc", 12 / 11),
+            ({"font_size": 11, "bold": True}, "abc", 1.1),
+            ({"font_size": 12, "bold": True}, "abc", (12 / 11) * 1.1),
+            ({}, "abc", 1.0),
+            ({"font_size": 11, "bold": False}, "ABC", 1.0 * (1 + 0.15 * 1)),
+            ({"font_size": 11, "bold": False}, "AbC", 1.0 * (1 + 0.15 * (2 / 3))),
+            ({"font_size": 11, "bold": True}, "ALLCAPS", 1.1 * (1 + 0.15 * 1)),
+            (
+                {"font_size": 12, "bold": True},
+                "MiXeD",
+                (12 / 11) * 1.1 * (1 + 0.15 * (3 / 5)),
+            ),
+            ({"font_size": 11, "bold": False}, "lower", 1.0),
+        ],
+    )
+    def test__get_scaling_factor(self, testbook, format_dict, longest_line, expected):
+        got = testbook.ws._get_scaling_factor(format_dict, longest_line)
+        assert got == expected
+
+    @pytest.mark.parametrize(
+        "cell_val,expected",
+        [
+            ("short\nlongest\nmid", "longest"),
+            ("one line", "one line"),
+            (["a", "bb", "ccc"], "ccc"),
+            ("a\nbb\nccc", "ccc"),
+        ],
+    )
+    def test__get_longest_line(self, testbook, cell_val, expected):
+        got = testbook.ws._get_longest_line(cell_val)
+        assert got == expected
+
+    @pytest.mark.parametrize(
+        "cell_val,expected",
+        [
+            ("abc", "abc"),
+            (123, "123"),
+            (["a", "b", "c"], "a\nb\nc"),
+            ({"x": 1, "y": 2}, "x\ny"),
+            (pd.Timestamp("2023-09-30 12:34:56"), "2023-09-30 12:34:56"),
+        ],
+    )
+    def test__get_cell_string(self, testbook, cell_val, expected):
+        # Patch FormatList handling if needed
+        got = testbook.ws._get_cell_string(cell_val)
+        assert got == expected
 
 
 class TestGPWorkbookStatic:
