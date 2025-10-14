@@ -18,7 +18,6 @@ and this project tries its very best to adhere to
 **Added**
 
 * Merged pull request templates to create new one
-* Added a ‘closed issue log’
 * Requirements and installation steps to README
 * Pre-commit hooks
 
