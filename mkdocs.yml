@@ -27,12 +27,12 @@ nav:
     - XlsxWriter wrappers: api/wrappers.md
   - Reference:
     - Accessibility checklist: reference/checklist.md
+    - Examples: reference/examples.md
     #- Glossary: reference/glossary.md
   - About GPTables:
     - Contributing guidance: info/contributing.md
     - Changelog: info/changelog.md
     - Contributors: info/contributors.md
-    # - gptables in use: info/examples.md
 
 plugins:
 - mkdocstrings:
@@ -50,4 +50,6 @@ plugins:
 
 markdown_extensions:
 - toc:
-   toc_depth: 1-3
+   toc_depth: 1-2
+- pymdownx.details
+- pymdownx.superfences
