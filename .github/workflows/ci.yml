@@ -135,4 +135,3 @@ jobs:
           run: |
             python -m build
         - name: Publish
-          uses: pypa/gh-action-pypi-publish@v1.13.0
