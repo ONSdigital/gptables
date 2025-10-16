@@ -179,16 +179,11 @@ def write_workbook(
     cover_gridlines : bool, optional
         indication if gridlines should apply to the cover worksheet. False
         by default.
-    contentsheet : str
-        alias for contentsheet_label, deprecated in v1.1.0
 
     Returns
     -------
     None
     """
-    if contentsheet is not None:
-        contentsheet_label = contentsheet
-
     wb = produce_workbook(
         filename,
         sheets,
