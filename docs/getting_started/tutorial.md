@@ -19,8 +19,8 @@ The tutorial code can be run from the
 ### Starting out
 
 This example looks at how to produce a basic gptables spreadsheet of data from the Palmer Penguins dataset.
-The data is first read in for presentation. Next, information about the data is supplied to 
-gptables. Then this information is used by gptables to produce the spreadsheet object. Finally, we 
+The data is first read in for presentation. Next, information about the data is supplied to
+gptables. Then this information is used by gptables to produce the spreadsheet object. Finally, we
 write out the spreadsheet.
 
 First, import `gptables` alongside any other necessary packages so that the data can be read in. Any
