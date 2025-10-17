@@ -37,7 +37,8 @@ docs = [
   "mkdocs-git-revision-date-localized-plugin",
   "mkdocs-print-site-plugin",
   "mkdocstrings-python",
-  "mkdocs-material"
+  "mkdocs-material",
+  "pymdown-extensions"
 ]
 dev = [
     "coverage",
