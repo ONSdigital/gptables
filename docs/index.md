@@ -18,7 +18,7 @@ Some of the key features of `gptables` outputs are:
 
 ![](static/getting_started_before_and_after.png)
 
-**Note**: This package does not create perfectly accessible spreadsheets. Users should refer to the releasing statistics in spreadsheets [guidance](https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/) and the [spreadsheet accessibility checklist](https://analysisfunction.civilservice.gov.uk/policy-store/making-spreadsheets-accessible-a-brief-checklist-of-the-basics/) to 
+**Note**: This package does not create perfectly accessible spreadsheets. Users should refer to the releasing statistics in spreadsheets [guidance](https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/) and the [spreadsheet accessibility checklist](https://analysisfunction.civilservice.gov.uk/policy-store/making-spreadsheets-accessible-a-brief-checklist-of-the-basics/) to
 ensure the standards are completely met.
 
 ## Get in touch
