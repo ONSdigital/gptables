@@ -892,7 +892,7 @@ class GPWorksheet(Worksheet):
         display_text = list(data.keys())[0]
 
         url_format = format_dict.copy()
-        url_format.update({"underline": True, "font_color": "blue"})
+        url_format.update({"underline": True, "font_color": "blue"}) # blue == #0000FF - passes WCAG AA contrast check
 
         self.write_url(
             row,
