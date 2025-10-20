@@ -2,7 +2,7 @@
 
 [![Actions build status](https://github.com/best-practice-and-impact/gptables/workflows/continuous-integration/badge.svg)](https://github.com/best-practice-and-impact/gptables/actions)[![PyPI release](https://badge.fury.io/py/gptables.svg)](https://badge.fury.io/py/gptables)
 
-`gptables` produces Excel spreadsheets that follow the much of the
+`gptables` produces Excel spreadsheets that follow much of the
 [Analysis Function guidance](https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/) on
 releasing statistics in spreadsheets. This aims to implement digital accessibility standards like
 [WCAG 2.2](https://www.w3.org/TR/WCAG22/) as well as follow other good practice, such as the use of notes on cover sheets. `gptables` helps users by creating spreadsheets consistently and more quickly than implementing this manually.
@@ -28,5 +28,5 @@ Got a feature request, or found a bug? Raise an [issue](https://github.com/ONSdi
 
 ## Related Packages
 Users may also be interested in [aftables](https://best-practice-and-impact.github.io/aftables/), an R native equivalent to
-`gptables`, and [csvcubed](https://gss-cogs.github.io/csvcubed-docs/external/), a package for turning data and metadata intos
+`gptables`, and [csvcubed](https://onsdigital.github.io/csvcubed-docs/external/), a package for turning data and metadata into
 machine-readable CSV-W files.
