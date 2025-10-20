@@ -17,4 +17,4 @@ here. To customise the worksheet label, pass the new label into the
 
 If a `notes_table` is not provided, the notes sheet will not be generated.
 
-See this in practice in the [Tutorial](../getting_started/usage.md#penguins-notes-example).
+See this in practice in the [Tutorial](../getting_started/tutorial.md#penguins-notes-example).

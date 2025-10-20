@@ -9,7 +9,7 @@ theme:
 nav:
   - Home: index.md
   - Getting started:
-    - Tutorial: getting_started/usage.md
+    - Tutorial: getting_started/tutorial.md
     - Table elements: getting_started/elements.md
   - How to:
     - Multiple sheets: how_to/multiple_sheets.md

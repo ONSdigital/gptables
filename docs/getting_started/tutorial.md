@@ -1,4 +1,4 @@
-# Getting started with gptables
+# Getting started with `gptables`
 
 ## Installation
 To install gptables, simply use:
@@ -9,154 +9,116 @@ pip install gptables
 
 ## Tutorial
 
-This section demonstrates usage of the gptables API functions and core Classes.
+gptables helps produce consistently structured and formatted tables.
 
-For source code and data used in examples, please see the
-[examples](https://github.com/ONSdigital/gptables/tree/main/gptables/examples) directory of the package.
+This section demonstrates basic use of the gptables with the Penguins dataset. More indepth information can be found in the how-tos and API docs.
 
-### Penguins - Minimal Example
+The tutorial code can be run from the
+[examples](https://github.com/ONSdigital/gptables/tree/main/gptables/examples) folder.
 
-This example demonstrates use of the `gptables.write_workbook` function.
-This API function is designed for production of consistently structured and formatted tables.
+### Starting out
 
-Summary statistics from the penguins dataset are used to build a `gptables.GPTable`
-object. Elements of metadata are provided to the corresponding parameters of the class.
-Where you wish to provide no metadata in required parameters, use `None`.
+This example looks at how to produce a basic gptables spreadsheet of data from the Palmer Penguins dataset.
+The data is first read in for presentation. Next, information about the data is supplied to
+gptables. Then this information is used by gptables to produce the spreadsheet object. Finally, we
+write out the spreadsheet.
 
-Table formatting can be defined as a `gptable.Theme`, which is passed to the API functions
-using the `theme` parameter. Or you can rely on our default - gptheme.
+First, import `gptables` alongside any other necessary packages so that the data can be read in. Any
+additional preparation like cleaning can be done here, and the output should be a `pandas.DataFrame`.
+
 
 ```python
 from pathlib import Path
-
 import pandas as pd
-
 import gptables as gpt
 
-# Read data
-parent_dir = Path(__file__).parents[1]
+penguins_data = pd.read_csv("penguins.csv")
+```
 
-penguins_data = pd.read_csv(parent_dir / "test/data/penguins.csv")
+Then construct the `GPTable`, defining some main elements. These will be displayed in the resulting
+spreadsheet.
 
-# Any data processing could go here as long as you end with a Pandas dataframe that you want to write in a spreadsheet
-
-# Define table elements
-penguins_table_name = "penguins_statistics"
-penguins_title = "The Penguins Dataset"
-penguins_subtitles = ["This is the first subtitle", "Just another subtitle"]
-penguins_scope = "Penguins"
-penguins_source = "Palmer Station, Antarctica"
-
-# Define our GPTable
+```python
 penguins_table = gpt.GPTable(
-    table=penguins_data,
-    table_name=penguins_table_name,
-    title=penguins_title,
-    subtitles=penguins_subtitles,
-    scope=penguins_scope,
-    source=penguins_source,
+    table = penguins_data,
+    table_name = "penguins_statistics",
+    title = "The Palmer Penguins Dataset",
+    subtitles = ["This is the first subtitle",
+                 "This is another subtitle"],
+    scope = "Penguins",
+    source = "Palmer Station, Antarctica",
 )
+```
 
-# Every table must be associated to a sheet name for writing
+If preferred, this can alternatively be done using a dictionary of keyword arguments:
+
+```python
+kwargs = {
+    "table_name": "penguins_statistics",
+    "title": "The Palmer Penguins Dataset",
+    "subtitles": ["This is the first subtitle",
+                 "This is another subtitle"],
+    "scope": "Penguins",
+    "source": "Palmer Station, Antarctica",
+}
+
+penguins_table = gpt.GPTable(table = penguins_data, **kwargs)
+```
+
+Each table should be associated to a sheet name for writing. Collate the sheets with their names in
+a dictionary:
+
+```python
 penguins_sheets = {"Penguins": penguins_table}
+```
 
-# Use write_workbook to win!
-if __name__ == "__main__":
-    output_path = parent_dir / "python_penguins_gptable.xlsx"
+Finally, use `gptables.write_workbook()` to create and write out the workbook with the output path,
+the sheets, and any additional elements.
+
+```python
+gpt.write_workbook(
+    filename="python_penguins_gptable.xlsx",
+    sheets=penguins_sheets,
+    contentsheet_options={"additional_elements": ["subtitles", "scope"]},
+)
+```
+
+The result with a subset of the data is shown below, where `gptables` has created a Table
+of contents and a sheet with the Penguins dataset. The sheet shows the specified title and
+subtitles presented in a minimal style in text with a legible font and size.
+
+![](../static/getting_started_before_and_after.png)
+
+The code is combined below in an extendable tab.
+
+??? "Starting out"
+    ```python
+    from pathlib import Path
+    import pandas as pd
+    import gptables as gpt
+
+    penguins_data = pd.read_csv("penguins.csv")
+
+    penguins_table = gpt.GPTable(
+        table = penguins_data,
+        table_name = "penguins_statistics",
+        title = "The Palmer Penguins Dataset",
+        subtitles = ["This is the first subtitle",
+                    "This is another subtitle"],
+        scope = "Penguins",
+        source = "Palmer Station, Antarctica",
+    )
+
+    penguins_table = gpt.GPTable(table = penguins_data, **kwargs)
+
+    penguins_sheets = {"Penguins": penguins_table}
+
     gpt.write_workbook(
-        filename=output_path,
+        filename="python_penguins_gptable.xlsx",
         sheets=penguins_sheets,
         contentsheet_options={"additional_elements": ["subtitles", "scope"]},
     )
-    print("Output written at: ", output_path)
-```
-
-### Penguins - Alternative Minimal Example
-
-This example demonstrates another way to use the `gptables.write_workbook` function.
-This code is equivalent to that in the above example.
-
-```python
-parent_dir = Path(__file__).parents[1]
-
-penguins_data = pd.read_csv(parent_dir / "test/data/penguins.csv")
-
-# Any data processing could go here as long as you end with a Pandas dataframe that you want to write in a spreadsheet
-
-# Define table elements
-penguins_table_name = "penguins_statistics"
-penguins_title = "The Penguins Dataset"
-penguins_subtitles = ["This is the first subtitle", "Just another subtitle"]
-penguins_scope = "Penguins"
-penguins_source = "Palmer Station, Antarctica"
-
-# Use kwargs to pass these to the appropriate parameters
-kwargs = {
-    "table_name": penguins_table_name,
-    "title": penguins_title,
-    "subtitles": penguins_subtitles,
-    "scope": penguins_scope,
-    "source": penguins_source,
-}
-
-penguins_table = gpt.GPTable(table=penguins_data, **kwargs)
-
-# Every table must be associated to a sheet name for writing
-penguins_sheets = {"Penguins": penguins_table}
-
-# Use write_workbook to win!
-if __name__ == "__main__":
-    output_path = parent_dir / "python_penguins_gptable.xlsx"
-    gpt.write_workbook(
-        filename=output_path,
-        sheets=penguins_sheets,
-        contentsheet_options={"additional_elements": ["subtitles", "scope"]},
-    )
-    print("Output written at: ", output_path)
-```
-
-```python
-# Read data
-parent_dir = Path(__file__).parents[1]
-
-penguins_data = pd.read_csv(parent_dir / "test/data/penguins.csv")
-
-# Any data processing could go here as long as you end with a Pandas dataframe that you want to write in a spreadsheet
-
-# Define table elements
-penguins_table_name = "penguins_statistics"
-penguins_title = "The Penguins Dataset"
-penguins_subtitles = ["This is the first subtitle", "Just another subtitle"]
-penguins_scope = "Penguins"
-penguins_source = "Palmer Station, Antarctica"
-
-kwargs = {
-    "table_name": penguins_table_name,
-    "title": penguins_title,
-    "subtitles": penguins_subtitles,
-    "scope": penguins_scope,
-    "source": penguins_source,
-}
-
-# Define our GPTable
-penguins_table = gpt.GPTable(
-    table=penguins_data, table_name="penguins_statistics", **kwargs
-)
-
-penguins_table_copy = deepcopy(penguins_table)
-penguins_table_copy.set_title("A copy of the first sheet")
-penguins_table_copy.set_table_name(
-    "penguins_statistics_copy"
-)  # All tables in a single workbook must have a unique name
-
-penguins_sheets = {"Penguins": penguins_table, "Copy of Penguins": penguins_table_copy}
-
-# Use write_workbook to win!
-if __name__ == "__main__":
-    output_path = parent_dir / "python_penguins_cover_gptable.xlsx"
-    gpt.write_workbook(filename=output_path, sheets=penguins_sheets)
-    print("Output written at: ", output_path)
-```
+    ```
 
 ### Penguins - Notes Example
 
