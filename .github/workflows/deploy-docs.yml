@@ -1,0 +1,28 @@
+name: Deploy docs
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  deploy-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install reqs
+        run: pip install .[docs]
+      - name: Build docs
+        run: mkdocs build
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4.7.3
+        with:
+          branch: gh-pages
+          folder: site
+
+permissions:
+  contents: write
