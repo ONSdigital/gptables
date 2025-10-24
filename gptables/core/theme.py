@@ -2,11 +2,12 @@ from functools import wraps
 
 import yaml
 from xlsxwriter.format import Format
+from typing import Any, Dict, List, Optional, Callable, Union
 
 
-def validate_single_format(f):
+def validate_single_format(f: Callable) -> Callable:
     @wraps(f)
-    def wrapper(cls, format_dict):
+    def wrapper(cls, format_dict: Dict[str, Any]) -> Any:
         """
         Decorator to validate that input is a dictionary dictionary.
         """
@@ -67,8 +68,8 @@ class Theme:
 
     def __init__(
         self,
-        config=None,
-    ):
+        config: Optional[Union[Dict[str, Any], str]] = None
+    ) -> None:
         """
         Initialise theme object.
 
@@ -117,7 +118,7 @@ class Theme:
             self.apply_config(config)
 
     @staticmethod
-    def _parse_config(config):
+    def _parse_config(config: Union[Dict[str, Any], str]) -> Dict[str, Any]:
         """
         Parse yaml configuration to dictionary.
         """
@@ -135,7 +136,7 @@ class Theme:
 
         return cfg
 
-    def _validate_config(self, config):
+    def _validate_config(self, config: Dict[str, Any]) -> None:
         """
         Assert that format dictionary lower level keys are valid XlsxWriter
         Format attributes.
@@ -146,14 +147,14 @@ class Theme:
                 for fmt in attr_config.keys():
                     self._validate_format_label(fmt)
 
-    def _validate_format_label(self, format_name):
+    def _validate_format_label(self, format_name: str) -> None:
         """
         Assert that format is a valid XlsxWriter Format attribute.
         """
         if format_name not in self._valid_format_labels:
             raise ValueError(f"`{format_name}` is not a valid format label")
 
-    def apply_config(self, config):
+    def apply_config(self, config: Union[Dict[str, Any], str]) -> None:
         """
         Update multiple Theme attributes using a YAML or dictionary config.
         This enables extension of build in Themes.
@@ -176,7 +177,7 @@ class Theme:
             else:
                 raise ValueError(f"`{key}` is not a valid Theme attribute")
 
-    def _update_all_formats(self, global_dict):
+    def _update_all_formats(self, global_dict: Dict[str, Any]) -> None:
         """
         Updates all theme attributes with a global format dictionary.
         """
@@ -185,7 +186,7 @@ class Theme:
                 getattr(self, "update_" + attr)(global_dict)
 
     @validate_single_format
-    def update_column_heading_format(self, format_dict):
+    def update_column_heading_format(self, format_dict: Dict[str, Any]) -> None:
         """
         Update the `column_heading_format` attribute. Where keys already exist,
         existing items are replaced.
@@ -193,7 +194,7 @@ class Theme:
         self.column_heading_format.update(format_dict)
 
     @validate_single_format
-    def update_index_1_format(self, format_dict):
+    def update_index_1_format(self, format_dict: Dict[str, Any]) -> None:
         """
         Update the `index_1_format` attribute. Where keys already exist, existing
         items are replaced.
@@ -201,7 +202,7 @@ class Theme:
         self.index_1_format.update(format_dict)
 
     @validate_single_format
-    def update_index_2_format(self, format_dict):
+    def update_index_2_format(self, format_dict: Dict[str, Any]) -> None:
         """
         Update the `index_2_format` attribute. Where keys already exist, existing
         items are replaced.
@@ -209,7 +210,7 @@ class Theme:
         self.index_2_format.update(format_dict)
 
     @validate_single_format
-    def update_index_3_format(self, format_dict):
+    def update_index_3_format(self, format_dict: Dict[str, Any]) -> None:
         """
         Update the `index_3_format` attribute. Where keys already exist, existing
         items are replaced.
@@ -217,7 +218,7 @@ class Theme:
         self.index_3_format.update(format_dict)
 
     @validate_single_format
-    def update_data_format(self, format_dict):
+    def update_data_format(self, format_dict: Dict[str, Any]) -> None:
         """
         Update the `data_format` attribute. Where keys already exist,
         existing items are replaced.
@@ -225,7 +226,7 @@ class Theme:
         self.data_format.update(format_dict)
 
     @validate_single_format
-    def update_cover_title_format(self, format_dict):
+    def update_cover_title_format(self, format_dict: Dict[str, Any]) -> None:
         """
         Update the `cover_title_format` attribute. Where keys already exist, existing
         items are replaced.
@@ -233,7 +234,7 @@ class Theme:
         self.cover_title_format.update(format_dict)
 
     @validate_single_format
-    def update_cover_subtitle_format(self, format_dict):
+    def update_cover_subtitle_format(self, format_dict: Dict[str, Any]) -> None:
         """
         Update the `cover_subtitle_format` attribute. Where keys already exist, existing
         items are replaced.
@@ -241,7 +242,7 @@ class Theme:
         self.cover_subtitle_format.update(format_dict)
 
     @validate_single_format
-    def update_cover_text_format(self, format_dict):
+    def update_cover_text_format(self, format_dict: Dict[str, Any]) -> None:
         """
         Update the `cover_text_format` attribute. Where keys already exist, existing
         items are replaced.
@@ -249,7 +250,7 @@ class Theme:
         self.cover_text_format.update(format_dict)
 
     @validate_single_format
-    def update_title_format(self, format_dict):
+    def update_title_format(self, format_dict: Dict[str, Any]) -> None:
         """
         Update the `title_format` attribute. Where keys already exist, existing
         items are replaced.
@@ -257,7 +258,7 @@ class Theme:
         self.title_format.update(format_dict)
 
     @validate_single_format
-    def update_subtitle_format(self, format_dict):
+    def update_subtitle_format(self, format_dict: Dict[str, Any]) -> None:
         """
         Update the `subtitle_format` attribute. Where keys already exist,
         existing items are replaced.
@@ -265,7 +266,7 @@ class Theme:
         self.subtitle_format.update(format_dict)
 
     @validate_single_format
-    def update_instructions_format(self, format_dict):
+    def update_instructions_format(self, format_dict: Dict[str, Any]) -> None:
         """
         Update the `instructions_format` attribute. Where keys already exist,
         existing items are replaced.
@@ -273,7 +274,7 @@ class Theme:
         self.instructions_format.update(format_dict)
 
     @validate_single_format
-    def update_scope_format(self, format_dict):
+    def update_scope_format(self, format_dict: Dict[str, Any]) -> None:
         """
         Update the `scope_format` attribute. Where keys already exist, existing
         items are replaced.
@@ -281,7 +282,7 @@ class Theme:
         self.scope_format.update(format_dict)
 
     @validate_single_format
-    def update_location_format(self, format_dict):
+    def update_location_format(self, format_dict: Dict[str, Any]) -> None:
         """
         Update the `location_format` attribute. Where keys already exist,
         existing items are replaced.
@@ -289,7 +290,7 @@ class Theme:
         self.location_format.update(format_dict)
 
     @validate_single_format
-    def update_source_format(self, format_dict):
+    def update_source_format(self, format_dict: Dict[str, Any]) -> None:
         """
         Update the `source_format` attribute. Where keys already exist,
         existing items are replaced.
@@ -297,14 +298,14 @@ class Theme:
         self.source_format.update(format_dict)
 
     @validate_single_format
-    def update_legend_format(self, format_dict):
+    def update_legend_format(self, format_dict: Dict[str, Any]) -> None:
         """
         Update the `legend_format` attribute. Where keys already exist,
         existing items are replaced.
         """
         self.legend_format.update(format_dict)
 
-    def update_description_order(self, order_list):
+    def update_description_order(self, order_list: List[str]) -> None:
         """
         Update the `description_order` attribute. Overrides existing order.
         """
@@ -318,7 +319,7 @@ class Theme:
             raise ValueError(msg)
         self.description_order = order_list
 
-    def print_attributes(self):
+    def print_attributes(self) -> None:
         """
         Print all current format attributes and values to the console.
         """
@@ -330,7 +331,7 @@ class Theme:
         for attr in obj_attr:
             print(attr, ":", getattr(self, attr))
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         """
         Comparison operator, for testing.
         """

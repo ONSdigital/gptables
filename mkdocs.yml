@@ -39,11 +39,16 @@ plugins:
 - mkdocstrings:
     handlers:
       python:
+        paths: ["."]
         options:
           docstring_style: numpy
           show_source: false
           show_signature: true
+          show_signature_annotations: true
+          separate_signature: true
           show_root_heading: true
+          extra:
+            show_type_annotations: true
 
           filters:
               - "!^__" # Hide methods like __init__()
