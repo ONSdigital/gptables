@@ -51,5 +51,6 @@ plugins:
 markdown_extensions:
 - toc:
    toc_depth: 1-2
+- admonition
 - pymdownx.details
 - pymdownx.superfences
