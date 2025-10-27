@@ -81,7 +81,7 @@ italicisation of two columns, left bordering on the 4th column, and indentation 
     penguins_additional_formatting = [
         {
             "column": {
-                "columns": ["Species", "Island"], 
+                "columns": ["Species", "Island"],
                 "format": {
                     "align": "center",
                     "italic": True,
