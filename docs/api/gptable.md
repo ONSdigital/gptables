@@ -75,7 +75,8 @@ In some cases you may want to apply one-off formatting on specific rows, columns
 As mentioned above, this formatting should not be used to represent data or important information.
 
 #### NOTE
-Columns are automatically aligned based on the [spreadsheet accessibility guidance](https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/).
+Columns are automatically aligned based on the [spreadsheet accessibility guidance](https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/). This includes left alignment
+of text outside a table, and row labels inside tables, as well as right alignment of data.
 
 Bespoke formatting can be applied to an individual `GPTable` via the `additional_formatting` parameter,
 when creating a `GPTable` instance. This parameter takes a list of dictionaries, where each dictionary
