@@ -121,11 +121,11 @@ The code is combined below in an extendable tab.
 
 The description column in the table of contents can be customised by passing additional
 elements from the `GPTable` into the `contentsheet_options` parameter
-of `gptables.write_workbook()`. 
+of `gptables.write_workbook()`.
 
 `contentsheet_options` can take `additional_elements`, such as `'subtitles'`, `'scope'`,
 `'source'`, or `'instructions'` to give more information about individual sheets within
-the workbook: 
+the workbook:
 
 ```python
     penguins_table = gpt.GPTable(
@@ -138,7 +138,7 @@ the workbook:
     )
 
     ...
-    
+
     gpt.write_workbook(
         filename=output_path,
         sheets=penguins_sheets,
