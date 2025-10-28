@@ -1,25 +1,26 @@
 from pathlib import Path
+
 import pandas as pd
+
 import gptables as gpt
 
 parent_dir = Path(__file__).parents[1]
 penguins_data = pd.read_csv(parent_dir / "test/data/penguins.csv")
 
 penguins_table = gpt.GPTable(
-    table = penguins_data,
-    table_name = "penguins_statistics",
-    title = "The Palmer Penguins Dataset",
-    subtitles = ["This is the first subtitle",
-                "This is another subtitle"],
-    scope = "Penguins",
-    source = "Palmer Station, Antarctica",
+    table=penguins_data,
+    table_name="penguins_statistics",
+    title="The Palmer Penguins Dataset",
+    subtitles=["This is the first subtitle", "This is another subtitle"],
+    scope="Penguins",
+    source="Palmer Station, Antarctica",
 )
 
 penguins_sheets = {"Penguins": penguins_table}
 
 penguins_cover = gpt.Cover(
-    cover_label = "Cover",
-    title = "Palmer Penguins Dataset",
+    cover_label="Cover",
+    title="Palmer Penguins Dataset",
     intro=[
         "This spreadsheet contains a table of data obtained from the palmerpenguins package",
         "This is intended to be a simple example of how to use the gptables package to create a spreadsheet with a cover sheet and data sheets.",
@@ -50,4 +51,4 @@ if __name__ == "__main__":
         sheets=penguins_sheets,
         theme=gpt.Theme(theme_path),
         cover=penguins_cover,
-)
+    )
