@@ -1,117 +1,98 @@
-## Penguins - Custom Theme Example
+# Custom themes with `gptables`
 
-This example demonstrates how to use a custom theme in the production of a workbook.
+It might be necessary to diverge from the `gptables` defaults, for example for organisational
+needs or user requirements. Where this is required regularly or across multiple teams, it can
+be helpful for reproducibility and code readability to create a custom theme as opposed to supplying 
+an `additional_formatting` argument to `GPTable`.
 
-Summary statistics from the penguins dataset are used to build a `gptables.GPTable`
-object. Elements of metadata are provided to the corresponding parameters of the class.
-Where you wish to provide no metadata in required parameters, use `None`.
+!!! warning "Consider accessibility implications from custom themes"
+    Using custom themes changes the `gptables` defaults, which can introduce accessibility issues.
+    Refer to the Releasing statistics in spreadsheets [guidance](https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/) and consider user needs
+    regarding accessiblity before adjusting the formatting.
 
-The theme parameter must take either a directory or a yaml file in the `gptables.write_workbook` function.
-The yaml file used in this example can be found in the themes folder as ‘’penguins_test_theme.yaml’’.
+The code to reproduce these sheets can be found in the examples folder.
+
+## Using custom themes
+
+The theme parameter in `gptables.write_workbook()` can be either a folder or a .yaml file.
+
+A .yaml can reformat settings across the whole workbook from global settings, as well as
+specified elements of the sheet. A basic example is shown below:
+
+```yaml
+global:
+    font_size: 13
+    font_name: Arial
+    font_color: '#AD0000'
+
+title:
+    font_size: 20
+
+subtitle:
+    font_size: 16
+
+data:
+    text_wrap: 1
+
+description_order:
+    - instructions
+    - source
+    - legend
+    - scope
+```
+
+The path to the file or folder is supplied to the theme argument of `gptables.write_workbook()`
+inside of `gptables.Theme()`:
 
 ```python
-
-import pandas as pd
-
-import gptables as gpt
-
-# Read data
-parent_dir = Path(__file__).parents[1]
-
-penguins_data = pd.read_csv(parent_dir / "test/data/penguins.csv")
-
-# Any data processing could go here as long as you end with a Pandas dataframe that you want to write in a spreadsheet
-
-# Define table elements
-penguins_table_name = "penguins_statistics"
-penguins_title = "The Penguins Dataset"
-penguins_subtitles = ["This is the first subtitle", "Just another subtitle"]
-penguins_scope = "Penguins"
-penguins_source = "Palmer Station, Antarctica"
-
-kwargs = {
-    "table_name": penguins_table_name,
-    "title": penguins_title,
-    "subtitles": penguins_subtitles,
-    "scope": penguins_scope,
-    "source": penguins_source,
-}
-penguins_table = gpt.GPTable(table=penguins_data, **kwargs)
-
-penguins_sheets = {"Penguins": penguins_table}
-
-# Use write_workbook to win!
-# Simply pass the filepath of the yaml file containing your theme to the GPTables Theme class and then to write_workbook
-if __name__ == "__main__":
-    output_path = parent_dir / "python_penguins_gptable.xlsx"
-    theme_path = str(Path(__file__).parent.parent / "themes/penguins_test_theme.yaml")
-    gpt.write_workbook(
+    gptables.write_workbook(
         filename=output_path,
-        sheets=penguins_sheets,
-        theme=gpt.Theme(theme_path),
+        sheets=sheets,
+        theme=gptables.Theme(theme_path),
         contentsheet_options={"additional_elements": ["subtitles", "scope"]},
     )
-    print("Output written at: ", output_path)
 ```
 
-```python
-import pandas as pd
+This is shown to have changed text colours and sizes as compared to the `gptables` defaults:
 
-import gptables as gpt
+![](../static/howto_theme_basic.png)
 
-# Read data
-parent_dir = Path(__file__).parents[1]
+This is combined into an extendible code block below.
 
-penguins_data = pd.read_csv(parent_dir / "test/data/penguins.csv")
+??? note "Basic usage of custom themes"
+    ```python
+    from pathlib import Path
+    import pandas as pd
+    import gptables as gpt
 
-# Any data processing could go here as long as you end with a Pandas dataframe that you want to write in a spreadsheet
+    penguins_data = pd.read_csv("penguins.csv")
 
-# Define table elements
-penguins_table_name = "penguins_statistics"
-penguins_title = "The Penguins Dataset"
-penguins_subtitles = ["This is the first subtitle", "Just another subtitle"]
-penguins_scope = "Penguins"
-penguins_source = "Palmer Station, Antarctica"
-
-kwargs = {
-    "table_name": penguins_table_name,
-    "title": penguins_title,
-    "subtitles": penguins_subtitles,
-    "scope": penguins_scope,
-    "source": penguins_source,
-    "index_columns": {
-        2: 0
-    },  # The level 2 index from our Pandas dataframe is put in the first (zeroth with Python indexing) column of the spreadsheet
-}
-
-# Define our GPTable
-penguins_table = gpt.GPTable(
-    table=penguins_data, table_name="penguins_statistics", **kwargs
-)
-
-penguins_sheets = {"Penguins": penguins_table}
-
-penguins_cover = gpt.Cover(
-    cover_label="Cover",
-    title="A Workbook containing two copies of the data",
-    intro=["This is some introductory information", "And some more"],
-    about=["Even more info about my data", "And a little more"],
-    contact=[
-        "John Doe",
-        "Tel: 345345345",
-        "Email: [john.doe@snailmail.com](mailto:john.doe@snailmail.com)",
-    ],
-)
-
-# Use write_workbook to win!
-if __name__ == "__main__":
-    output_path = parent_dir / "python_penguins_cover_gptable.xlsx"
-    gpt.write_workbook(
-        filename=output_path,
-        sheets=penguins_sheets,
-        cover=penguins_cover,
+    penguins_table = gpt.GPTable(
+        table=penguins_data,
+        table_name="penguins_statistics",
+        title="The Palmer Penguins Dataset",
+        subtitles=["This is the first subtitle",
+                   "This is another subtitle"],
+        scope="Penguins",
+        source="Palmer Station, Antarctica",
     )
-    print("Output written at: ", output_path)
+
+    penguins_sheets = {"Penguins": penguins_table}
+
+    gpt.write_workbook(
+        filename="gptables_theme_basic.xlsx",
+        sheets=penguins_sheets,
+        theme=gpt.Theme(example_theme_basic.yaml),
+        contentsheet_options={"additional_elements": ["subtitles", "scope"]},
+    )
+    ```
+
+Theme files can also be used to modify elements such as the coversheet, x, and y. The precedence
+of formatting be specified with <>.
+
+```yaml
 ```
 
-<a id="module-gptables.examples.penguins_notes"></a>
+This is shown to have <>, and is combined in an extendible code block below.
+
+![](<path_to_comparison_of_cover>)

@@ -53,3 +53,4 @@ markdown_extensions:
    toc_depth: 1-2
 - pymdownx.details
 - pymdownx.superfences
+- admonition
