@@ -216,7 +216,7 @@ if __name__ == "__main__":
 
 This example uses the [Starting out](tutorial.md#starting-out) example above, and adds a cover sheet to the workbook.
 
-Cover sheets can be used to provide information that is general to all tables in a workbook. See the [Analysis Function Guidance](https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/#section-11) for more information about what to include in a cover sheet, and how to make sure it is accessible. 
+Cover sheets can be used to provide information that is general to all tables in a workbook. See the [Analysis Function Guidance](https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/#section-11) for more information about what to include in a cover sheet, and how to make sure it is accessible.
 
 Note: Cover sheets are added as the first sheet in the workbook when written by `gptables`. This is important when applying additional formatting to other worksheets by their index in the workbook.
 
@@ -280,7 +280,7 @@ gpt.write_workbook(
     cover_sheet=penguins_cover,
     contentsheet_options={"additional_elements": ["subtitles", "scope"]},
 )
-``` 
+```
 The resulting cover sheet is shown below.
 
 ![](../static/cover_sheet.png)
