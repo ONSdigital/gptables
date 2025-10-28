@@ -570,7 +570,11 @@ class GPWorksheet(Worksheet):
                 value=np.nan,
             ).infer_objects(copy=False)
 
-        data_table_copy = data_table_copy.convert_dtypes()
+        for col in data_table_copy.columns:
+            try:
+                data_table_copy[col] = pd.to_numeric(data_table_copy[col])
+            except Exception:
+                pass
 
         column_types = data_table_copy.dtypes
 
