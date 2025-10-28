@@ -175,6 +175,12 @@ This is combined with a basic example below in an extendable tab.
 and [Worksheet](https://xlsxwriter.readthedocs.io/worksheet.html#the-worksheet-class) classes from
 XlsxWriter.
 
+!!! warning "Competing formatting"
+    Some formatting will only occur where cells do not already have formatting applied,
+    for example in the `gptables` global [theme](https://github.com/ONSdigital/gptables/blob/e0dc2348e8172972ddd6ea2f737cb6047f591780/gptables/themes/gptheme.yaml#L1-L4) settings.
+
+    Consult the XlsxWriter [Worksheet class documentation](https://xlsxwriter.readthedocs.io/worksheet.html#the-worksheet-class) as well as the `gptables` [theme how-to](../how_to/custom_theme.md) for more information.
+
 Worksheet properties can be altered directly, for example setting row height:
 
 ```python
