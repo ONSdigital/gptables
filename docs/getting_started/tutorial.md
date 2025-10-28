@@ -118,6 +118,42 @@ The code is combined below in an extendable tab.
     )
     ```
 
+### Tables of contents
+
+By default, `gptables` creates a table of contents sheet for the workbook.
+This contains a single table with two columns. The first
+column contains the worksheet label as a link for each worksheet in the
+workbook. The second column contains a description of the sheet contents.
+
+![](../static/table_of_contents_default.png)
+
+This description can be customised by passing additional elements from the `GPTable` into
+the `contentsheet_options` parameter of `gptables.write_workbook`. 
+
+`contentsheet_options` can take `additional_elements`, such as `'subtitles'`, `'scope'`,
+`'source'`, or `'instructions'`: 
+
+```python
+    penguins_table = gpt.GPTable(
+        ...
+        instructions="This workbook contains a single sheet. The name is a link to it."
+        subtitles=["This is the first subtitle", "This is another subtitle"],
+        scope="Penguins",
+        source="Palmer Station, Antarctica",
+        ...
+    )
+
+    ...
+    
+    gpt.write_workbook(
+        filename=output_path,
+        sheets=penguins_sheets,
+        contentsheet_options={"additional_elements": ["instructions", "subtitles", "scope", "source"]},
+    )
+```
+
+![](../static/table_of_contents_additional_elements.png)
+
 ### Penguins - Notes Example
 
 This example demonstrates how to include notes in a GPTable. Notes cannot
