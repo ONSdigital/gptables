@@ -504,7 +504,7 @@ class GPWorksheet(Worksheet):
 
         # Create formats array
         # pandas.DataFrame did NOT want to hold dictionaries, so be wary
-        formats = pd.DataFrame().reindex_like(data)
+        formats = pd.DataFrame().reindex_like(data).astype(object)
         dict_row = [{} for n in range(formats.shape[1])]
         for row in range(formats.shape[0]):
             dict_row = [{} for n in range(formats.shape[1])]
@@ -564,10 +564,11 @@ class GPWorksheet(Worksheet):
         # look for shorthand notation, usually a few letters in square brackets
         # will also find note markers eg [Note 1]
         # Using np.nan instead on None for backwards compatibility with pandas <=1.4
-        data_table_copy = data_table.replace(
-            regex=r"\[[\w\s]+\]",
-            value=np.nan,
-        )
+        with pd.option_context("future.no_silent_downcasting", True):
+            data_table_copy = data_table.replace(
+                regex=r"\[[\w\s]+\]",
+                value=np.nan,
+            ).infer_objects(copy=False)
 
         data_table_copy = data_table_copy.convert_dtypes()
 
@@ -827,7 +828,9 @@ class GPWorksheet(Worksheet):
         display_text = list(data.keys())[0]
 
         url_format = format_dict.copy()
-        url_format.update({"underline": True, "font_color": "blue"})
+        url_format.update(
+            {"underline": True, "font_color": "blue"}
+        )  # blue == #0000FF - passes WCAG AA contrast check
 
         self.write_url(
             row, col, url, workbook.add_format(url_format), display_text, *args
