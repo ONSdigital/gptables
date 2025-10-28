@@ -2,7 +2,7 @@
 
 It might be necessary to diverge from the `gptables` defaults, for example for organisational
 needs or user requirements. Where this is required regularly or across multiple teams, it can
-be helpful for reproducibility and code readability to create a custom theme as opposed to supplying 
+be helpful for reproducibility and code readability to create a custom theme as opposed to supplying
 an `additional_formatting` argument to `GPTable`.
 
 !!! warning "Consider accessibility implications from custom themes"
@@ -17,7 +17,8 @@ The code to reproduce these sheets can be found in the examples folder.
 The theme parameter in `gptables.write_workbook()` can be either a folder or a .yaml file.
 
 A .yaml can reformat settings across the whole workbook from global settings, as well as
-specified elements of the sheet. A basic example is shown below:
+specified elements of the sheet. A basic example is shown below, where the order in which elements
+appear on the datasheet is supplied under `description_order`.
 
 ```yaml
 global:
@@ -87,12 +88,32 @@ This is combined into an extendible code block below.
     )
     ```
 
-Theme files can also be used to modify elements such as the coversheet, x, and y. The precedence
-of formatting be specified with <>.
+Theme files can also be used to modify specific elements, such as the titles and subtitles
+on the cover:
 
 ```yaml
+global:
+    font_size: 13
+    font_name: Arial
+    font_color: '#AD0000'
+
+cover_title:
+    font_size: 20
+
+cover_subtitle:
+    font_size: 18
+
+data:
+    text_wrap: 1
+
+description_order:
+    - instructions
+    - source
+    - legend
+    - scope
 ```
 
-This is shown to have <>, and is combined in an extendible code block below.
+This is shown to have formatted the sizes of the cover elements, with the global settings
+dictating the other font sizes and colour throughout the workbook.
 
-![](<path_to_comparison_of_cover>)
+![](../static/howto_theme_cover.png)

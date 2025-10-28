@@ -3,11 +3,11 @@ global:
     font_name: Arial
     font_color: '#AD0000'
 
-title:
+cover_title:
     font_size: 20
 
-subtitle:
-    font_size: 16
+cover_subtitle:
+    font_size: 18
 
 data:
     text_wrap: 1
