@@ -83,9 +83,8 @@ gpt.write_workbook(
 )
 ```
 
-The result with a subset of the data is shown below, where `gptables` has created a Table
-of contents and a sheet with the Penguins dataset. The sheet shows the specified title and
-subtitles presented in a minimal style in text with a legible font and size.
+`gptables` creates a table of contents, with worksheet labels linking to the worksheets, and a description of their contents. There is a sheet with the dataset, and it presents the
+specified details in a minimal style with text of a legible font and size.
 
 ![](../static/getting_started_before_and_after.png)
 
@@ -120,18 +119,13 @@ The code is combined below in an extendable tab.
 
 ### Tables of contents
 
-By default, `gptables` creates a table of contents sheet for the workbook.
-This contains a single table with two columns. The first
-column contains the worksheet label as a link for each worksheet in the
-workbook. The second column contains a description of the sheet contents.
-
-![](../static/table_of_contents_default.png)
-
-This description can be customised by passing additional elements from the `GPTable` into
-the `contentsheet_options` parameter of `gptables.write_workbook`. 
+The description column in the table of contents can be customised by passing additional
+elements from the `GPTable` into the `contentsheet_options` parameter
+of `gptables.write_workbook()`. 
 
 `contentsheet_options` can take `additional_elements`, such as `'subtitles'`, `'scope'`,
-`'source'`, or `'instructions'`: 
+`'source'`, or `'instructions'` to give more information about individual sheets within
+the workbook: 
 
 ```python
     penguins_table = gpt.GPTable(
@@ -153,6 +147,26 @@ the `contentsheet_options` parameter of `gptables.write_workbook`.
 ```
 
 ![](../static/table_of_contents_additional_elements.png)
+
+`contentsheet_options` also allows for customisation of the table of contents `title`, `subtitles`,
+`table_name`, `instructions` and `column_names`. For example:
+
+```python
+    gpt.write_workbook(
+        filename=output_path,
+        sheets=penguins_sheets,
+        contentsheet_options={"title": "A title for the table of contents",
+                                "subtitles": ["A subtitle for the table of contents"],
+                                "additional_elements": ["subtitles", "scope"]},
+    )
+```
+
+![](../static/table_of_contents_customisation.png)
+
+Set `contentsheet_label = None` inside `gptables.write_workbook()` to disable creating
+a table of contents.
+
+More information can be found in the [function documentation](../api/functions.md#gptables.core.api.write_workbook).
 
 ### Penguins - Notes Example
 
