@@ -1,112 +1,198 @@
-## Penguins - Additional Formatting Example
+# Add additional formatting
+There may be specific user needs or organisational reasons calling for
+formatting other than the `gptables` defaults. A wide range of options are possible
+with the `gptable.GPTable(..., additional_formatting = ...)` parameter. See the [XlsxWriter documentation](https://xlsxwriter.readthedocs.io/format.html#the-format-class) for the full options.
 
-This example demonstrates additional formatting that is not supported in
-the `gptable.Theme`.
+!!! warning "Consider accessibility implications to formatting changes"
+    Additional formatting changes the `gptables` defaults, which can introduce accessibility issues.
+    Refer to the Releasing statistics in spreadsheets [guidance](https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/) and consider user needs
+    regarding accessiblity before adjusting the formatting.
 
-Specific columns, rows and cells of the table elements (indexes, column headings and data)
-can be formatted using the `gptable.GPTable(..., additional_formatting = ...)` parameter.
-This parameter takes a list of dictionaries, allowing you to select as many rows, columns
-or cells as you like.
+## Using `additional_formatting`
 
-As with all formatting, supported arguments are desribed in the
-[XlsxWriter documentation](https://xlsxwriter.readthedocs.io/format.html#format-methods-and-format-properties).
+The `gptable.GPTable(..., additional_formatting = ...)` parameter allows for specifying
+columns, rows, and/or cells and the corresponding formatting changes to make.
 
-Any formatting not possible through this means can be achieved using
-`XlsxWriter` [Workbook](https://xlsxwriter.readthedocs.io/workbook.html)
-and [Worksheet](https://xlsxwriter.readthedocs.io/worksheet.html) functionality.
-A `gptable.GPWorkbook` object is returned when using the
-`gptables.produce_workbook` API function.
-The `GPWorkbook.worksheets()` function returns a list of `GPWorksheet` objects,
-which can also be modified.
+!!! warning "Formatting conflicts"
+    There are some conflicts between additional formatting options, for example wrapping
+    and shrinking text. Outputs should be reviewed for correctness.
+
+Columns can be referenced by name or number. Rows may only be referenced by number, with `-1`
+corresponding to the last row. Column and row numbers include indexes and column headings.
+Cell formatting takes highest precedence, followed by row formatting, and finally column formatting.
+
+The option of what to format is specified, followed by the specific columns, rows, or cells,
+and then the formatting changes. To change the properties of columns called Species and Island
+to be center-aligned and italic, for example:
 
 ```python
-from pathlib import Path
-
-import pandas as pd
-
-import gptables as gpt
-
-# Read data and arrange
-parent_dir = Path(__file__).parents[1]
-
-penguins_data = pd.read_csv(parent_dir / "test/data/penguins.csv")
-
-# Any data processing could go here as long as you end with a Pandas dataframe that you want to write in a spreadsheet
-
-# Define table elements
-penguins_table_name = "penguins_statistics"
-penguins_title = "Penguins"
-
-# Individual words/phrases can have formatting applied without the use of the additional_formatting argument
-penguins_subtitles = [
-    "The first subtitle",
-    [{"bold": True}, "Just", " another subtitle"],
-]
-penguins_units = {key: "mm" for key in range(2, 5)}
-penguins_scope = "Penguins"
-
-# Define additional formatting
-# Columns can be referenced by name or number
-# Rows may only be referenced by number
-# Column and row numbers refer to the table elements, including indexes and column headings
-penguins_additional_formatting = [
+sample_additional_formatting = [
     {
         "column": {
-            "columns": ["Species", "Island"],  # str, int or list of either
+            "columns": ["Species", "Island"],
             "format": {
                 "align": "center",
                 "italic": True,
-            },  # The "Species" and "Island" columns are centre-aligned and made italic
+            },
+        }
+    }
+]
+```
+
+Multiple selections of columns, rows, and cells can be made in a single `additional_formatting` list.
+
+```python
+penguins_additional_formatting = [
+    {
+        "column": {
+            "columns": ["Species", "Island"],
+            "format": {
+                "align": "center",
+                "italic": True,
+            },
         }
     },
     {
         "column": {"columns": [3], "format": {"left": 1}}
-    },  # Gives the fourth column a left border
+    },
     {
         "row": {
-            "rows": -1,  # Numbers only, but can refer to last row using -1
+            "rows": -1,
             "format": {
                 "bottom": 1,
                 "indent": 2,
-            },  # Give the last row a border at the bottom of each cell and indents two levels
+            },
         }
     },
 ]
+```
 
-kwargs = {
-    "table_name": penguins_table_name,
-    "title": penguins_title,
-    "subtitles": penguins_subtitles,
-    "units": penguins_units,
-    "scope": penguins_scope,
-    "source": None,
-    "additional_formatting": penguins_additional_formatting,
-}
+This is combined with a basic example below in an extendable tab. The result is
+italicisation of two columns, left bordering on the 4th column, and indentation in the final row.
 
-# Define our GPTable
-penguins_table = gpt.GPTable(table=penguins_data, **kwargs)
+??? "Using additional formatting"
+    ```python
+    from pathlib import Path
+    import pandas as pd
+    import gptables as gpt
 
-# Use produce workbook to return GPWorkbook
-if __name__ == "__main__":
-    output_path = parent_dir / "python_penguins_additional_formatting_gptable.xlsx"
-    wb = gpt.produce_workbook(filename=output_path, sheets={"Penguins": penguins_table})
+    penguins_data = pd.read_csv("spenguins.csv")
 
-    # Carry out additional modifications on the GPWorkbook or GPWorksheets
-    # This supports all `XlsxWriter` package functionality
-    ws = wb.worksheets()[0]
-    ws.set_row(0, 30)  # Set the height of the first row
+    penguins_additional_formatting = [
+        {
+            "column": {
+                "columns": ["Species", "Island"],
+                "format": {
+                    "align": "center",
+                    "italic": True,
+                },
+            }
+        },
+        {
+            "column": {"columns": [3], "format": {"left": 1}}
+        },
+        {
+            "row": {
+                "rows": -1,
+                "format": {
+                    "bottom": 1,
+                    "indent": 2,
+                },
+            }
+        },
+    ]
 
-    # To format cells using the set_row or set_column functions we must use a workbook to create a format object
-    italic_format = wb.add_format({"italic": True})
-    ws.set_column(
-        2, 3, 10, italic_format
-    )  # Sets the width of the third and fourth column and makes them italic
+    penguins_table = gpt.GPTable(
+        table = penguins_data,
+        table_name = "penguins_statistics",
+        title = "The Palmer Penguins Dataset",
+        subtitles = ["This is the first subtitle",
+                    "This is another subtitle"],
+        scope = "Penguins",
+        source = "Palmer Station, Antarctica",
+        additional_formatting = penguins_additional_formatting,
+    )
 
-    # Note that the first two arguments of set_column are the first and last columns (inclusive) you want to format as opposed
-    # to set_row which only affects a single row at a time (the first argument).
+    penguins_sheets = {"Penguins": penguins_table}
 
-    # Finally use the close method to save the output
-
+    wb = gpt.produce_workbook(
+        filename="gptables_additional_formatting_example.xlsx",
+        sheets=penguins_sheets
+    )
     wb.close()
-    print("Output written at: ", output_path)
+    ```
+
+![](../static/additional_formatting.png)
+
+## Formatting text
+
+Formatting changes can also be applied to other text in a sheet, such as subtitles, without
+`additional_formatting`:
+
+```python
+formatted_subtitles = [
+    "The first subtitle",
+    [{"bold": True}, "This", " is another subtitle"],
+]
+```
+
+This is combined with a basic example below in an extendable tab.
+
+??? "Formatting text"
+    ```python
+    from pathlib import Path
+    import pandas as pd
+    import gptables as gpt
+
+    penguins_data = pd.read_csv("penguins.csv")
+
+    formatted_subtitles = [
+        "The first subtitle",
+        [{"bold": True}, "This", " is another subtitle"],
+    ]
+
+    penguins_table = gpt.GPTable(
+        table = penguins_data,
+        table_name = "penguins_statistics",
+        title = "The Palmer Penguins Dataset",
+        subtitles = formatted_subtitles
+        scope = "Penguins",
+        source = "Palmer Station, Antarctica",
+    )
+
+    penguins_sheets = {"Penguins": penguins_table}
+
+    wb = gpt.produce_workbook(
+        filename="additional_formatting_example.xlsx",
+        sheets=penguins_sheets
+    )
+    wb.close()
+    ```
+
+## Further formatting
+
+`gptables` outputs can also be built on with the [Format](https://xlsxwriter.readthedocs.io/format.html#the-format-class), [Workbook](https://xlsxwriter.readthedocs.io/workbook.html#the-workbook-class)
+and [Worksheet](https://xlsxwriter.readthedocs.io/worksheet.html#the-worksheet-class) classes from
+XlsxWriter.
+
+!!! warning "Competing formatting"
+    Some formatting will only occur where cells do not already have formatting applied,
+    for example in the `gptables` global [theme](https://github.com/ONSdigital/gptables/blob/e0dc2348e8172972ddd6ea2f737cb6047f591780/gptables/themes/gptheme.yaml#L1-L4) settings.
+
+    Consult the XlsxWriter [Worksheet class documentation](https://xlsxwriter.readthedocs.io/worksheet.html#the-worksheet-class) as well as the `gptables` [theme how-to](../how_to/custom_theme.md) for more information.
+
+Worksheet properties can be altered directly, for example setting row height:
+
+```python
+ws = wb.worksheets()[0]
+ws.set_row(0, 30)
+```
+
+Or, by using `Format` objects:
+
+```python
+italic_format = wb.add_format({"italic": True})
+ws.set_column(
+    2, 3, 10, italic_format
+)
 ```
