@@ -173,7 +173,7 @@ This is combined with a basic example below in an extendable tab.
     ```
 
 This formatting is applied in addition to the
-formatting of that element specified in the [`Theme`](theme.md#gptables.core.theme.Theme).
+formatting of that element specified in the [`Theme`](../api/theme.md).
 !!! warning "Formatting of note references and links"
     Text formatting is not currently supported if the cell also contains note
     references or links. This may be changed in the future if there is
@@ -294,5 +294,5 @@ for [border styles in the XlsxWriter documentation](https://xlsxwriter.readthedo
 
 For any formatting beyond this, if the package should support it then please raise an issue
 or create a pull request. Otherwise, you will need to modify the underlying
-[`GPWorkbook`](wrappers.md#gptables.core.wrappers.GPWorkbook) or [`GPWorksheet`](wrappers.md#gptables.core.wrappers.GPWorksheet) objects
+[`GPWorkbook`](../api/wrappers.md#gptables.core.wrappers.GPWorkbook) or [`GPWorksheet`](../api/wrappers.md#gptables.core.wrappers.GPWorksheet) objects
 before they are written to Excel.
