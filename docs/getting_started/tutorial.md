@@ -117,7 +117,7 @@ The code is combined below in an extendable tab.
     )
     ```
 
-### Tables of contents
+### Table of contents
 
 The description column in the table of contents can be customised by passing additional
 elements from the `GPTable` into the `contentsheet_options` parameter
