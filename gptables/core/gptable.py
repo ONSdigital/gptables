@@ -9,8 +9,8 @@ class GPTable:
     A Good Practice Table. Stores a table and metadata for writing a table
     to excel.
 
-    .. note:: Deprecated in v1.1.0: Ability to reference notes within
-        ``GPTable.table.columns`` will be removed in v2 of gptables. Please use
+    .. note:: Removed in v2.0.0: Ability to reference notes within
+        ``GPTable.table.columns`` has been removed. Please use
         ``GPTable.table_notes`` to ensure references are correctly placed and ordered.
 
     Attributes
@@ -108,6 +108,14 @@ class GPTable:
         Set the `table`, `index_columns`, `units` and `table_notes` attributes. Overwrites
         existing values for these attributes.
         """
+        if not isinstance(new_table, pd.DataFrame):
+            raise TypeError("`table` must be a pandas DataFrame")
+
+        if any("$$" in str(h) for h in new_table.columns):
+            raise ValueError(
+                "Notes inside column headers are no longer supported. "
+                "Use GPTable.table_notes for column notes instead."
+            )
         if not isinstance(new_table, pd.DataFrame):
             raise TypeError("`table` must be a pandas DataFrame")
 
@@ -321,6 +329,11 @@ class GPTable:
         Units should be in the format {column: units_text}. Column can be column name or 0-indexed column
         number in `table`.
         """
+        if any("$$" in str(h) for h in self.table.columns):
+            raise ValueError(
+                "Notes inside column headers are no longer supported. "
+                "Use GPTable.table_notes for column notes instead."
+            )
         if isinstance(new_units, dict) and len(new_units) > 0:
             for value in new_units.values():
                 self._validate_text(value, "units")

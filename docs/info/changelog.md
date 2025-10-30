@@ -21,6 +21,9 @@ and this project tries its very best to adhere to
 * Requirements and installation steps to README
 * Pre-commit hooks
 
+**Removed**
+* The ability to reference notes within 'GPTable.table.columns' has been removed (see this changelog for the notice in v1.1.0)
+
 **Changed**
 
 * a11ytables renamed to aftables throughout

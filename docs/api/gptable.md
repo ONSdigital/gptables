@@ -25,9 +25,7 @@ left corner of the first sheet containing a data table.
 See this in practice in the Tutorial(../getting_started/usage.md#example-usage).
 
 #### NOTE
-Deprecated in v1.1.0: Ability to reference notes within
-`GPTable.table.columns` will be removed in v2 of gptables. Please use
-`GPTable.table_notes` to ensure references are correctly placed and ordered.
+Removed in v2.0.0: The ability to reference notes within `GPTable.table.columns` has been removed. Notes should now be added using the `GPTable.table_notes` to ensure references are correctly placed and ordered.
 
 ## Links
 
