@@ -18,6 +18,7 @@ nav:
     - Add a custom theme: how_to/custom_theme.md
     - Use in R: how_to/in_r.md
   - API:
+    - API reference: api/api_reference.md
     - Functions: api/functions.md
     - Table of contents: api/table_of_contents.md
     - Cover: api/cover.md
