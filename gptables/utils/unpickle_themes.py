@@ -9,7 +9,7 @@ class ThemeUnpickler(pickle.Unpickler):
     init.
     """
 
-    def find_class(self, module, name):
+    def find_class(self, module: str, name: str) -> type:
         if name == "Theme":
             from gptables.core.theme import Theme
 
