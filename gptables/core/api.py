@@ -1,7 +1,12 @@
 import warnings
-import pandas as pd
 from pathlib import Path
-from typing import Optional, Dict, Any, Union
+from typing import Any, Dict, Optional, Union
+
+import pandas as pd
+
+from gptables.core.cover import Cover
+from gptables.core.gptable import GPTable
+from gptables.core.theme import Theme
 from gptables.core.wrappers import GPWorkbook
 
 
@@ -14,7 +19,7 @@ def produce_workbook(
     contentsheet_options: Optional[Dict[str, Any]] = None,
     notes_table: Optional[pd.DataFrame] = None,
     notesheet_label: str = "Notes",
-    notesheet_options:  Optional[Dict[str, Any]] = None,
+    notesheet_options: Optional[Dict[str, Any]] = None,
     auto_width: Union[bool, Dict[str, bool]] = True,
     gridlines: str = "hide_all",
     cover_gridlines: bool = False,
@@ -63,6 +68,11 @@ def produce_workbook(
     -------
     workbook : gptables.GPWorkbook
     """
+    if contentsheet_options is None:
+        contentsheet_options = {}
+    if notesheet_options is None:
+        notesheet_options = {}
+
     if isinstance(filename, Path):
         filename = filename.as_posix()
 
@@ -187,6 +197,12 @@ def write_workbook(
     -------
     None
     """
+
+    if contentsheet_options is None:
+        contentsheet_options = {}
+    if notesheet_options is None:
+        notesheet_options = {}
+
     if contentsheet is not None:
         contentsheet_label = contentsheet
 

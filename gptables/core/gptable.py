@@ -1,8 +1,9 @@
 import re
+from typing import Any, Dict, List, Optional, Union
 
 import pandas as pd
 from xlsxwriter.format import Format
-from typing import List, Dict, Any, Optional, Union
+
 
 class GPTable:
     """
@@ -82,6 +83,11 @@ class GPTable:
 
         self.additional_formatting = []
 
+        if additional_formatting is None:
+            additional_formatting = []
+
+        self.additional_formatting = additional_formatting
+
         # Valid format labels from XlsxWriter
         self._valid_format_labels = [
             attr.replace("set_", "")
@@ -102,11 +108,11 @@ class GPTable:
         self._set_data_range()
 
     def set_table(
-            self,
-            new_table: pd.DataFrame,
-            new_index_columns: Optional[Dict[int, int]] = None,
-            new_units: Optional[Dict[Any, Any]] = None,
-            new_table_notes: Optional[Dict[Any, Any]] = None,
+        self,
+        new_table: pd.DataFrame,
+        new_index_columns: Optional[Dict[int, int]] = None,
+        new_units: Optional[Dict[Any, Any]] = None,
+        new_table_notes: Optional[Dict[Any, Any]] = None,
     ) -> None:
         """
         Set the `table`, `index_columns`, `units` and `table_notes` attributes. Overwrites
@@ -194,7 +200,7 @@ class GPTable:
         """
         return column_index in range(self.table.shape[1])
 
-    def _set_column_headings(self)-> None:  # TODO: check custom formatting in headers
+    def _set_column_headings(self) -> None:  # TODO: check custom formatting in headers
         """
         Sets the `column_headings` attribute to the set of column indexes that
         are not assigned to `index_columns`.
@@ -216,7 +222,7 @@ class GPTable:
                 msg = "Empty column name found in table data - column names must all have text"
                 raise ValueError(msg)
 
-    def _validate_no_duplicate_column_names(self)-> None:
+    def _validate_no_duplicate_column_names(self) -> None:
         """
         Validate that there are no duplicate column names in table data.
         """
@@ -261,7 +267,9 @@ class GPTable:
 
         self.subtitles.append(new_subtitle)
 
-    def set_subtitles(self, new_subtitles: Optional[List[Any]], overwrite: bool = True) -> None:
+    def set_subtitles(
+        self, new_subtitles: Optional[List[Any]], overwrite: bool = True
+    ) -> None:
         """
         Set a list of subtitles to the `subtitles` attribute. Overwrites
         existing ist of subtitles by default. If `overwrite` is False, new list
@@ -319,7 +327,9 @@ class GPTable:
 
         self.scope = new_scope
 
-    def set_units(self, new_units: Optional[Dict[Any, Any]]) -> None:  # TODO: custom formatting in units?
+    def set_units(
+        self, new_units: Optional[Dict[Any, Any]]
+    ) -> None:  # TODO: custom formatting in units?
         """
         Adds units to column headers.
         Units should be in the format {column: units_text}. Column can be column name or 0-indexed column
@@ -365,7 +375,9 @@ class GPTable:
 
         self.units = new_units
 
-    def _update_column_names_in_additional_formatting(self, col_names: Dict[Any, Any]) -> None:
+    def _update_column_names_in_additional_formatting(
+        self, col_names: Dict[Any, Any]
+    ) -> None:
         """
         Parameters
         ----------
@@ -389,7 +401,8 @@ class GPTable:
         self.additional_formatting = formatting_list
 
     def set_table_notes(
-        self, new_table_notes: Optional[Dict[Any, Any]]) -> None:  # TODO: custom formatting in column headers?
+        self, new_table_notes: Optional[Dict[Any, Any]]
+    ) -> None:  # TODO: custom formatting in column headers?
         """
         Adds note references to column headers.
         `table_notes` should be in the format {column: "$$note_reference$$"}.
@@ -460,7 +473,9 @@ class GPTable:
 
         self.legend.append(new_legend)
 
-    def set_legend(self, new_legend: Optional[List[Any]], overwrite: bool = True) -> None:
+    def set_legend(
+        self, new_legend: Optional[List[Any]], overwrite: bool = True
+    ) -> None:
         """
         Set a list of legend entries to the `legend` attribute. Overwrites
         existing legend entries by default. If overwrite is False, new entries
