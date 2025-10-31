@@ -1,8 +1,8 @@
 from functools import wraps
+from typing import Any, Callable, Dict, List, Optional, Union
 
 import yaml
 from xlsxwriter.format import Format
-from typing import Any, Dict, List, Optional, Callable, Union
 
 
 def validate_single_format(f: Callable) -> Callable:
@@ -66,10 +66,7 @@ class Theme:
     description_order : list
     """
 
-    def __init__(
-        self,
-        config: Optional[Union[Dict[str, Any], str]] = None
-    ) -> None:
+    def __init__(self, config: Optional[Union[Dict[str, Any], str]] = None) -> None:
         """
         Initialise theme object.
 
