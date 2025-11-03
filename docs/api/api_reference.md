@@ -14,4 +14,4 @@
 | [`GPTable`](gptable.md) | Stores information about data in a table. |
 | [`GPWorkbook`](gpworkbook.md) | Wrapper for `XlsxWriter.Workbook` to support further editing after `produce_workbook()` |
 | [`GPWorksheet`](gpworksheet.md) | Wrapper for `XlsxWriter.Worksheet` to support further editing after `produce_workbook()` |
-| `Theme` | Used to set the formatting of various elements throughout the workbook. |
+| [`Theme`](theme.md) | Used to set the formatting of various elements throughout the workbook. |
