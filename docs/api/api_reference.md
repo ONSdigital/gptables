@@ -4,8 +4,8 @@
 
 | Object                | Description               |
 |-----------------------|---------------------------|
-| `produce_workbook()` | Creates a formatted workbook suitable for further editing. |
-| `write_workbook()` | Creates and Writes out a formatted workbook. |
+| [`produce_workbook()`](produce_workbook.md) | Creates a formatted workbook suitable for further editing. |
+| [`write_workbook()`](write_workbook.md) | Creates and Writes out a formatted workbook. |
 
 ## Classes
 | Object                | Description               |

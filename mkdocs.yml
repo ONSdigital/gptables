@@ -19,7 +19,8 @@ nav:
     - Use in R: how_to/in_r.md
   - API:
     - API reference: api/api_reference.md
-    - Functions: api/functions.md
+    - produce_workbook(): api/produce_workbook.md
+    - write_workbook(): api/write_workbook.md
     - Cover: api/cover.md
     - Notes sheet: api/notes_sheet.md
     - Theme: api/theme.md
@@ -45,7 +46,7 @@ plugins:
           show_signature: true
           show_signature_annotations: true
           separate_signature: true
-          show_root_heading: true
+          separate_signature: false
           extra:
             show_type_annotations: true
 
