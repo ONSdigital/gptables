@@ -170,14 +170,14 @@ More information can be found in the [function documentation](../api/functions.m
 
 ### Notes
 
-GPTables allows for attaching notes to tables. Notes are useful for adding footnotes, clarifications, or 
+GPTables allows for attaching notes to tables. Notes are useful for adding footnotes, clarifications, or
 extra information that helps users interpret the data.
 
-Notes appear on a separate worksheet called `Notes`. They can be referenced in the `title`, `subtitles`, 
-`scope`, `source`, and `legend` elements. Notes cannot be added to individual data cells or column 
+Notes appear on a separate worksheet called `Notes`. They can be referenced in the `title`, `subtitles`,
+`scope`, `source`, and `legend` elements. Notes cannot be added to individual data cells or column
 headings.
 
-Placeholders or references for notes are put in using the notation `$$note$$`, like `"Table title 
+Placeholders or references for notes are put in using the notation `$$note$$`, like `"Table title
 $$Reference$$"`. These placeholders are replaced with numbered references in the final output.
 
 ```python
@@ -194,8 +194,8 @@ The note text must be provided as a `pandas.DataFrame` to the `notes_table` argu
 `gptables.write_workbook()`. This should contain the text of the placeholder
 or reference, the text for the note, and optionally any hyperlinks to include with the note.
 
-Below, note references are first created using a dictionary of lists before being converted into a 
-dataframe object. Note that all lists must be the same length - if a note has no link, use an empty 
+Below, note references are first created using a dictionary of lists before being converted into a
+dataframe object. Note that all lists must be the same length - if a note has no link, use an empty
 string `""` or `None` for that entry.
 
 ```python
@@ -226,8 +226,8 @@ gpt.write_workbook(
 )
 ```
 
-The resulting spreadsheet contains a sheet `Notes` with the reference note text next to their assigned 
-note number. The sheet with the dataset `Penguins` shows the reference note numbers corresponding to 
+The resulting spreadsheet contains a sheet `Notes` with the reference note text next to their assigned
+note number. The sheet with the dataset `Penguins` shows the reference note numbers corresponding to
 where they were assigned in the title and subtitle.
 
 ![](../static/notes.png)
