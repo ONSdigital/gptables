@@ -33,7 +33,7 @@ class Cover:
         contact: List = None,
         cover_label: str = "Cover",
         width: int = 85,
-    ):
+    ) -> None:
 
         self.title = title
         self.intro = self._parse_formatting(intro)
@@ -45,7 +45,7 @@ class Cover:
         # TODO: Add input validation (e.g. empty list)
 
     @staticmethod
-    def _parse_formatting(attribute):
+    def _parse_formatting(attribute) -> List:
         """Check attribute for a list. If there is a list then cast the list to a FormatList in attribute.
 
         Parameters
