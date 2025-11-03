@@ -116,8 +116,6 @@ class GPTable:
                 "Notes inside column headers are no longer supported. "
                 "Use GPTable.table_notes for column notes instead."
             )
-        if not isinstance(new_table, pd.DataFrame):
-            raise TypeError("`table` must be a pandas DataFrame")
 
         default_index = pd.Index(range(new_table.shape[0]))
         if not all(new_table.index == default_index) and not new_table.empty:
