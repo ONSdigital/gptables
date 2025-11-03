@@ -3,7 +3,7 @@
 Cover sheets can be used to provide information that is general to all tables in a Workbook.
 
 #### NOTE
-Cover sheets are added as the first sheet in the Worbook when written by `gptables`.
+Cover sheets are added as the first sheet in the Workbook when written by `gptables`.
 This is important when applying additional formatting to other Worksheets by their index in the Workbook.
 
 ## Mapping

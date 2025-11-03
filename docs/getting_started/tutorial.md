@@ -83,9 +83,8 @@ gpt.write_workbook(
 )
 ```
 
-The result with a subset of the data is shown below, where `gptables` has created a Table
-of contents and a sheet with the Penguins dataset. The sheet shows the specified title and
-subtitles presented in a minimal style in text with a legible font and size.
+`gptables` creates a table of contents, with worksheet labels linking to the worksheets, and a description of their contents. There is a sheet with the dataset, and it presents the
+specified details in a minimal style with text of a legible font and size.
 
 ![](../static/getting_started_before_and_after.png)
 
@@ -109,8 +108,6 @@ The code is combined below in an extendable tab.
         source = "Palmer Station, Antarctica",
     )
 
-    penguins_table = gpt.GPTable(table = penguins_data, **kwargs)
-
     penguins_sheets = {"Penguins": penguins_table}
 
     gpt.write_workbook(
@@ -119,6 +116,57 @@ The code is combined below in an extendable tab.
         contentsheet_options={"additional_elements": ["subtitles", "scope"]},
     )
     ```
+
+### Table of contents
+
+The description column in the table of contents can be customised by passing additional
+elements from the `GPTable` into the `contentsheet_options` parameter
+of `gptables.write_workbook()`.
+
+`contentsheet_options` can take `additional_elements`, such as `'subtitles'`, `'scope'`,
+`'source'`, or `'instructions'` to give more information about individual sheets within
+the workbook:
+
+```python
+    penguins_table = gpt.GPTable(
+        ...
+        instructions="This workbook contains a single sheet. The name is a link to it."
+        subtitles=["This is the first subtitle", "This is another subtitle"],
+        scope="Penguins",
+        source="Palmer Station, Antarctica",
+        ...
+    )
+
+    ...
+
+    gpt.write_workbook(
+        filename=output_path,
+        sheets=penguins_sheets,
+        contentsheet_options={"additional_elements": ["instructions", "subtitles", "scope", "source"]},
+    )
+```
+
+![](../static/table_of_contents_additional_elements.png)
+
+`contentsheet_options` also allows for customisation of the table of contents `title`, `subtitles`,
+`table_name`, `instructions` and `column_names`. For example:
+
+```python
+    gpt.write_workbook(
+        filename=output_path,
+        sheets=penguins_sheets,
+        contentsheet_options={"title": "A title for the table of contents",
+                                "subtitles": ["A subtitle for the table of contents"],
+                                "additional_elements": ["subtitles", "scope"]},
+    )
+```
+
+![](../static/table_of_contents_customisation.png)
+
+Set `contentsheet_label = None` inside `gptables.write_workbook()` to disable creating
+a table of contents.
+
+More information can be found in the [function documentation](../api/functions.md#gptables.core.api.write_workbook).
 
 ### Penguins - Notes Example
 
@@ -214,158 +262,130 @@ if __name__ == "__main__":
     print("Output written at: ", output_path)
 ```
 
-### Cover Page Example
+### Cover Sheet Example
 
-This example replicates the [Labour Market overview accessible
-spreadsheet](https://analysisfunction.civilservice.gov.uk/policy-store/further-resources-for-releasing-statistics-in-spreadsheets/) example by the Analysis Function, based
-on data from December 2020.
+This example uses the [Starting out](tutorial.md#starting-out) example above, and adds a cover sheet to the workbook.
+
+Cover sheets can be used to provide information that is general to all tables in a workbook. See the [Analysis Function Guidance](https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/#section-11) for more information about what to include in a cover sheet, and how to make sure it is accessible.
+
+Note: Cover sheets are added as the first sheet in the workbook when written by `gptables`. This is important when applying additional formatting to other worksheets by their index in the workbook.
+
+To include a cover sheet, first map your text elements to the attributes of a [Cover](../api/cover.md) object:
 
 ```python
-from pathlib import Path
-
-import pandas as pd
-
-import gptables as gpt
-
-# Read data and arrange
-parent_dir = Path(__file__).parent
-
-labour_market_data = pd.read_csv(parent_dir / "survey_data.csv")
-labour_market_data.dropna(
-    axis=0, how="all", inplace=True
-)  # Remove empty rows in the data
-labour_market_data.dropna(
-    axis=1, how="all", inplace=True
-)  # Remove columns rows in the data
-col_names = [
-    "Time period and dataset code row",
-    "Number of people",
-    "Economically active",
-    "Employment level",
-    "Unemployment level",
-    "Economically inactive",
-    "Economically active rate",
-    "Employment rate",
-    "Unemployment rate",
-    "Economically inactive rate",
-]
-labour_market_data.columns = col_names
-
-
-# Define table elements
-table_name = "Labour_market_overview_accessibility_example_Nov21"
-title = "Number and percentage of population aged 16 and over in each labour market activity group, UK, seasonally adjusted"
-subtitles = [
-    "This worksheet contains one table. Some cells refer to notes which can be found on the notes worksheet."
-]
-units = {
-    1: "thousands",
-    2: "thousands",
-    3: "thousands",
-    4: "thousands",
-    5: "thousands",
-    6: "%",
-    7: "%",
-    8: "%",
-    9: "%",
-}
-table_notes = {
-    2: "$$note 1$$",
-    3: "$$note 2$$",
-    4: "$$note 2$$",
-    5: "$$note 3$$",
-    7: "$$note 4$$",
-    8: "$$note 4$$",
-    9: "$$note 4$$",
-}
-scope = "Labour Market"
-source = "Source: Office for National Statistics"
-index = {2: 0}  # Column 0 is a level 2 index
-additional_formatting = [
-    {
-        "row": {
-            "rows": [1],
-            "format": {"bold": True, "font_size": 14},
-        }
-    }
-]
-
-
-# or use kwargs to pass these to the appropriate parameters
-kwargs = {
-    "table_name": table_name,
-    "title": title,
-    "subtitles": subtitles,
-    "units": units,
-    "table_notes": table_notes,
-    "scope": scope,
-    "source": source,
-    "index_columns": index,
-    "additional_formatting": additional_formatting,
-}
-
-
-# Define our GPTable
-survey_table = gpt.GPTable(table=labour_market_data, **kwargs)
-
-sheets = {"sheet 1a": survey_table}
-
-cover = gpt.Cover(
-    cover_label="Cover",
-    title="Labour market overview data tables, UK, December 2020 (accessibility example)",
+penguins_cover = gpt.Cover(
+    cover_label = "Cover",
+    title = "Palmer Penguins Dataset",
     intro=[
-        "This spreadsheet contains a selection of the data tables published alongside the Office for National Statistics' Labour market overview for December 2020. We have edited these data tables and the accompanying cover sheet, table of contents and notes worksheet to meet the legal accessibility regulations. It is intended to be an example of an accessible spreadsheet. The data tables and accompanying information have not been quality assured. Please see the original statistical release if you are looking for accurate data.",
-        "[Labour market overview, UK: December 2020](https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/bulletins/uklabourmarket/december2020)",
+        "This spreadsheet contains a table of data obtained from the palmerpenguins package",
+        "This is intended to be a simple example of how to use the gptables package to create a spreadsheet with a cover sheet and data sheets.",
     ],
     about=[
-        [{"bold": True, "font_size": 14}, "Publication dates"],
-        "This data tables in this spreadsheet were originally published at 7:00am 15 December 2020",
-        "The next publication was published at 7:00am 26 January 2021.",
-        [{"bold": True, "font_size": 14}, "Note on weighting methodology"],
-        "Due to the coronavirus (COVID19) pandemic, all face to face interviewing for the Labour Force Survey was suspended and replaced with telephone interviewing. This change in mode for first interviews has changed the non-response bias of the survey, affecting interviews from March 2020 onwards. All data included in this spreadsheet have now been updated and are based on latest weighting methodology.",
-        "More information about the impact of COVID19 on the Labour Force Survey",
-        "Dataset identifier codes",
-        "The four-character identification codes appearing in the tables are the ONS' references for the data series.",
-        [{"bold": True, "font_size": 14}, "Comparing quarterly changes"],
-        "When comparing quarterly changes ONS recommends comparing with the previous non-overlapping three-month average time period, for example, compare Apr to Jun with Jan to Mar, not with Mar to May.",
-        [{"bold": True, "font_size": 14}, "Units, notes and no data"],
-        "Some cells in the tables refer to notes which can be found in the notes worksheet. Note markers are presented in square brackets, for example: [note 1].",
-        "Some cells have no data, when this is the case the words 'no data' are presented in square brackets, for example: '[no data]'. An explanation of why there is no data is given in the notes worksheet, see the column headings for which notes you should refer to.",
-        "Some column headings give units, when this is the case the units are presented in round brackets to differentiate them from note markers.",
-        [
-            {"bold": True, "font_size": 14},
-            "Historic publication dates for labour market statistics",
-            " ",
-        ],
-        "The monthly labour market statistics release was first published in April 1998. Prior to April 1998 there was no integrated monthly release and the Labour Force Survey estimates were published separately, on different dates, from other labour market statistics. From April 2018 the usual publication day for the release was changed from Wednesday to Tuesday.",
-        [{"bold": True, "font_size": 14}, "More labour market data"],
-        "Other labour market datasets are available on the ONS website.",
-        "Labour market statistics time series dataset on the ONS website.",
+        "Additional information about your publication can go here",
     ],
     contact=[
-        "Tel: 01633455400",
-        "Email: [labour.market@ons.gov.uk](mailto:labour.market@ons.gov.uk)",
+        "Tel: 01234 567890",
+        "Email: [example@email.address](mailto: example@email.address)",
+    ],
+)
+```
+This will automatically create a cover sheet with the subheadings "Introductory information", "About these data", and "Contact" where these attributes are included.
+
+Add additional formatting to create further subheadings as needed:
+
+```python
+penguins_cover = gpt.Cover(
+    cover_label = "Cover",
+    title = "Palmer Penguins Dataset",
+    intro=[
+        "This spreadsheet contains a table of data obtained from the palmerpenguins package",
+        "This an example of how to use the gptables package to create a spreadsheet with a cover sheet and data sheets.",
+    ],
+    about=[
+        "Additional information about your publication can go here",
+        [{"bold": True}, "Publication dates"],
+        "This data tables in this spreadsheet were originally published at 7:00am 01 January 2025.",
+        "The next publication will be published at 7:00am 01 January 2026.",
+        [{"bold": True}, "Methodology notes"],
+        "Information on methodology can be useful to users of your data",
+        [{"bold": True}, "Notes, blank cells and units"],
+        "Some cells in the tables refer to notes which can be found in the notes worksheet. Note markers are presented in square brackets, for example: [note 1].",
+        "Blank cells indicate no data. An explanation of why there is no data is given in the notes worksheet.",
+        "Some column headings give units, when this is the case the units are presented in round brackets to differentiate them from note markers.",
+    ],
+    contact=[
+        "Tel: 01234 567890",
+        "Email: [example@email.address](mailto: example@email.address)",
     ],
 )
 
-# Notesheet
-notes_table = pd.read_csv(parent_dir / "survey_data_notes.csv")
-notes_table.dropna(axis=0, how="all", inplace=True)  # Remove empty rows in the data
-notes_table.dropna(axis=1, how="all", inplace=True)  # Remove columns rows in the data
-notes_table.columns = ["Note reference", "Note text"]
-
-# Use write_workbook to win!
-if __name__ == "__main__":
-    output_path = parent_dir / "python_survey_data_gptable.xlsx"
-    gpt.write_workbook(
-        filename=output_path,
-        sheets=sheets,
-        cover=cover,
-        notes_table=notes_table,
-        contentsheet_options={"additional_elements": ["subtitles", "scope"]},
-        auto_width=True,
-        gridlines="show_all",
-        cover_gridlines=True,
-    )
-    print("Output written at: ", output_path)
 ```
+
+Finally, pass the cover object to the `cover_sheet` argument of the `gptables.write_workbook()` function:
+
+```python
+gpt.write_workbook(
+    filename="python_penguins_gptable_with_cover.xlsx",
+    sheets=penguins_sheets,
+    cover_sheet=penguins_cover,
+    contentsheet_options={"additional_elements": ["subtitles", "scope"]},
+)
+```
+The resulting cover sheet is shown below.
+
+![](../static/cover_sheet.png)
+
+The code is combined below in an extendable tab.
+
+??? "Adding a cover sheet"
+    ```python
+    from pathlib import Path
+    import pandas as pd
+    import gptables as gpt
+
+    penguins_data = pd.read_csv("penguins.csv")
+
+    penguins_table = gpt.GPTable(
+        table = penguins_data,
+        table_name = "penguins_statistics",
+        title = "The Palmer Penguins Dataset",
+        subtitles = ["This is the first subtitle",
+                    "This is another subtitle"],
+        scope = "Penguins",
+        source = "Palmer Station, Antarctica",
+    )
+
+    penguins_sheets = {"Penguins": penguins_table}
+
+    penguins_cover = gpt.Cover(
+        cover_label = "Cover",
+        title = "Palmer Penguins Dataset",
+        intro=[
+            "This spreadsheet contains a table of data obtained from the palmerpenguins package",
+            "This is intended to be a simple example of how to use the gptables package to create a spreadsheet with a cover sheet and data sheets.",
+        ],
+        about=[
+            "Additional information about your publication can go here",
+            [{"bold": True}, "Publication dates"],
+            "Date published: 01 January 2025.",
+            "Next release: 01 January 2026.",
+            [{"bold": True}, "Methodology notes"],
+            "Information on methodology can be useful to users of your data",
+            [{"bold": True}, "Notes, blank cells and units"],
+            "Some cells in the tables refer to notes which can be found in the notes worksheet. Note markers are presented in square brackets, for example: [note 1].",
+            "Blank cells indicate no data. An explanation of why there is no data is given in the notes worksheet, see the column headings for which notes you should refer to.",
+            "Some column headings give units, when this is the case the units are presented in round brackets to differentiate them from note markers.",
+        ],
+        contact=[
+            "Tel: 01234 567890",
+            "Email: [example@email.address](mailto: example@email.address)",
+        ],
+    )
+
+    gpt.write_workbook(
+        filename="python_penguins_gptable.xlsx",
+        sheets=penguins_sheets,
+        cover=penguins_cover,
+        contentsheet_options={"additional_elements": ["subtitles", "scope"]},
+    )
+    ```
