@@ -521,9 +521,6 @@ class GPWorksheet(Worksheet):
         data = pd.DataFrame(gptable.table, copy=True)
 
         # Create row containing column headings
-        # Store the string representation of each dtype, including the type and brackets
-        # data_types = {col: str(dtype) for col, dtype in data.dtypes.items()}
-        # backup_data = data.copy()
         data.loc[-1] = data.columns
         data.index = data.index + 1
         data.sort_index(inplace=True)
