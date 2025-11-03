@@ -25,7 +25,6 @@ nav:
     - GPTable: api/gptable.md
     - GPWorkbook: api/gpworkbook.md
     - GPWorksheet: api/gpworksheet.md
-    - Notes sheet: api/notes_sheet.md
     - Theme: api/theme.md
   - Reference:
     - Accessibility checklist: reference/checklist.md

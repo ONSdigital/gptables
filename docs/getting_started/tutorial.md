@@ -170,7 +170,8 @@ More information can be found in the [function documentation](../api/functions.m
 
 ### Notes
 
-GPTables allows for attaching notes to tables. Notes are useful for adding footnotes, clarifications, or
+GPTables allows for attaching notes to tables by supplying `notes_table` to `produce_workbook()` or
+`write_workbook()`. Notes are useful for adding footnotes, clarifications, or
 extra information that helps users interpret the data.
 
 Notes appear on a separate worksheet called `Notes`. They can be referenced in the `title`, `subtitles`,
@@ -217,7 +218,7 @@ notes = {
 penguins_notes_table = pd.DataFrame.from_dict(notes)
 ```
 
-When outputting the table, specify the reference table for the `Notes` sheet using `notes_table`:
+When outputting the table, specify the reference table for the `Notes` sheet using `notes_table`.
 ```python
 gpt.write_workbook(
     ...
@@ -275,6 +276,10 @@ where they were assigned in the title and subtitle.
         contentsheet_options={"additional_elements": ["subtitles", "scope"]},
     )
     ```
+
+The notes sheet `title`, `table_name` and `instructions`can be customised by supplying these to
+the `notesheet_options` parameter in `write_workbook()` or `produce_workbook()`. An updated 
+label can be supplied to `notesheet_label`.
 
 ### Cover Sheet Example
 
