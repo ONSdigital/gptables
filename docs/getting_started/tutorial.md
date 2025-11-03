@@ -286,7 +286,7 @@ label can be supplied to `notesheet_label`.
 This example uses the [Starting out](tutorial.md#starting-out) example above, and adds a cover sheet to the workbook.
 
 Cover sheets can be used to provide information that is general to all tables in a workbook. See the [Analysis Function Guidance](https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/#section-11) for more information about what to include in a cover sheet, and how to make sure it is accessible.
-s
+
 Note: Cover sheets are added as the first sheet in the workbook when written by `gptables`. This is important when applying additional formatting to other worksheets by their index in the workbook.
 
 To include a cover sheet, first map your text elements to the attributes of a [Cover](../api/classes/cover.md) object:
