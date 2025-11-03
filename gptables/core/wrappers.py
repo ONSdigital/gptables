@@ -582,6 +582,10 @@ class GPWorksheet(Worksheet):
         data_table_copy = data_table_copy.convert_dtypes()
 
         column_types = data_table_copy.dtypes
+        if index_columns == [] and pd.api.types.is_numeric_dtype(
+            column_types[data_table.columns[0]]
+        ):
+            column_types[data_table.columns[0]] = "str"
 
         for column in data_table.columns:
             if data_table.columns.get_loc(column) in index_columns:
