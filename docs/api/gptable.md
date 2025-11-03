@@ -7,23 +7,6 @@ The supported table elements are represented like this in the output .xlsx file:
 
 ![Cells A1 to A6 contain the title, subtitles, instructions, legend, source and scope. These parameters are mapped individually. The next row contains the column headings. Within the same row but on a new line are the units. The table note references are within the same row on a new line under the units. In columns 1, 2 and 3 of the next row down are index levels 1, 2 and 3. In the next columns are the data. Column headings, indices and data are supplied as a pandas DataFrame. Units and table note references are mapped individually.](../static/table_mapping.png)
 
-## Notes
-
-Notes are text elements that appear on the separately generated `Notesheet`.
-
-Notes can be referenced in the `title`, `subtitles`, `scope`, `source`
-and `legend` elements. Notes corresponding to entries in the data can be
-referenced using the `table_notes` element. This will add a note reference to
-the relevant column heading. Note references cannot be added to data cells, as
-inserting references here would reduce the usability of the data. We use double
-dollar symbols (`$$`) to denote notes in text. For example, a note could be
-referenced as `"My table title $$Reference$$"`.
-
-References in text are replaced with numbers, in increasing order from the top-
-left corner of the first sheet containing a data table.
-
-See this in practice in the Tutorial(../getting_started/usage.md#example-usage).
-
 #### NOTE
 Deprecated in v1.1.0: Ability to reference notes within
 `GPTable.table.columns` will be removed in v2 of gptables. Please use

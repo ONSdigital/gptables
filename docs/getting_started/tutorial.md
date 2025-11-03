@@ -118,6 +118,14 @@ The code is combined below in an extendable tab.
     )
     ```
 
+## Notes
+
+GPTables allows you to attach notes to your tables. Notes are useful for adding footnotes, clarifications, or extra information that helps users interpret the data.
+
+Notes appear on a separate worksheet called `Notes`. They can be referenced in the `title`, `subtitles`, `scope`, `source`, and `legend` elements, as well as in column headers using `table_notes`. Notes cannot be added to individual data cells to preserve usability.
+
+To reference a note, use double dollar signs (`$$`) around a placeholder name, like `"My table title $$Reference$$"`. These placeholders are replaced with numbered references in the final output.
+
 ### Penguins - Notes Example
 
 This example demonstrates how to include notes in a GPTable. Notes cannot
@@ -128,6 +136,74 @@ Placeholders for notes are put in using the notation, $$note$$. The actual note 
 must be provided as a Pandas dataframe to the notes_table argument of the `gptables.write_workbook` function.
 This dataframe should contain the text of the placeholder, the actual text you want in the note and (optionally)
 any hyperlinks you want in the note.
+
+
+```python
+penguins_title = "The Penguins Dataset$$noteabouty$$"
+penguins_subtitles = [
+    "This is the first subtitle$$noteaboutx$$",
+    "Just another subtitle",
+]
+```
+Notes can also be included in column headers:
+```python
+
+penguins_table_notes = {
+    "species": "$$noteaboutx$$",
+    2: "$$noteaboutz$$",
+}
+```
+Assign the table notes to the `table_notes` keyword argument:
+```python
+kwargs = {
+    "table_name": penguins_table_name,
+    "title": penguins_title,
+    "subtitles": penguins_subtitles,
+    "units": penguins_units,
+    "table_notes": penguins_table_notes,
+    "scope": penguins_scope,
+    "source": penguins_source,
+}
+```
+
+Notes references are first created using a dictionary, before being converted into a dataframe object:
+```python
+notes = {
+    "Note reference": ["noteaboutz", "noteaboutx", "noteabouty"],
+    "Note text": [
+        "This is a note about z linking to google.",
+        "This is a note about x linking to duckduckgo.",
+        "This is a note about y linking to the ONS website.",
+    ],
+    "Useful link": [
+        "[google](https://www.google.com)",
+        "[duckduckgo](https://duckduckgo.com/)",
+        "[ONS](https://www.ons.gov.uk)",
+    ],
+}
+penguins_notes_table = pd.DataFrame.from_dict(notes)
+```
+
+When outputting, specify the reference table for the `Notes` sheet using `notes_table`:
+```python
+output_path = parent_dir / "python_penguins_gptable.xlsx"
+    gpt.write_workbook(
+        filename=output_path,
+        sheets=penguins_sheets,
+        notes_table=penguins_notes_table,
+        contentsheet_options={"additional_elements": ["subtitles", "scope"]},
+    )
+```
+
+
+The resulting spreadsheet shown below contains a sheet `Notes` with all the reference note text next to their assigned note number. The sheet with the dataset `Penguins` shows the reference note numbers corresponding to where they were assigned in the title, subtitle and column header elements.
+
+![](../static/getting_started_notes_section.png)
+
+![](../static/getting_started_notes.png)
+
+<details>
+<summary>Expand this section to see the full code</summary>
 
 ```python
 from pathlib import Path
@@ -211,6 +287,8 @@ if __name__ == "__main__":
     )
     print("Output written at: ", output_path)
 ```
+
+</details>
 
 ### Cover Sheet Example
 
