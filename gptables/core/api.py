@@ -1,23 +1,29 @@
 import warnings
 from pathlib import Path
+from typing import Any, Dict, Optional, Union
 
+import pandas as pd
+
+from gptables.core.cover import Cover
+from gptables.core.gptable import GPTable
+from gptables.core.theme import Theme
 from gptables.core.wrappers import GPWorkbook
 
 
 def produce_workbook(
-    filename,
-    sheets,
-    theme=None,
-    cover=None,
-    contentsheet_label="Contents",
-    contentsheet_options={},
-    notes_table=None,
-    notesheet_label="Notes",
-    notesheet_options={},
-    auto_width=True,
-    gridlines="hide_all",
-    cover_gridlines=False,
-):
+    filename: str,
+    sheets: Dict[str, "GPTable"],
+    theme: Optional["Theme"] = None,
+    cover: Optional["Cover"] = None,
+    contentsheet_label: str = "Contents",
+    contentsheet_options: Optional[Dict[str, Any]] = None,
+    notes_table: Optional[pd.DataFrame] = None,
+    notesheet_label: str = "Notes",
+    notesheet_options: Optional[Dict[str, Any]] = None,
+    auto_width: Union[bool, Dict[str, bool]] = True,
+    gridlines: str = "hide_all",
+    cover_gridlines: bool = False,
+) -> "GPWorkbook":
     """
     Produces a GPWorkbook, ready to be written to the specified `.xlsx` file
     using the ``.close()`` method.
@@ -62,6 +68,11 @@ def produce_workbook(
     -------
     workbook : gptables.GPWorkbook
     """
+    if contentsheet_options is None:
+        contentsheet_options = {}
+    if notesheet_options is None:
+        notesheet_options = {}
+
     if isinstance(filename, Path):
         filename = filename.as_posix()
 
@@ -119,20 +130,20 @@ def produce_workbook(
 
 
 def write_workbook(
-    filename,
-    sheets,
-    theme=None,
-    cover=None,
-    contentsheet=None,
-    contentsheet_label="Contents",
-    contentsheet_options={},
-    notes_table=None,
-    notesheet_label="Notes",
-    notesheet_options={},
-    auto_width=True,
-    gridlines="hide_all",
-    cover_gridlines=False,
-):
+    filename: str,
+    sheets: Dict[str, "GPTable"],
+    theme: Optional["Theme"] = None,
+    cover: Optional["Cover"] = None,
+    contentsheet: Optional[str] = None,
+    contentsheet_label: str = "Contents",
+    contentsheet_options: Optional[Dict[str, Any]] = None,
+    notes_table: Optional[pd.DataFrame] = None,
+    notesheet_label: str = "Notes",
+    notesheet_options: Optional[Dict[str, Any]] = None,
+    auto_width: Union[bool, Dict[str, bool]] = True,
+    gridlines: str = "hide_all",
+    cover_gridlines: bool = False,
+) -> None:
     """
     Writes a GPWorkbook to the specified `.xlsx` file.
 
@@ -184,6 +195,12 @@ def write_workbook(
     -------
     None
     """
+
+    if contentsheet_options is None:
+        contentsheet_options = {}
+    if notesheet_options is None:
+        notesheet_options = {}
+
     wb = produce_workbook(
         filename,
         sheets,
