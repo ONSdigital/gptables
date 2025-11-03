@@ -594,10 +594,20 @@ class GPWorksheet(Worksheet):
                 regex=r"\[[\w\s]+\]",
                 value=np.nan,
             ).infer_objects(copy=False)
+            if (
+                data_table_copy.columns.to_list()
+                == data_table_copy.iloc[0, :].to_list()
+            ):
+                # drop first row which contains column names
+                data_table_copy = data_table_copy.iloc[1:]
 
         data_table_copy = data_table_copy.convert_dtypes()
 
         column_types = data_table_copy.dtypes
+        if index_columns == [] and pd.api.types.is_numeric_dtype(
+            column_types[data_table.columns[0]]
+        ):
+            column_types[data_table.columns[0]] = "str"
 
         for column in data_table.columns:
             if data_table.columns.get_loc(column) in index_columns:
