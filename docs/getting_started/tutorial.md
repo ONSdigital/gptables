@@ -389,3 +389,95 @@ The code is combined below in an extendable tab.
         contentsheet_options={"additional_elements": ["subtitles", "scope"]},
     )
     ```
+
+### Multiple sheets
+
+This example uses the [Starting out](tutorial.md#starting-out) example above, and adds a second data sheet to the workbook.
+
+To include another data sheet, you must construct another `GPTable`, similarly to how it was done with a single data sheet. This extra sheet can have it's own unique elements, including data.
+```python
+penguins_table_1 = gpt.GPTable(
+    table=penguins_data_1,
+    table_name="penguins_statistics_1",
+    title="The Palmer Penguins Dataset (Sheet 1)",
+    subtitles=["This is the first subtitle", "This is another subtitle"],
+    scope="Penguins",
+    source="Palmer Station, Antarctica",
+)
+
+penguins_table_2 = gpt.GPTable(
+    table=penguins_data_2,
+    table_name="penguins_statistics_2",
+    title="The Palmer Penguins Dataset (Sheet 2)",
+    subtitles=["This is the first subtitle for sheet 2", "Another subtitle for sheet 2"],
+    scope="Penguins",
+    source="Palmer Station, Antarctica",
+)
+```
+
+Each table should be associated to a sheet name for writing. Collate the sheets with their names in a dictionary:
+
+```python
+penguins_sheets = {
+        "Penguins 1": penguins_table_1,
+        "Penguins 2": penguins_table_2
+    }
+```
+
+Finally, use `gptables.write_workbook()` to create and write out the workbook with the output path, the sheets, and any additional elements.
+
+```python
+gpt.write_workbook(
+    filename="python_penguins_gptable.xlsx",
+    sheets=penguins_sheets,
+    contentsheet_options={"additional_elements": ["subtitles", "scope"]},
+)
+```
+
+The code is combined below in an extendable tab.
+
+??? "Multiple sheets"
+    ```python
+    from pathlib import Path
+    import pandas as pd
+    import gptables as gpt
+
+
+    # Read the CSV once
+    penguins_data = pd.read_csv("penguins.csv")
+
+    # Split the penguins data into two halves, keeping the first 3 colums as keys.
+    penguins_data_1 = penguins_data.iloc[:, :10]
+    penguins_data_2 = pd.concat([penguins_data.iloc[:, :3], penguins_data.iloc[:, 10:]], axis=1)
+
+    # Create two different GPTable objects
+    penguins_table_1 = gpt.GPTable(
+        table=penguins_data_1,
+        table_name="penguins_statistics_1",
+        title="The Palmer Penguins Dataset (Sheet 1)",
+        subtitles=["This is the first subtitle", "This is another subtitle"],
+        scope="Penguins",
+        source="Palmer Station, Antarctica",
+    )
+
+    penguins_table_2 = gpt.GPTable(
+        table=penguins_data_2,
+        table_name="penguins_statistics_2",
+        title="The Palmer Penguins Dataset (Sheet 2)",
+        subtitles=["This is the first subtitle for sheet 2", "Another subtitle for sheet 2"],
+        scope="Penguins",
+        source="Palmer Station, Antarctica",
+    )
+
+    # Add both tables to the sheets dictionary
+    penguins_sheets = {
+        "Penguins 1": penguins_table_1,
+        "Penguins 2": penguins_table_2
+    }
+
+    gpt.write_workbook(
+        filename="python_penguins_gptable.xlsx",
+        sheets=penguins_sheets,
+        contentsheet_options={"additional_elements": ["subtitles", "scope"]},
+    )
+    ```
