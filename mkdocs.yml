@@ -22,9 +22,9 @@ nav:
     - produce_workbook(): api/produce_workbook.md
     - write_workbook(): api/write_workbook.md
     - Cover: api/cover.md
+    - GPTable: api/gptable.md
     - Notes sheet: api/notes_sheet.md
     - Theme: api/theme.md
-    - GPTable: api/gptable.md
     - XlsxWriter wrappers: api/wrappers.md
   - Reference:
     - Accessibility checklist: reference/checklist.md

@@ -11,7 +11,7 @@
 | Object                | Description               |
 |-----------------------|---------------------------|
 | [`Cover`](cover.md) | Stores information for the cover sheet of a workbook. |
-| `GPTable` | Stores information about data in a table. |
+| [`GPTable`](gptable.md) | Stores information about data in a table. |
 | `GPWorkbook` | Wrapper for `XlsxWriter.Workbook` to support further editing after `produce_workbook()` |
 | `GPWorksheet` | Wrapper for `XlsxWriter.Worksheet` to support further editing after `produce_workbook()` |
 | `Theme` | Used to set the formatting of various elements throughout the workbook. |
