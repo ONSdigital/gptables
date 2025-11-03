@@ -1,99 +1,39 @@
-"""
-Penguins - Notes Example
-----------------------
-
-This example demonstrates how to include notes in a GPTable. Notes cannot
-be included in data cells but may appear either in column headers or in text such
-as titles, subtitles, etc.
-
-Placeholders for notes are put in using the notation, $$note$$. The actual note text
-must be provided as a Pandas dataframe to the notes_table argument of the ``gptables.write_workbook`` function.
-This dataframe should contain the text of the placeholder, the actual text you want in the note and (optionally)
-any hyperlinks you want in the note.
-"""
-
 from pathlib import Path
 
 import pandas as pd
 
 import gptables as gpt
 
-# Read data
 parent_dir = Path(__file__).parents[1]
-
 penguins_data = pd.read_csv(parent_dir / "test/data/penguins.csv")
 
-# Any data processing could go here as long as you end with a Pandas dataframe that you want to write in a spreadsheet
-
-# Define table elements
-
-penguins_table_name = "penguins_statistics"
-
-# Notes are added by using $$note$$ in text
-penguins_title = "The Penguins Dataset$$noteabouty$$"
-penguins_subtitles = [
-    "This is the first subtitle$$noteaboutx$$",
-    "Just another subtitle",
-]
-
-# Notes can also be included in column headers, see below
-penguins_table_notes = {
-    "species": "$$noteaboutx$$",
-    2: "$$noteaboutz$$",
-    "Comments": "$$noteaboutw$$",
-}  # Columns can be referenced either by index or by name
-penguins_units = {
-    2: "mm",
-    "bill_depth_mm": "mm",
-    4: "mm",
-    "body_mass_g": "g",
-}  # As above for column referencing
-penguins_scope = "Penguins"
-penguins_source = "Palmer Station, Antarctica"
-
-kwargs = {
-    "table_name": penguins_table_name,
-    "title": penguins_title,
-    "subtitles": penguins_subtitles,
-    "units": penguins_units,
-    "table_notes": penguins_table_notes,
-    "scope": penguins_scope,
-    "source": penguins_source,
-}
-
-# Define our GPTable
-penguins_table = gpt.GPTable(table=penguins_data, **kwargs)
+penguins_table = gpt.GPTable(table=penguins_data,
+                             table_name = "penguins_statistics",
+                             title="The Palmer Penguins Dataset$$note_about_x$$",
+                             subtitles = ["This is the first subtitle$$note_about_y$$",
+                                          "This is another subtitle"],
+                             scope = "Penguins",
+                             source = "Palmer Station, Antarctica")
 
 penguins_sheets = {"Penguins": penguins_table}
 
-# Notesheet - Note that the ordering of each list only matters with respect to the other lists in the "notes" dictionary.
-# GPTables will use the "Note reference" list to ensure the "Note text" is assigned correctly
-# All lists must be the same length. If a note has no link, use an empty string or None for that entry.
 notes = {
-    "Note reference": ["noteaboutz", "noteaboutx", "noteabouty", "noteaboutw"],
+    "Note reference": ["note_about_x", "note_about_y", "note_about_z", "note_with_no_link"],
     "Note text": [
-        "This is a note about z linking to google.",
-        "This is a note about x linking to duckduckgo.",
-        "This is a note about y linking to the ONS website.",
-        "This is a note about w with no link.",
+        "This is a note about x linking to google.",
+        "This is a note about y linking to duckduckgo.",
+        "This is a note about z linking to the ONS website.",
+        "This is a note with no link."
     ],
     "Useful link": [
         "[google](https://www.google.com)",
         "[duckduckgo](https://duckduckgo.com/)",
         "[ONS](https://www.ons.gov.uk)",
-        None,
+        None
     ],
 }
+penguins_notes_table = pd.DataFrame.from_dict(notes)
 
-try:
-    penguins_notes_table = pd.DataFrame.from_dict(notes)
-except ValueError as e:
-    raise ValueError(
-        "Error creating notes table. Check that all lists in 'notes' are the same length."
-        "If a note has no link, use an empty string or None for that entry."
-    ) from e
-
-# Use write_workbook to win!
 if __name__ == "__main__":
     output_path = parent_dir / "python_penguins_gptable.xlsx"
     gpt.write_workbook(
