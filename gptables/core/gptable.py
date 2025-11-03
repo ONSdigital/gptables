@@ -8,7 +8,7 @@ from xlsxwriter.format import Format
 class GPTable:
     """
     A Good Practice Table.
-    
+
     Stores data, text content, and content metadata for writing a table to Excel.
 
     Attributes

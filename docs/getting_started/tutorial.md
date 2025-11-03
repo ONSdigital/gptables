@@ -278,7 +278,7 @@ where they were assigned in the title and subtitle.
     ```
 
 The notes sheet `title`, `table_name` and `instructions`can be customised by supplying these to
-the `notesheet_options` parameter in `write_workbook()` or `produce_workbook()`. An updated 
+the `notesheet_options` parameter in `write_workbook()` or `produce_workbook()`. An updated
 label can be supplied to `notesheet_label`.
 
 ### Cover Sheet Example

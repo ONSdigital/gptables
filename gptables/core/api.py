@@ -26,7 +26,7 @@ def produce_workbook(
 ) -> GPWorkbook:
     """
     Produces a formatted workbook.
-    
+
     Can be written to an `.xlsx` file as specified in `filename` using `.close()`.
 
     Parameters

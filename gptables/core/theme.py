@@ -27,7 +27,7 @@ class Theme:
     """
     Defines format attributes for table elements for use with XlsxWriter.
 
-    For valid values, see XlsxWriter `Format` properties: 
+    For valid values, see XlsxWriter `Format` properties:
     _<https://xlsxwriter.readthedocs.io/format.html#format-methods-and-format-properties>_.
 
     Attributes
