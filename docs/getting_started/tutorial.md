@@ -446,7 +446,7 @@ The code is combined below in an extendable tab.
     # Read the CSV once
     penguins_data = pd.read_csv("penguins.csv")
 
-    # Split the penguins data into two halves, keeping the first 3 colums as keys.
+    # Split the penguins data into two halves, keeping the first 3 columns as keys.
     penguins_data_1 = penguins_data.iloc[:, :10]
     penguins_data_2 = pd.concat([penguins_data.iloc[:, :3], penguins_data.iloc[:, 10:]], axis=1)
 
