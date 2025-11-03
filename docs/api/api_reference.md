@@ -1,13 +1,13 @@
 # API Reference
 
-## Functions
+<h2>Functions</h2>
 
 | Object                | Description               |
 |-----------------------|---------------------------|
 | [`produce_workbook()`](produce_workbook.md) | Creates a formatted workbook suitable for further editing. |
 | [`write_workbook()`](write_workbook.md) | Creates and Writes out a formatted workbook. |
 
-## Classes
+<h2>Classes</h2>
 | Object                | Description               |
 |-----------------------|---------------------------|
 | [`Cover`](cover.md) | Stores information for the cover sheet of a workbook. |

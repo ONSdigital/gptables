@@ -7,22 +7,22 @@ from gptables.core.gptable import FormatList
 @dataclass
 class Cover:
     """
-    dataclass for storing cover sheet text.
+    Stores cover sheet properties.
 
     Attributes
     ----------
     title : str
-        cover page title
+        Cover page title
     intro : List[str, list], optional
-        introductory text
+        Introductory text
     about : List[str, list], optional
-        about/notes text
+        About/notes text
     contact : List[str, list], optional
-        contact details text
+        Contact details text
     cover_label : str
-        cover page tab label, defaults to Cover
+        Cover page tab label, defaults to "Cover"
     width: int
-        width of the column, defaults to 85
+        Width of the column, defaults to 85
     """
 
     def __init__(
