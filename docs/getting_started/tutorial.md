@@ -166,11 +166,12 @@ the workbook:
 Set `contentsheet_label = None` inside `gptables.write_workbook()` to disable creating
 a table of contents.
 
-More information can be found in the [function documentation](../api/functions.md#gptables.core.api.write_workbook).
+More information can be found in the [function documentation](../api/functions/write_workbook.md).
 
 ### Notes
 
-GPTables allows for attaching notes to tables. Notes are useful for adding footnotes, clarifications, or
+GPTables allows for attaching notes to tables by supplying `notes_table` to `produce_workbook()` or
+`write_workbook()`. Notes are useful for adding footnotes, clarifications, or
 extra information that helps users interpret the data.
 
 Notes appear on a separate worksheet called `Notes`. They can be referenced in the `title`, `subtitles`,
@@ -217,7 +218,7 @@ notes = {
 penguins_notes_table = pd.DataFrame.from_dict(notes)
 ```
 
-When outputting the table, specify the reference table for the `Notes` sheet using `notes_table`:
+When outputting the table, specify the reference table for the `Notes` sheet using `notes_table`.
 ```python
 gpt.write_workbook(
     ...
@@ -276,6 +277,10 @@ where they were assigned in the title and subtitle.
     )
     ```
 
+The notes sheet `title`, `table_name` and `instructions`can be customised by supplying these to
+the `notesheet_options` parameter in `write_workbook()` or `produce_workbook()`. An updated
+label can be supplied to `notesheet_label`.
+
 ### Cover Sheet Example
 
 This example uses the [Starting out](tutorial.md#starting-out) example above, and adds a cover sheet to the workbook.
@@ -284,7 +289,7 @@ Cover sheets can be used to provide information that is general to all tables in
 
 Note: Cover sheets are added as the first sheet in the workbook when written by `gptables`. This is important when applying additional formatting to other worksheets by their index in the workbook.
 
-To include a cover sheet, first map your text elements to the attributes of a [Cover](../api/cover.md) object:
+To include a cover sheet, first map your text elements to the attributes of a [Cover](../api/classes/cover.md) object:
 
 ```python
 penguins_cover = gpt.Cover(

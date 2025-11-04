@@ -18,7 +18,7 @@ from .theme import Theme
 
 class GPWorksheet(Worksheet):
     """
-    Wrapper for an XlsxWriter Worksheet object. Provides a method for writing
+    Wrapper for an `XlsxWriter.Worksheet` object. Provides a method for writing
     a good practice table (GPTable) to a Worksheet.
     """
 
@@ -993,8 +993,7 @@ class GPWorksheet(Worksheet):
 
 class GPWorkbook(Workbook):
     """
-    Wrapper for and XlsxWriter Workbook object. The Worksheets class has been
-    replaced by an alternative with a method for writting GPTable objects.
+    Wrapper for an `XlsxWriter.Workbook` object.
     """
 
     def __init__(self, filename: str = None, options: dict = {}) -> None:
@@ -1096,9 +1095,9 @@ class GPWorkbook(Workbook):
             description of the page layout
             defaults to "This worksheet contains one table."
 
-        Return
+        Returns
         ------
-        gpt.GPTable
+        gptables.GPTable
         """
         if column_names is None:
             column_names = ["Sheet name", "Table description"]
@@ -1202,11 +1201,10 @@ class GPWorkbook(Workbook):
             description of the page layout
             defaults to "This worksheet contains one table."
 
-        Return
+        Returns
         ------
-        gpt.GPTable
+        gptables.GPTable
         """
-        # set defaults
         if table_name is None:
             table_name = "notes_table"
 

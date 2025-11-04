@@ -23,10 +23,11 @@ def produce_workbook(
     auto_width: Union[bool, Dict[str, bool]] = True,
     gridlines: str = "hide_all",
     cover_gridlines: bool = False,
-) -> "GPWorkbook":
+) -> GPWorkbook:
     """
-    Produces a GPWorkbook, ready to be written to the specified `.xlsx` file
-    using the ``.close()`` method.
+    Produces a formatted workbook.
+
+    Can be written to an `.xlsx` file as specified in `filename` using `.close()`.
 
     Parameters
     ----------
@@ -145,14 +146,7 @@ def write_workbook(
     cover_gridlines: bool = False,
 ) -> None:
     """
-    Writes a GPWorkbook to the specified `.xlsx` file.
-
-    This is an alternative main function that will take in data and theme
-    information. It calls upon the package to write a formatted `.xlsx`
-    file to the specified path.
-
-    .. note:: Deprecated in v1.1.0: `contentsheet` will be removed
-        in v2, it is replaced by `contentsheet_label`
+    Writes a formatted Excel workbook to `filename`.
 
     Parameters
     ----------

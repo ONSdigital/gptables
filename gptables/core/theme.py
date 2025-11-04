@@ -25,13 +25,10 @@ def validate_single_format(f: Callable) -> Callable:
 
 class Theme:
     """
-    A class that defines a set of format attributes for use in xlsxwriter.
+    Defines format attributes for table elements for use with XlsxWriter.
 
-    This class associates a dict of format attributes with table elements.
-
-    See XlsxWriter
-    `format properties <https://xlsxwriter.readthedocs.io/format.html#format-methods-and-format-properties>`_
-    for valid options.
+    For valid values, see XlsxWriter `Format` properties:
+    _<https://xlsxwriter.readthedocs.io/format.html#format-methods-and-format-properties>_.
 
     Attributes
     ----------

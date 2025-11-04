@@ -19,13 +19,15 @@ nav:
     - Use in R: how_to/in_r.md
   - API:
     - API reference: api/api_reference.md
-    - Functions: api/functions.md
-    - Table of contents: api/table_of_contents.md
-    - Cover: api/cover.md
-    - Notes sheet: api/notes_sheet.md
-    - Theme: api/theme.md
-    - GPTable: api/gptable.md
-    - XlsxWriter wrappers: api/wrappers.md
+    - Functions:
+      - produce_workbook(): api/functions/produce_workbook.md
+      - write_workbook(): api/functions/write_workbook.md
+    - Classes:
+      - Cover: api/classes/cover.md
+      - GPTable: api/classes/gptable.md
+      - GPWorkbook: api/classes/gpworkbook.md
+      - GPWorksheet: api/classes/gpworksheet.md
+      - Theme: api/classes/theme.md
   - Reference:
     - Accessibility checklist: reference/checklist.md
     - Examples: reference/examples.md
@@ -46,7 +48,7 @@ plugins:
           show_signature: true
           show_signature_annotations: true
           separate_signature: true
-          show_root_heading: true
+          separate_signature: false
           extra:
             show_type_annotations: true
 
