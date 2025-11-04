@@ -146,20 +146,36 @@ class GPWorksheet(Worksheet):
         """
         Reference annotations in the table column headings and index columns.
         """
-        table = getattr(gptable, "table")
+        table = gptable.table.copy()
 
-        table.columns = self._replace_reference_in_attr(
-            [x for x in table.columns], reference_order
-        )
+        notes = getattr(gptable, "table_notes", {}) or {}
+        if notes:
+            headers = list(table.columns)
+            rename_map = {}
+
+            for key, note_token in notes.items():
+
+                idx = key if isinstance(key, int) else table.columns.get_loc(key)
+                old = headers[idx]
+
+                rendered = self._replace_reference_in_attr(note_token, reference_order)
+
+                if not (
+                    isinstance(old, str)
+                    and old.splitlines()
+                    and old.splitlines()[-1] == rendered
+                ):
+                    new = f"{old}\n{rendered}"
+                    rename_map[old] = new
+            if rename_map:
+                table = table.rename(columns=rename_map)
 
         index_columns = gptable.index_columns.values()
-
         for col in index_columns:
             table.iloc[:, col] = table.iloc[:, col].apply(
                 lambda x: self._replace_reference_in_attr(x, reference_order)
             )
-
-        setattr(gptable, "table", table)
+        gptable.table = table
 
     def _replace_reference_in_attr(self, data, reference_order):
         """

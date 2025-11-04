@@ -116,8 +116,6 @@ class GPTable:
                 "Notes inside column headers are no longer supported. "
                 "Use GPTable.table_notes for column notes instead."
             )
-        if not isinstance(new_table, pd.DataFrame):
-            raise TypeError("`table` must be a pandas DataFrame")
 
         default_index = pd.Index(range(new_table.shape[0]))
         if not all(new_table.index == default_index) and not new_table.empty:
@@ -144,7 +142,7 @@ class GPTable:
 
         if new_table_notes is None:
             new_table_notes = self.table_notes
-        self.set_table_notes(new_table_notes)
+        self.table_notes = new_table_notes
 
     def set_index_columns(self, new_index_columns):
         """
@@ -404,44 +402,8 @@ class GPTable:
         Adds note references to column headers.
         `table_notes` should be in the format {column: "$$note_reference$$"}.
         Column can be column name or 0-indexed column number in `table`.
+
         """
-        if isinstance(new_table_notes, dict) and len(new_table_notes) > 0:
-            for value in new_table_notes.values():
-                self._validate_text(value, "table_notes")
-
-            headers = self.table.columns.values.tolist()
-
-            # Check if units have already been added to headers...
-            unmodified_headers = [header.split("\n")[0] for header in headers]
-
-            # ...if so, apply any notes applied to headers without units, to headers with units
-            for n in range(len(unmodified_headers)):
-                if unmodified_headers[n] in list(new_table_notes.keys()):
-                    new_table_notes[n] = new_table_notes.pop(unmodified_headers[n])
-
-            # Convert numeric keys to column names
-            new_headers_keys = [
-                headers[key] if isinstance(key, int) else key
-                for key in new_table_notes.keys()
-            ]
-            new_headers_values = [
-                f"{key}\n{value}"
-                for key, value in zip(new_headers_keys, new_table_notes.values())
-            ]
-            new_headers = dict(zip(new_headers_keys, new_headers_values))
-
-            self.table = self.table.rename(columns=new_headers)
-
-            if len(self.additional_formatting) > 0:
-                self._update_column_names_in_additional_formatting(new_headers)
-
-        elif new_table_notes is not None:
-            msg = (
-                "`table_notes` attribute must be a dictionary or None"
-                " ({column: '$$note_reference$$'})"
-            )
-            raise TypeError(msg)
-
         self.table_notes = new_table_notes
 
     def set_source(self, new_source):
