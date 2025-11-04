@@ -18,6 +18,7 @@ nav:
     - Add a custom theme: how_to/custom_theme.md
     - Use in R: how_to/in_r.md
   - API:
+    - API reference: api/api_reference.md
     - Functions: api/functions.md
     - Table of contents: api/table_of_contents.md
     - Cover: api/cover.md
@@ -38,11 +39,16 @@ plugins:
 - mkdocstrings:
     handlers:
       python:
+        paths: ["."]
         options:
           docstring_style: numpy
           show_source: false
           show_signature: true
+          show_signature_annotations: true
+          separate_signature: true
           show_root_heading: true
+          extra:
+            show_type_annotations: true
 
           filters:
               - "!^__" # Hide methods like __init__()
@@ -51,5 +57,7 @@ plugins:
 markdown_extensions:
 - toc:
    toc_depth: 1-2
+- admonition
 - pymdownx.details
 - pymdownx.superfences
+- admonition
