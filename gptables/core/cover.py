@@ -7,22 +7,22 @@ from gptables.core.gptable import FormatList
 @dataclass
 class Cover:
     """
-    dataclass for storing cover sheet text.
+    Stores cover sheet properties.
 
     Attributes
     ----------
     title : str
-        cover page title
+        Cover page title
     intro : List[str, list], optional
-        introductory text
+        Introductory text
     about : List[str, list], optional
-        about/notes text
+        About/notes text
     contact : List[str, list], optional
-        contact details text
+        Contact details text
     cover_label : str
-        cover page tab label, defaults to Cover
+        Cover page tab label, defaults to "Cover"
     width: int
-        width of the column, defaults to 85
+        Width of the column, defaults to 85
     """
 
     def __init__(
@@ -33,7 +33,7 @@ class Cover:
         contact: List = None,
         cover_label: str = "Cover",
         width: int = 85,
-    ):
+    ) -> None:
 
         self.title = title
         self.intro = self._parse_formatting(intro)
@@ -45,7 +45,7 @@ class Cover:
         # TODO: Add input validation (e.g. empty list)
 
     @staticmethod
-    def _parse_formatting(attribute):
+    def _parse_formatting(attribute) -> List:
         """Check attribute for a list. If there is a list then cast the list to a FormatList in attribute.
 
         Parameters

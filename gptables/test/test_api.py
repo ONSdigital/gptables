@@ -27,7 +27,6 @@ def create_gpworkbook():
             source="My imagination",
             units={0: "Latin alphabet", "columnB": "real numbers"},
             table_notes={1: "$$ref2$$"},
-            index_columns={2: 0},
             additional_formatting=[
                 {"column": {"columns": ["columnA"], "format": {"bold": True}}}
             ],

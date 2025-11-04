@@ -18,11 +18,11 @@ from .theme import Theme
 
 class GPWorksheet(Worksheet):
     """
-    Wrapper for an XlsxWriter Worksheet object. Provides a method for writing
+    Wrapper for an `XlsxWriter.Worksheet` object. Provides a method for writing
     a good practice table (GPTable) to a Worksheet.
     """
 
-    def write_cover(self, cover):
+    def write_cover(self, cover: "Cover") -> None:
         """
         Write a cover page to the Worksheet. Uses text from a Cover object and
         details of the Workbook contents.
@@ -57,7 +57,12 @@ class GPWorksheet(Worksheet):
 
         self.set_column(0, 0, cover.width)
 
-    def write_gptable(self, gptable, auto_width, reference_order=[]):
+    def write_gptable(
+        self,
+        gptable: "GPTable",
+        auto_width: bool,
+        reference_order: list = [],
+    ) -> None:
         """
         Write data from a GPTable object to the worksheet using the workbook
         Theme object for formatting.
@@ -107,7 +112,11 @@ class GPWorksheet(Worksheet):
             auto_width,
         )
 
-    def _reference_annotations(self, gptable, reference_order):
+    def _reference_annotations(
+        self,
+        gptable: "GPTable",
+        reference_order: list,
+    ) -> None:
         """
         Replace note references with numbered references and move to end of element.
         Acts on `title`, `subtitles`, `table` and `notes` attributes of a GPTable.
@@ -142,7 +151,11 @@ class GPWorksheet(Worksheet):
             )
         self._reference_table_annotations(gptable, reference_order)
 
-    def _reference_table_annotations(self, gptable, reference_order):
+    def _reference_table_annotations(
+        self,
+        gptable: "GPTable",
+        reference_order: list,
+    ) -> None:
         """
         Reference annotations in the table column headings and index columns.
         """
@@ -161,7 +174,11 @@ class GPWorksheet(Worksheet):
 
         setattr(gptable, "table", table)
 
-    def _replace_reference_in_attr(self, data, reference_order):
+    def _replace_reference_in_attr(
+        self,
+        data: object,
+        reference_order: list,
+    ) -> object:
         """
         Replaces references in a string or list/dict of strings. Works
         recursively on list elements and dict values. Other types are returned
@@ -199,7 +216,7 @@ class GPWorksheet(Worksheet):
         return data
 
     @staticmethod
-    def _replace_reference(string, reference_order):
+    def _replace_reference(string: str, reference_order: list) -> str:
         """
         Given a single string, record occurrences of new references (denoted by
         flanking dollar signs [$$reference$$]) and replace with number
@@ -226,7 +243,7 @@ class GPWorksheet(Worksheet):
 
         return string
 
-    def _parse_urls(self, sheet):
+    def _parse_urls(self, sheet: object) -> None:
         """
         Convert markdown URL formatting into URL, string tuple
 
@@ -265,7 +282,7 @@ class GPWorksheet(Worksheet):
         if isinstance(sheet, GPTable):
             self._parse_table_urls(sheet)
 
-    def _parse_table_urls(self, gptable):
+    def _parse_table_urls(self, gptable: "GPTable") -> None:
         """
         Parse URLs in table.
         """
@@ -282,7 +299,7 @@ class GPWorksheet(Worksheet):
 
         setattr(gptable, "table", table)
 
-    def _replace_url_in_attr(self, data):
+    def _replace_url_in_attr(self, data: object) -> object:
         """
         Replaces urls in a string or list/dict of strings. Works
         recursively on list elements and dict values. Other types
@@ -309,7 +326,7 @@ class GPWorksheet(Worksheet):
         return data
 
     @staticmethod
-    def _replace_url(string):
+    def _replace_url(string: str) -> object:
         """
         Given a single string, record occurrences of markdown
         style urls (formatted as `"[url](display_text)"`) and
@@ -348,7 +365,7 @@ class GPWorksheet(Worksheet):
 
             return {string: url}
 
-    def _write_element(self, pos, element, format_dict):
+    def _write_element(self, pos: list, element: object, format_dict: dict) -> list:
         """
         Write a single text element of a GPTable to the GPWorksheet.
 
@@ -372,7 +389,9 @@ class GPWorksheet(Worksheet):
 
         return pos
 
-    def _write_element_list(self, pos, element_list, format_dict):
+    def _write_element_list(
+        self, pos: list, element_list: list, format_dict: dict
+    ) -> list:
         """
         Writes a list of elements row-wise.
 
@@ -397,37 +416,41 @@ class GPWorksheet(Worksheet):
 
         return pos
 
-    def _write_instructions(self, pos, element, format_dict):
+    def _write_instructions(
+        self, pos: list, element: object, format_dict: dict
+    ) -> list:
         """
         Alias for writting description elements by name.
         """
         return self._write_element(pos, element, format_dict)
 
-    def _write_source(self, pos, element, format_dict):
+    def _write_source(self, pos: list, element: object, format_dict: dict) -> list:
         """
         Alias for writting description elements by name.
         """
         return self._write_element(pos, element, format_dict)
 
-    def _write_scope(self, pos, element, format_dict):
+    def _write_scope(self, pos: list, element: object, format_dict: dict) -> list:
         """
         Alias for writting description elements by name.
         """
         return self._write_element(pos, element, format_dict)
 
-    def _write_legend(self, pos, element_list, format_dict):
+    def _write_legend(self, pos: list, element_list: list, format_dict: dict) -> list:
         """
         Alias for writting description elements by name.
         """
         return self._write_element_list(pos, element_list, format_dict)
 
-    def _write_notes(self, pos, element_list, format_dict):
+    def _write_notes(self, pos: list, element_list: list, format_dict: dict) -> list:
         """
         Alias for writting description elements by name.
         """
         return self._write_element_list(pos, element_list, format_dict)
 
-    def _write_table_elements(self, pos, gptable, auto_width):
+    def _write_table_elements(
+        self, pos: list, gptable: "GPTable", auto_width: bool
+    ) -> list:
         """
         Writes the table and units elements of a GPTable. Uses the
         Workbook Theme, plus any additional formatting associated with the
@@ -548,7 +571,9 @@ class GPWorksheet(Worksheet):
 
         return pos
 
-    def _apply_column_alignments(self, data_table, formats_table, index_columns):
+    def _apply_column_alignments(
+        self, data_table: pd.DataFrame, formats_table: pd.DataFrame, index_columns: list
+    ) -> None:
         """
         Add column alignment to format based on datatype
 
@@ -569,10 +594,20 @@ class GPWorksheet(Worksheet):
                 regex=r"\[[\w\s]+\]",
                 value=np.nan,
             ).infer_objects(copy=False)
+            if (
+                data_table_copy.columns.to_list()
+                == data_table_copy.iloc[0, :].to_list()
+            ):
+                # drop first row which contains column names
+                data_table_copy = data_table_copy.iloc[1:]
 
         data_table_copy = data_table_copy.convert_dtypes()
 
         column_types = data_table_copy.dtypes
+        if index_columns == [] and pd.api.types.is_numeric_dtype(
+            column_types[data_table.columns[0]]
+        ):
+            column_types[data_table.columns[0]] = "str"
 
         for column in data_table.columns:
             if data_table.columns.get_loc(column) in index_columns:
@@ -587,8 +622,11 @@ class GPWorksheet(Worksheet):
             self._apply_format(formats_table[column], alignment_dict)
 
     def _apply_additional_formatting(
-        self, formats_table, additional_formatting, index_levels
-    ):
+        self,
+        formats_table: pd.DataFrame,
+        additional_formatting: list,
+        index_levels: int,
+    ) -> None:
         """
         Apply row, column and cell formatting to dataframe of formats.
         """
@@ -627,7 +665,9 @@ class GPWorksheet(Worksheet):
 
             self._apply_format(formats_table_slice, formatting)
 
-    def _write_array(self, pos, data, formats):
+    def _write_array(
+        self, pos: list, data: pd.DataFrame, formats: pd.DataFrame
+    ) -> list:
         """
         Write a two-dimensional array to the current Worksheet, starting from
         the specified position.
@@ -664,7 +704,9 @@ class GPWorksheet(Worksheet):
 
         return pos
 
-    def _mark_data_as_worksheet_table(self, gptable, formats_dataframe):
+    def _mark_data_as_worksheet_table(
+        self, gptable: "GPTable", formats_dataframe: pd.DataFrame
+    ) -> None:
         """
         Marks the data to be recognised as a Worksheet Table in Excel.
 
@@ -700,7 +742,9 @@ class GPWorksheet(Worksheet):
             },
         )
 
-    def _smart_write(self, row, col, data, format_dict, *args):
+    def _smart_write(
+        self, row: int, col: int, data: object, format_dict: dict, *args
+    ) -> None:
         """
         Depending on the input data, this function will write rich strings or
         use the standard `write()` method. For rich strings, the base format is
@@ -761,8 +805,8 @@ class GPWorksheet(Worksheet):
             self.write(row, col, data, wb.add_format(format_dict), *args)
 
     def _write_with_newlines_and_custom_formats(
-        self, wb, row, col, data, format_dict, *args
-    ):
+        self, wb: Workbook, row: int, col: int, data: list, format_dict: dict, *args
+    ) -> None:
         """
         Take list of FormatList (and str), join with newline characters and smart write
         """
@@ -792,7 +836,9 @@ class GPWorksheet(Worksheet):
             wb, row, col, FormatList(data_with_newlines), format_dict, *args
         )
 
-    def _write_with_newlines(self, wb, row, col, data, format_dict, *args):
+    def _write_with_newlines(
+        self, wb: Workbook, row: int, col: int, data: list, format_dict: dict, *args
+    ) -> None:
         """
         Take list of str, join with newline character and write
         """
@@ -800,7 +846,15 @@ class GPWorksheet(Worksheet):
 
         self.write(row, col, data_string, wb.add_format(format_dict), *args)
 
-    def _write_with_custom_formats(self, wb, row, col, data, format_dict, *args):
+    def _write_with_custom_formats(
+        self,
+        wb: Workbook,
+        row: int,
+        col: int,
+        data: "FormatList",
+        format_dict: dict,
+        *args,
+    ) -> None:
         data_with_custom_formats = []
         for item in data.list:
             # Convert dicts to Format (with merge onto base format)
@@ -823,7 +877,15 @@ class GPWorksheet(Worksheet):
             row, col, *data_with_all_formats, wb.add_format(format_dict), *args
         )
 
-    def _write_dict_as_url(self, workbook, row, col, data, format_dict, *args):
+    def _write_dict_as_url(
+        self,
+        workbook: Workbook,
+        row: int,
+        col: int,
+        data: dict,
+        format_dict: dict,
+        *args,
+    ) -> None:
         url = list(data.values())[0]
         display_text = list(data.keys())[0]
 
@@ -837,7 +899,7 @@ class GPWorksheet(Worksheet):
         )
 
     @staticmethod
-    def _apply_format(format_table_slice, format_dict):
+    def _apply_format(format_table_slice: object, format_dict: dict) -> None:
         """
         Update all cells of a given dataframe slice with the format
         dictionary. Handles dict, series or dataframes.
@@ -850,14 +912,16 @@ class GPWorksheet(Worksheet):
         elif isinstance(format_table_slice, dict):
             format_table_slice.update(format_dict)
 
-    def _set_column_widths(self, widths):
+    def _set_column_widths(self, widths: list) -> None:
         """
         Set the column widths using a list of widths.
         """
         for col_number in range(len(widths)):
             self.set_column_pixels(col_number, col_number, widths[col_number])
 
-    def _calculate_column_widths(self, table, formats_table):
+    def _calculate_column_widths(
+        self, table: pd.DataFrame, formats_table: pd.DataFrame
+    ) -> list:
         """
         Calculate Excel column widths using xlsxwriter's cell_autofit_width for each cell,
         and take the maximum per column.
@@ -888,7 +952,7 @@ class GPWorksheet(Worksheet):
             col_widths.append(max(cell_widths) if cell_widths else 0)
         return col_widths
 
-    def _get_scaling_factor(self, format_dict, text):
+    def _get_scaling_factor(self, format_dict: dict, text: str) -> float:
         """Return scaling factor for width based on font size, bold formatting,
         and capitalisation."""
         font_size = (
@@ -906,12 +970,12 @@ class GPWorksheet(Worksheet):
         capitalisation_factor = 1.0 + 0.15 * upper_ratio
         return (font_size / 11) * (1.1 if bold else 1.0) * capitalisation_factor
 
-    def _get_longest_line(self, cell_val):
+    def _get_longest_line(self, cell_val: object) -> str:
         """Return the longest line in a cell value split by newline."""
         cell_val_str = self._get_cell_string(cell_val)
         return max(cell_val_str.split("\n"), key=len)
 
-    def _get_cell_string(self, cell_val):
+    def _get_cell_string(self, cell_val: object) -> str:
         """Return the contents from any cell value as a string."""
         if isinstance(cell_val, str):
             return cell_val
@@ -929,18 +993,19 @@ class GPWorksheet(Worksheet):
 
 class GPWorkbook(Workbook):
     """
-    Wrapper for and XlsxWriter Workbook object. The Worksheets class has been
-    replaced by an alternative with a method for writting GPTable objects.
+    Wrapper for an `XlsxWriter.Workbook` object.
     """
 
-    def __init__(self, filename=None, options={}):
+    def __init__(self, filename: str = None, options: dict = {}) -> None:
         super(GPWorkbook, self).__init__(filename=filename, options=options)
         self.theme = None
         self._annotations = None
         # Set default theme
         self.set_theme(gptheme)
 
-    def add_worksheet(self, name=None, gridlines="hide_all"):
+    def add_worksheet(
+        self, name: str = None, gridlines: str = "hide_all"
+    ) -> "GPWorksheet":
         """
         Overwrite add_worksheet() to create a GPWorksheet object.
 
@@ -968,7 +1033,7 @@ class GPWorkbook(Workbook):
 
         return worksheet
 
-    def set_theme(self, theme):
+    def set_theme(self, theme: "Theme") -> None:
         """
         Sets the theme for all GPTable objects written to the Workbook.
 
@@ -988,7 +1053,7 @@ class GPWorkbook(Workbook):
             )
         self.theme = theme
 
-    def _update_annotations(self, sheets):
+    def _update_annotations(self, sheets: dict) -> None:
         ordered_refs = []
         for gptable in sheets.values():
             gptable._set_annotations(self.theme.description_order)
@@ -999,14 +1064,14 @@ class GPWorkbook(Workbook):
 
     def make_table_of_contents(
         self,
-        sheets,
-        additional_elements=None,
-        column_names=None,
-        table_name=None,
-        title=None,
-        subtitles=None,
-        instructions=None,
-    ):
+        sheets: dict,
+        additional_elements: list = None,
+        column_names: list = None,
+        table_name: str = None,
+        title: str = None,
+        subtitles: list = None,
+        instructions: str = None,
+    ) -> "GPTable":
         """
         Generate table of contents from sheet and optional customisation parameters.
 
@@ -1030,9 +1095,9 @@ class GPWorkbook(Workbook):
             description of the page layout
             defaults to "This worksheet contains one table."
 
-        Return
+        Returns
         ------
-        gpt.GPTable
+        gptables.GPTable
         """
         if column_names is None:
             column_names = ["Sheet name", "Table description"]
@@ -1088,10 +1153,11 @@ class GPWorkbook(Workbook):
             title=title,
             subtitles=subtitles,
             instructions=instructions,
+            index_columns={2: 0},
         )
 
     @staticmethod
-    def _strip_annotation_references(text):
+    def _strip_annotation_references(text: object) -> object:
         """
         Strip annotation references (as $$ $$) from a str or list text element.
         """
@@ -1115,11 +1181,11 @@ class GPWorkbook(Workbook):
 
     def make_notesheet(
         self,
-        notes_table,
-        table_name=None,
-        title=None,
-        instructions=None,
-    ):
+        notes_table: pd.DataFrame,
+        table_name: str = None,
+        title: str = None,
+        instructions: str = None,
+    ) -> "GPTable":
         """
         Generate notes table sheets from notes table and optional customisation parameters.
 
@@ -1135,11 +1201,10 @@ class GPWorkbook(Workbook):
             description of the page layout
             defaults to "This worksheet contains one table."
 
-        Return
+        Returns
         ------
-        gpt.GPTable
+        gptables.GPTable
         """
-        # set defaults
         if table_name is None:
             table_name = "notes_table"
 

@@ -1,4 +1,5 @@
 import re
+from typing import Any, Dict, List, Optional, Union
 
 import pandas as pd
 from xlsxwriter.format import Format
@@ -6,12 +7,9 @@ from xlsxwriter.format import Format
 
 class GPTable:
     """
-    A Good Practice Table. Stores a table and metadata for writing a table
-    to excel.
+    A Good Practice Table.
 
-    .. note:: Deprecated in v1.1.0: Ability to reference notes within
-        ``GPTable.table.columns`` will be removed in v2 of gptables. Please use
-        ``GPTable.table_notes`` to ensure references are correctly placed and ordered.
+    Stores data, text content, and content metadata for writing a table to Excel.
 
     Attributes
     ----------
@@ -46,19 +44,19 @@ class GPTable:
 
     def __init__(
         self,
-        table,
-        table_name,
-        title,
-        scope=None,
-        source=None,
-        units=None,
-        table_notes=None,
-        subtitles=[],
-        instructions="",
-        legend=[],
-        index_columns={2: 0},
-        additional_formatting=[],
-    ):
+        table: pd.DataFrame,
+        table_name: str,
+        title: str,
+        scope: Optional[str] = None,
+        source: Optional[str] = None,
+        units: Optional[Dict[Any, Any]] = None,
+        table_notes: Optional[Dict[Any, Any]] = None,
+        subtitles: Optional[List[Any]] = None,
+        instructions: str = "",
+        legend: Optional[List[Any]] = None,
+        index_columns: Optional[Dict[int, int]] = None,
+        additional_formatting: Optional[List[Dict[str, Any]]] = None,
+    ) -> None:
 
         # Attributes
         self.title = None
@@ -82,6 +80,11 @@ class GPTable:
 
         self.additional_formatting = []
 
+        if additional_formatting is None:
+            additional_formatting = []
+
+        self.additional_formatting = additional_formatting
+
         # Valid format labels from XlsxWriter
         self._valid_format_labels = [
             attr.replace("set_", "")
@@ -102,8 +105,12 @@ class GPTable:
         self._set_data_range()
 
     def set_table(
-        self, new_table, new_index_columns=None, new_units=None, new_table_notes=None
-    ):
+        self,
+        new_table: pd.DataFrame,
+        new_index_columns: Optional[Dict[int, int]] = None,
+        new_units: Optional[Dict[Any, Any]] = None,
+        new_table_notes: Optional[Dict[Any, Any]] = None,
+    ) -> None:
         """
         Set the `table`, `index_columns`, `units` and `table_notes` attributes. Overwrites
         existing values for these attributes.
@@ -138,7 +145,7 @@ class GPTable:
             new_table_notes = self.table_notes
         self.set_table_notes(new_table_notes)
 
-    def set_index_columns(self, new_index_columns):
+    def set_index_columns(self, new_index_columns: Dict[int, int]) -> None:
         """
         Set the `index_columns` attribute. Overwrites any existing values.
         A dict must be supplied. This dict should map index level to a
@@ -184,13 +191,13 @@ class GPTable:
             )
             raise ValueError(msg)
 
-    def _valid_column_index(self, column_index):
+    def _valid_column_index(self, column_index: int) -> bool:
         """
         Check if `column_index` is valid, given the `table` shape.
         """
         return column_index in range(self.table.shape[1])
 
-    def _set_column_headings(self):  # TODO: check custom formatting in headers
+    def _set_column_headings(self) -> None:  # TODO: check custom formatting in headers
         """
         Sets the `column_headings` attribute to the set of column indexes that
         are not assigned to `index_columns`.
@@ -198,7 +205,7 @@ class GPTable:
         index_cols = set(self.index_columns.values())
         self._column_headings = {x for x in range(self.table.shape[1])} - index_cols
 
-    def _validate_all_column_names_have_text(self):
+    def _validate_all_column_names_have_text(self) -> None:
         """
         Validate that all column names in header row have text.
         """
@@ -212,7 +219,7 @@ class GPTable:
                 msg = "Empty column name found in table data - column names must all have text"
                 raise ValueError(msg)
 
-    def _validate_no_duplicate_column_names(self):
+    def _validate_no_duplicate_column_names(self) -> None:
         """
         Validate that there are no duplicate column names in table data.
         """
@@ -220,7 +227,7 @@ class GPTable:
             msg = "Duplicate column names found in table data - column names must be unique"
             raise ValueError(msg)
 
-    def set_table_name(self, new_table_name):
+    def set_table_name(self, new_table_name: str) -> None:
         """
         Set the `table_name` attribute.
         """
@@ -235,7 +242,7 @@ class GPTable:
         else:
             self.table_name = new_table_name
 
-    def set_title(self, new_title):
+    def set_title(self, new_title: Any) -> None:
         """
         Set the `title` attribute.
         """
@@ -246,7 +253,7 @@ class GPTable:
 
         self.title = new_title
 
-    def add_subtitle(self, new_subtitle):
+    def add_subtitle(self, new_subtitle: Any) -> None:
         """
         Add a single subtitle to the existing list of `subtitles`.
         """
@@ -257,7 +264,9 @@ class GPTable:
 
         self.subtitles.append(new_subtitle)
 
-    def set_subtitles(self, new_subtitles, overwrite=True):
+    def set_subtitles(
+        self, new_subtitles: Optional[List[Any]], overwrite: bool = True
+    ) -> None:
         """
         Set a list of subtitles to the `subtitles` attribute. Overwrites
         existing ist of subtitles by default. If `overwrite` is False, new list
@@ -287,7 +296,7 @@ class GPTable:
         else:
             self.subtitles += new_subtitles
 
-    def set_instructions(self, new_instructions):
+    def set_instructions(self, new_instructions: Any) -> None:
         """
         Set `instructions` attribute.
         """
@@ -300,7 +309,7 @@ class GPTable:
         else:
             self.instructions = new_instructions
 
-    def set_scope(self, new_scope):
+    def set_scope(self, new_scope: Any) -> None:
         """
         Set the `scope` attribute.
         """
@@ -315,7 +324,9 @@ class GPTable:
 
         self.scope = new_scope
 
-    def set_units(self, new_units):  # TODO: custom formatting in units?
+    def set_units(
+        self, new_units: Optional[Dict[Any, Any]]
+    ) -> None:  # TODO: custom formatting in units?
         """
         Adds units to column headers.
         Units should be in the format {column: units_text}. Column can be column name or 0-indexed column
@@ -361,7 +372,9 @@ class GPTable:
 
         self.units = new_units
 
-    def _update_column_names_in_additional_formatting(self, col_names):
+    def _update_column_names_in_additional_formatting(
+        self, col_names: Dict[Any, Any]
+    ) -> None:
         """
         Parameters
         ----------
@@ -385,8 +398,8 @@ class GPTable:
         self.additional_formatting = formatting_list
 
     def set_table_notes(
-        self, new_table_notes
-    ):  # TODO: custom formatting in column headers?
+        self, new_table_notes: Optional[Dict[Any, Any]]
+    ) -> None:  # TODO: custom formatting in column headers?
         """
         Adds note references to column headers.
         `table_notes` should be in the format {column: "$$note_reference$$"}.
@@ -431,7 +444,7 @@ class GPTable:
 
         self.table_notes = new_table_notes
 
-    def set_source(self, new_source):
+    def set_source(self, new_source: Any) -> None:
         """
         Set the source attribute to the specified str.
         """
@@ -446,7 +459,7 @@ class GPTable:
 
         self.source = new_source
 
-    def add_legend(self, new_legend):
+    def add_legend(self, new_legend: Any) -> None:
         """
         Add a single legend entry to the existing `legend` list.
         """
@@ -457,7 +470,9 @@ class GPTable:
 
         self.legend.append(new_legend)
 
-    def set_legend(self, new_legend, overwrite=True):
+    def set_legend(
+        self, new_legend: Optional[List[Any]], overwrite: bool = True
+    ) -> None:
         """
         Set a list of legend entries to the `legend` attribute. Overwrites
         existing legend entries by default. If overwrite is False, new entries
@@ -481,7 +496,7 @@ class GPTable:
         else:
             self.legend += new_legend
 
-    def _set_annotations(self, description_order):
+    def _set_annotations(self, description_order: List[str]) -> None:
         """
         Set a list of note references to the `_annotations` attribute.
         """
@@ -507,7 +522,7 @@ class GPTable:
         # remove duplicates from ordered_refs and assign to self._annotations
         self._annotations = list(dict.fromkeys(ordered_refs))
 
-    def _get_references_from_attr(self, data):
+    def _get_references_from_attr(self, data: Any) -> List[str]:
         """
         Finds references in a string or list/dict of strings. Works
         recursively on list elements and dict values. Other types are ignored.
@@ -540,7 +555,7 @@ class GPTable:
         return ordered_refs
 
     # Deprecated as of v1.1.0 - instead use `table_notes` to add references to column headers
-    def _get_references_from_table(self):
+    def _get_references_from_table(self) -> List[str]:
         """
         Get note references in the table column headings and index columns.
         """
@@ -561,7 +576,7 @@ class GPTable:
         return ordered_refs
 
     @staticmethod
-    def _get_references(string):
+    def _get_references(string: str) -> List[str]:
         """
         Given a single string, return occurrences of note references (denoted by
         flanking dollar signs [$$reference$$]).
@@ -583,7 +598,7 @@ class GPTable:
 
         return ordered_refs
 
-    def set_additional_formatting(self, new_formatting):
+    def set_additional_formatting(self, new_formatting: List[Dict[str, Any]]) -> None:
         """
         Set a dictionary of additional formatting to be applied to this table.
         """
@@ -603,7 +618,7 @@ class GPTable:
 
         self.additional_formatting = new_formatting
 
-    def _validate_format_labels(self, format_list):
+    def _validate_format_labels(self, format_list: List[Dict[str, Any]]) -> None:
         """
         Validate that format labels are valid property of XlsxWriter Format.
         """
@@ -618,7 +633,7 @@ class GPTable:
                 msg = f"`{label}` is not a valid XlsxWriter Format property"
                 raise ValueError(msg)
 
-    def _set_data_range(self):
+    def _set_data_range(self) -> None:
         """
         Get the top-left and bottom-right cell reference of the table data.
         """
@@ -647,7 +662,7 @@ class GPTable:
         ]
 
     @staticmethod
-    def _validate_text(obj, attr):
+    def _validate_text(obj: Any, attr: str) -> None:
         """
         Validate that an object contains valid text elements. These are either
         strings or list of strings and dictionaries.
@@ -680,11 +695,11 @@ class FormatList:
     Dictionaries specify additional formatting to be applied to the following string.
     """
 
-    def __init__(self, list):
-        self.list = list
+    def __init__(self, items: List[Union[str, Dict[str, Any]]]) -> None:
+        self.list = items
         self._set_string_property()
 
-    def _set_string_property(self):
+    def _set_string_property(self) -> None:
         string = ""
         for entry in self.list:
             if isinstance(entry, str):

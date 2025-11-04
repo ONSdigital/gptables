@@ -1,0 +1,19 @@
+global:
+    font_size: 13
+    font_name: Arial
+    font_color: '#AD0000'
+
+title:
+    font_size: 20
+
+subtitle:
+    font_size: 16
+
+data:
+    text_wrap: 1
+
+description_order:
+    - instructions
+    - source
+    - legend
+    - scope
