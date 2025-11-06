@@ -102,7 +102,7 @@ The code is combined below in an extendable tab.
     )
     ```
 
-## Table of contents sheet
+## Customising the table of contents
 
 The description column in a table of contents can be customised by passing additional
 elements from the `GPTable` into the `contentsheet_options` parameter
@@ -153,7 +153,7 @@ a table of contents.
 
 More information can be found in the [function documentation](../api/functions/write_workbook.md).
 
-## Notes sheet
+## Adding notes
 
 Notes are useful for adding footnotes, clarifications, or extra information that helps users interpret 
 the data. `gptables` allows for attaching notes to tables by supplying `notes_table` to 
@@ -218,7 +218,7 @@ where they were assigned in the title and subtitle.
 
 ![](../static/notes.png)
 
-??? Notes
+??? "Adding notes"
 
     ```python
     from pathlib import Path
@@ -266,15 +266,11 @@ The notes sheet `title`, `table_name` and `instructions`can be customised by sup
 the `notesheet_options` parameter in `write_workbook()` or `produce_workbook()`. An updated
 label can be supplied to `notesheet_label`.
 
-## Cover Sheet Example
+## Adding a cover sheet
 
-This example uses the [Starting out](tutorial.md#starting-out) example above, and adds a cover sheet to the workbook.
+Cover sheets can be used to provide information that is general to all tables in a workbook.
 
-Cover sheets can be used to provide information that is general to all tables in a workbook. See the [Analysis Function Guidance](https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/#section-11) for more information about what to include in a cover sheet, and how to make sure it is accessible.
-
-Note: Cover sheets are added as the first sheet in the workbook when written by `gptables`. This is important when applying additional formatting to other worksheets by their index in the workbook.
-
-To include a cover sheet, first map your text elements to the attributes of a [Cover](../api/classes/cover.md) object:
+To include a cover sheet, first map text elements to the attributes of a [Cover](../api/classes/cover.md) object:
 
 ```python
 penguins_cover = gpt.Cover(
@@ -295,7 +291,7 @@ penguins_cover = gpt.Cover(
 ```
 This will automatically create a cover sheet with the subheadings "Introductory information", "About these data", and "Contact" where these attributes are included.
 
-Add additional formatting to create further subheadings as needed:
+Additional formatting can be introduced to create further subheadings if required:
 
 ```python
 penguins_cover = gpt.Cover(
@@ -325,17 +321,17 @@ penguins_cover = gpt.Cover(
 
 ```
 
-Finally, pass the cover object to the `cover_sheet` argument of the `gptables.write_workbook()` function:
+Finally, supply the `Cover` to the `cover_sheet` argument of `gptables.write_workbook()`:
 
 ```python
 gpt.write_workbook(
-    filename="python_penguins_gptable_with_cover.xlsx",
-    sheets=penguins_sheets,
+    ...
     cover_sheet=penguins_cover,
-    contentsheet_options={"additional_elements": ["subtitles", "scope"]},
+    ...
 )
 ```
-The resulting cover sheet is shown below.
+A cover sheet is created with the supplied information, with the title in large bold text
+followed by the introduction and information about the data followed by the contact details.
 
 ![](../static/cover_sheet.png)
 
@@ -394,11 +390,10 @@ The code is combined below in an extendable tab.
     )
     ```
 
-## Multiple sheets
+## Adding additional data sheets
 
-This example uses the [Starting out](tutorial.md#starting-out) example above, and adds a second data sheet to the workbook.
+For additional data sheets, construct additional `GPTable`s:
 
-To include another data sheet, you must construct another `GPTable`, similarly to how it was done with a single data sheet. This extra sheet can have it's own unique elements, including data.
 ```python
 penguins_table_1 = gpt.GPTable(
     table=penguins_data_1,
@@ -419,7 +414,7 @@ penguins_table_2 = gpt.GPTable(
 )
 ```
 
-Each table should be associated to a sheet name for writing. Collate the sheets with their names in a dictionary:
+Collate the `GPTable`s with their names in a dictionary:
 
 ```python
 penguins_sheets = {
@@ -432,29 +427,25 @@ Finally, use `gptables.write_workbook()` to create and write out the workbook wi
 
 ```python
 gpt.write_workbook(
-    filename="python_penguins_gptable.xlsx",
+    ...
     sheets=penguins_sheets,
-    contentsheet_options={"additional_elements": ["subtitles", "scope"]},
+    ...
 )
 ```
 
 The code is combined below in an extendable tab.
 
-??? "Multiple sheets"
+??? "Adding additional data sheets"
     ```python
     from pathlib import Path
     import pandas as pd
     import gptables as gpt
 
-
-    # Read the CSV once
     penguins_data = pd.read_csv("penguins.csv")
 
-    # Split the penguins data into two halves, keeping the first 3 columns as keys.
     penguins_data_1 = penguins_data.iloc[:, :10]
     penguins_data_2 = pd.concat([penguins_data.iloc[:, :3], penguins_data.iloc[:, 10:]], axis=1)
 
-    # Create two different GPTable objects
     penguins_table_1 = gpt.GPTable(
         table=penguins_data_1,
         table_name="penguins_statistics_1",
@@ -473,7 +464,6 @@ The code is combined below in an extendable tab.
         source="Palmer Station, Antarctica",
     )
 
-    # Add both tables to the sheets dictionary
     penguins_sheets = {
         "Penguins 1": penguins_table_1,
         "Penguins 2": penguins_table_2
