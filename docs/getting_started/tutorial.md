@@ -392,7 +392,7 @@ The code is combined below in an extendable tab.
 
 ## Adding additional data sheets
 
-For additional data sheets, construct additional `GPTable`s:
+For additional data sheets, construct additional GPTables:
 
 ```python
 penguins_table_1 = gpt.GPTable(
@@ -414,7 +414,7 @@ penguins_table_2 = gpt.GPTable(
 )
 ```
 
-Collate the `GPTable`s with their names in a dictionary:
+Collate the GPTables with their names in a dictionary:
 
 ```python
 penguins_sheets = {
@@ -423,7 +423,7 @@ penguins_sheets = {
     }
 ```
 
-Finally, use `gptables.write_workbook()` to create and write out the workbook with the output path, the sheets, and any additional elements.
+Finally, use `gptables.write_workbook()` to create and write out the workbook:
 
 ```python
 gpt.write_workbook(
@@ -433,7 +433,7 @@ gpt.write_workbook(
 )
 ```
 
-The code is combined below in an extendable tab.
+The code is combined into a full example below in an extendable tab.
 
 ??? "Adding additional data sheets"
     ```python
