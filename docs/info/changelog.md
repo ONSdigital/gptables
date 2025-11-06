@@ -22,7 +22,8 @@ and this project tries its very best to adhere to
 * Pre-commit hooks
 
 **Removed**
-* The ability to reference notes within 'GPTable.table.columns' has been removed (see this changelog for the notice in v1.1.0)
+
+* `contentsheet` notices are removed (see this changelog for the notice in v1.1.0)
 
 **Changed**
 
