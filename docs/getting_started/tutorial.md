@@ -9,8 +9,7 @@ To install `gptables`, simply use `pip install gptables`.
 
 ## Starting out
 
-First install and import `gptables` alongside any other necessary packages to read in and prepare
-the data. Any additional preparation like cleaning can be done here.
+First import `gptables` alongside any other necessary packages. Read in the data.
 
 ```python
 from pathlib import Path
@@ -20,8 +19,9 @@ import gptables as gpt
 penguins_data = pd.read_csv("penguins.csv")
 ```
 
-Then construct the `GPTable`, defining some main elements. These will be displayed in the resulting
-spreadsheet. The `table` containing the data should be a `pandas.DataFrame`.
+Perform any data preparation, for example cleaning. Then construct the `GPTable` by defining some details
+about the data, such as its title and source. The  `table` containing the data should be a
+`pandas.DataFrame`.
 
 ```python
 penguins_table = gpt.GPTable(
@@ -35,7 +35,7 @@ penguins_table = gpt.GPTable(
 )
 ```
 
-This can alternatively be achieved using a dictionary of keyword arguments:
+As a matter of preference, this can alternatively be achieved using a dictionary of keyword arguments:
 
 ```python
 kwargs = {
@@ -50,13 +50,13 @@ kwargs = {
 penguins_table = gpt.GPTable(table = penguins_data, **kwargs)
 ```
 
-Each `GPTable` should be associated to a sheet name using a dictionary:
+Each `GPTable` should be associated with a sheet name using a dictionary.
 
 ```python
 penguins_sheets = {"Penguins": penguins_table}
 ```
 
-Finally, use `write_workbook()` with the output path, the sheets, and any additional elements to create 
+Finally, use `write_workbook()` with the output path, sheets, and any additional elements to create 
 and write a formatted Excel workbook.
 
 ```python
@@ -67,9 +67,10 @@ gpt.write_workbook(
 )
 ```
 
-`gptables` creates a table of contents, with worksheet labels linking to the worksheets, and a 
-description of their contents. There is a sheet with the dataset, and it presents the
-specified details in a minimal style with text of a legible font and size.
+The workbook contains a table of contents, with sheet names linking 
+to the data sheets alongside descriptions of the data. There is a sheet for each dataset, on which
+the specified details such as titles are presented in a minimal style with text of a legible
+font and size.
 
 ![](../static/getting_started_before_and_after.png)
 
