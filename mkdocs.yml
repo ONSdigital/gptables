@@ -5,6 +5,7 @@ theme:
   name: material
   features:
     - toc.integrate
+    - content.code.copy
 
 nav:
   - Home: index.md
