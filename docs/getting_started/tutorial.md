@@ -155,16 +155,16 @@ More information can be found in the [function documentation](../api/functions/w
 
 ## Notes sheet
 
-`gptables` allows for attaching notes to tables by supplying `notes_table` to `produce_workbook()` or
-`write_workbook()`. Notes are useful for adding footnotes, clarifications, or
-extra information that helps users interpret the data.
+Notes are useful for adding footnotes, clarifications, or extra information that helps users interpret 
+the data. `gptables` allows for attaching notes to tables by supplying `notes_table` to 
+`produce_workbook()` or `write_workbook()`.
 
 Notes appear on a separate worksheet called `Notes`. They can be referenced in the `title`, `subtitles`,
 `scope`, `source`, and `legend` elements. Notes cannot be added to individual data cells or column
 headings.
 
-Placeholders or references for notes are put in using the notation `$$note$$`, like `"Table title
-$$Reference$$"`. These placeholders are replaced with numbered references in the final output.
+Placeholders or references for notes are inserted using the notation `$$note$$`. These placeholders
+are replaced with numbered references in the final output.
 
 ```python
 penguins_table = gpt.GPTable(
@@ -176,13 +176,13 @@ penguins_table = gpt.GPTable(
 )
 ```
 
-The note text must be provided as a `pandas.DataFrame` to the `notes_table` argument of
-`gptables.write_workbook()`. This should contain the text of the placeholder
-or reference, the text for the note, and optionally any hyperlinks to include with the note.
+The note table to appear on the Notes sheet must be provided as a `pandas.DataFrame` to the 
+`notes_table` argument of `gptables.write_workbook()`. This should contain the text of the placeholder
+or reference, the text for the note, and optionally any links to include with the note.
 
 Below, note references are first created using a dictionary of lists before being converted into a
 dataframe object. Note that all lists must be the same length - if a note has no link, use an empty
-string `""` or `None` for that entry.
+string `""` or `None` at that list position.
 
 ```python
 notes = {
@@ -203,7 +203,7 @@ notes = {
 penguins_notes_table = pd.DataFrame.from_dict(notes)
 ```
 
-When outputting the table, specify the reference table for the `Notes` sheet using `notes_table`.
+When producing the workbook, specify the `notes_table`.
 ```python
 gpt.write_workbook(
     ...
