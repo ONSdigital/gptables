@@ -384,7 +384,7 @@ The code is combined with a full example below in an extendable tab.
     )
 
     gpt.write_workbook(
-        filename="python_penguins_gptable.xlsx",
+        filename="gpt_adding_cover.xlsx",
         sheets=penguins_sheets,
         cover=penguins_cover,
         contentsheet_options={"additional_elements": ["subtitles", "scope"]},
