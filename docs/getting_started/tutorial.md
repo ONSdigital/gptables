@@ -12,7 +12,6 @@ To install `gptables`, simply use `pip install gptables`.
 First import `gptables` alongside any other necessary packages and read in the data.
 
 ```python
-from pathlib import Path
 import pandas as pd
 import gptables as gpt
 
@@ -78,7 +77,6 @@ The code is combined below in an extendable tab.
 
 ??? "Starting out"
     ```python
-    from pathlib import Path
     import pandas as pd
     import gptables as gpt
 
@@ -222,7 +220,6 @@ This is combined into a full example below in an extendable tab.
 ??? "Adding notes"
 
     ```python
-    from pathlib import Path
     import pandas as pd
     import gptables as gpt
 
@@ -340,7 +337,6 @@ The code is combined with a full example below in an extendable tab.
 
 ??? "Adding a cover sheet"
     ```python
-    from pathlib import Path
     import pandas as pd
     import gptables as gpt
 
