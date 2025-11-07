@@ -44,7 +44,7 @@ notes = {
 penguins_notes_table = pd.DataFrame.from_dict(notes)
 
 if __name__ == "__main__":
-    output_path = parent_dir / "python_penguins_gptable.xlsx"
+    output_path = parent_dir / "gpt_adding_notes.xlsx"
     gpt.write_workbook(
         filename=output_path,
         sheets=penguins_sheets,

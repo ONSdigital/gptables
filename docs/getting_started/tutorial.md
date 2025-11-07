@@ -217,6 +217,8 @@ correspond to where placeholders were inserted in the title and subtitle.
 
 ![](../static/notes.png)
 
+This is combined into a full example below in an extendable tab.
+
 ??? "Adding notes"
 
     ```python
@@ -254,7 +256,7 @@ correspond to where placeholders were inserted in the title and subtitle.
     penguins_notes_table = pd.DataFrame.from_dict(notes)
 
     gpt.write_workbook(
-        filename="penguins_with_notes.xlsx",
+        filename="gpt_adding_notes.xlsx",
         sheets=penguins_sheets,
         notes_table=penguins_notes_table,
         contentsheet_options={"additional_elements": ["subtitles", "scope"]},
