@@ -1,7 +1,7 @@
 # Tutorial
 
-This section aims to demonstrate some basic `gptables` functionality. The code from each section 
-can be run from the 
+This section aims to demonstrate some basic `gptables` functionality. The code from each section
+can be run from the
 [examples](https://github.com/ONSdigital/gptables/tree/main/gptables/examples) folder, with more advanced
 usage guides found in the how-tos and [API documentation](../api/api_reference.md).
 
@@ -55,7 +55,7 @@ Each `GPTable` should then be associated with a sheet name using a dictionary.
 penguins_sheets = {"Penguins": penguins_table}
 ```
 
-Finally, use `write_workbook()` with the output path, sheets, and any additional elements to create 
+Finally, use `write_workbook()` with the output path, sheets, and any additional elements to create
 and write a formatted Excel workbook.
 
 ```python
@@ -66,7 +66,7 @@ gpt.write_workbook(
 )
 ```
 
-The workbook contains a table of contents, with sheet names linking 
+The workbook contains a table of contents, with sheet names linking
 to the data sheets alongside descriptions of the data. There is a sheet for each dataset, on which
 the specified details such as titles are presented in a minimal style with text of a legible
 font and size.
@@ -154,13 +154,13 @@ More information can be found in the [function documentation](../api/functions/w
 
 ## Adding notes
 
-Notes are useful for adding footnotes, clarifications, or extra information to help users interpret 
-the data. Notes can be attached to tables by supplying `notes_table` to 
+Notes are useful for adding footnotes, clarifications, or extra information to help users interpret
+the data. Notes can be attached to tables by supplying `notes_table` to
 `produce_workbook()` or `write_workbook()`.
 
 Notes appear on a separate worksheet called Notes. They can be referenced in the `title`, `subtitles`,
 `scope`, `source`, and `legend` elements using the notation `$$placeholder$$`. These placeholders
-are replaced with numbered references in the final output. Notes cannot be added to individual data 
+are replaced with numbered references in the final output. Notes cannot be added to individual data
 cells or column headings.
 
 ```python
@@ -173,7 +173,7 @@ penguins_table = gpt.GPTable(
 )
 ```
 
-The note table to appear on the Notes sheet must be provided as a `pandas.DataFrame` to the 
+The note table to appear on the Notes sheet must be provided as a `pandas.DataFrame` to the
 `notes_table` argument of `gptables.write_workbook()`. This should contain the text of the placeholder
 or reference, the text for the note, and optionally any links to include with the note.
 
@@ -210,7 +210,7 @@ gpt.write_workbook(
 ```
 
 The resulting spreadsheet contains a sheet called Notes. In a table, the automatically
-generated note numbers are alongside the note text and link (if supplied). The note numbers 
+generated note numbers are alongside the note text and link (if supplied). The note numbers
 correspond to where placeholders were inserted in the title and subtitle.
 
 ![](../static/tutorial_adding_notes.png)
