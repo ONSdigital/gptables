@@ -1,5 +1,5 @@
 # Add additional formatting
-There may be specific user needs or organisational reasons requiring 
+There may be specific user needs or organisational reasons requiring
 formatting other than the `gptables` defaults. If this is required regularly, consider
 the use of a [theme](custom_theme.md).
 
