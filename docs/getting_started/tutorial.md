@@ -97,7 +97,7 @@ The code is combined below in an extendable tab.
     penguins_sheets = {"Penguins": penguins_table}
 
     gpt.write_workbook(
-        filename="python_penguins_gptable.xlsx",
+        filename="gpt_starting_out.xlsx",
         sheets=penguins_sheets,
         contentsheet_options={"additional_elements": ["subtitles", "scope"]},
     )
