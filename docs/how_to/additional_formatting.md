@@ -113,7 +113,7 @@ italicisation of two columns, left bordering on the 4th column, and indentation 
     penguins_sheets = {"Penguins": penguins_table}
 
     wb = gpt.produce_workbook(
-        filename="gptables_additional_formatting_example.xlsx",
+        filename="gpt_additional_formatting.xlsx",
         sheets=penguins_sheets
     )
     wb.close()
