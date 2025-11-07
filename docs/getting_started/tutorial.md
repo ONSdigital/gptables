@@ -9,7 +9,7 @@ To install `gptables`, simply use `pip install gptables`.
 
 ## Starting out
 
-First import `gptables` alongside any other necessary packages. Read in the data.
+First import `gptables` alongside any other necessary packages and read in the data.
 
 ```python
 from pathlib import Path
@@ -50,7 +50,7 @@ kwargs = {
 penguins_table = gpt.GPTable(table = penguins_data, **kwargs)
 ```
 
-Each `GPTable` should be associated with a sheet name using a dictionary.
+Each `GPTable` should then be associated with a sheet name using a dictionary.
 
 ```python
 penguins_sheets = {"Penguins": penguins_table}
@@ -109,8 +109,8 @@ The description column in a table of contents can be customised by passing addit
 elements from the `GPTable` into the `contentsheet_options` parameter
 of `gptables.write_workbook()`.
 
-`contentsheet_options` can take `additional_elements`, such as `'subtitles'`, `'scope'`,
-`'source'`, and `'instructions'` to give more information about individual sheets within
+`contentsheet_options` can take `additional_elements`, including `'subtitles'`, `'scope'`,
+`'source'`, and `'instructions'` to present more information about individual sheets within
 the workbook:
 
 ```python
@@ -156,16 +156,14 @@ More information can be found in the [function documentation](../api/functions/w
 
 ## Adding notes
 
-Notes are useful for adding footnotes, clarifications, or extra information that helps users interpret 
-the data. `gptables` allows for attaching notes to tables by supplying `notes_table` to 
+Notes are useful for adding footnotes, clarifications, or extra information to help users interpret 
+the data. Notes can be attached to tables by supplying `notes_table` to 
 `produce_workbook()` or `write_workbook()`.
 
-Notes appear on a separate worksheet called `Notes`. They can be referenced in the `title`, `subtitles`,
-`scope`, `source`, and `legend` elements. Notes cannot be added to individual data cells or column
-headings.
-
-Placeholders or references for notes are inserted using the notation `$$note$$`. These placeholders
-are replaced with numbered references in the final output.
+Notes appear on a separate worksheet called Notes. They can be referenced in the `title`, `subtitles`,
+`scope`, `source`, and `legend` elements using the notation `$$placeholder$$`. These placeholders
+are replaced with numbered references in the final output. Notes cannot be added to individual data 
+cells or column headings.
 
 ```python
 penguins_table = gpt.GPTable(
@@ -182,8 +180,8 @@ The note table to appear on the Notes sheet must be provided as a `pandas.DataFr
 or reference, the text for the note, and optionally any links to include with the note.
 
 Below, note references are first created using a dictionary of lists before being converted into a
-dataframe object. Note that all lists must be the same length - if a note has no link, use an empty
-string `""` or `None` at that list position.
+`pandas.DataFrame`. All lists must be the same length - if a note has no link, use an empty
+string (`""`) or `None` at that list position.
 
 ```python
 notes = {
@@ -213,9 +211,9 @@ gpt.write_workbook(
 )
 ```
 
-The resulting spreadsheet contains a sheet `Notes` with the reference note text next to their assigned
-note number. The sheet with the dataset `Penguins` shows the reference note numbers corresponding to
-where they were assigned in the title and subtitle.
+The resulting spreadsheet contains a sheet called Notes. In a table, the automatically
+generated note numbers are alongside the note text and link (if supplied). The note numbers 
+correspond to where placeholders were inserted in the title and subtitle.
 
 ![](../static/notes.png)
 
@@ -271,7 +269,7 @@ label can be supplied to `notesheet_label`.
 
 Cover sheets can be used to provide information that is general to all tables in a workbook.
 
-To include a cover sheet, first map text elements to the attributes of a [Cover](../api/classes/cover.md) object:
+To include a cover sheet, supply text elements to the attributes of a [`Cover`](../api/classes/cover.md) object:
 
 ```python
 penguins_cover = gpt.Cover(
@@ -290,7 +288,7 @@ penguins_cover = gpt.Cover(
     ],
 )
 ```
-This will automatically create a cover sheet with the subheadings "Introductory information", "About these data", and "Contact" where these attributes are included.
+This will automatically create a cover sheet with the subheadings "Introductory information", "About these data", and "Contact" if these attributes are included.
 
 Additional formatting can be introduced to create further subheadings if required:
 
@@ -322,7 +320,7 @@ penguins_cover = gpt.Cover(
 
 ```
 
-Finally, supply the `Cover` to the `cover_sheet` argument of `gptables.write_workbook()`:
+Supply the `Cover` to the `cover_sheet` argument of `gptables.write_workbook()`:
 
 ```python
 gpt.write_workbook(
@@ -332,11 +330,11 @@ gpt.write_workbook(
 )
 ```
 A cover sheet is created with the supplied information, with the title in large bold text
-followed by the introduction and information about the data followed by the contact details.
+followed by the introduction, information about the data, and contact details.
 
 ![](../static/cover_sheet.png)
 
-The code is combined below in an extendable tab.
+The code is combined with a full example below in an extendable tab.
 
 ??? "Adding a cover sheet"
     ```python
@@ -424,7 +422,7 @@ penguins_sheets = {
     }
 ```
 
-Finally, use `gptables.write_workbook()` to create and write out the workbook:
+Then, use `gptables.write_workbook()` to create and write out the workbook:
 
 ```python
 gpt.write_workbook(
