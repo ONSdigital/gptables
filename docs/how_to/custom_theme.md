@@ -120,4 +120,4 @@ dictating the other font sizes and colour throughout the workbook.
 ![](../static/howto_theme_cover.png)
 
 Additional options available for element-wise formatting can be found in the 
-[template theme](https://github.com/ONSdigital/gptables/blob/main/gptables/themes/gptheme.yaml) file.
+[theme](https://github.com/ONSdigital/gptables/blob/main/gptables/themes/gptheme.yaml) file.
