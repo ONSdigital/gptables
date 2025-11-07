@@ -44,7 +44,7 @@ penguins_cover = gpt.Cover(
 )
 
 if __name__ == "__main__":
-    output_path = parent_dir / "gptables_theme_cover.xlsx"
+    output_path = parent_dir / "gpt_theme_cover.xlsx"
     theme_path = str(Path(__file__).parent.parent / "themes/example_theme_cover.yaml")
     gpt.write_workbook(
         filename=output_path,

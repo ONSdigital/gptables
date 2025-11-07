@@ -1,6 +1,9 @@
 # Add additional formatting
 There may be specific user needs or organisational reasons requiring 
-formatting other than the `gptables` defaults. A wide range of options are possible
+formatting other than the `gptables` defaults. If this is required regularly, consider
+the use of a [theme](custom_theme.md).
+
+A wide range of options are possible
 with the `gptable.GPTable(..., additional_formatting = ...)` parameter. See the [XlsxWriter documentation](https://xlsxwriter.readthedocs.io/format.html#the-format-class) for all formatting options.
 
 !!! warning "Consider accessibility implications to formatting changes"

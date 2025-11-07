@@ -1,6 +1,6 @@
 # Custom themes with `gptables`
 
-It might be necessary to diverge from the `gptables` defaults, for example for organisational
+It might be necessary to diverge from the `gptables` defaults for organisational
 needs or user requirements. Where this is required regularly or across multiple teams, it can
 be helpful for reproducibility and code readability to create a custom theme as opposed to supplying
 an `additional_formatting` argument to `GPTable`.
@@ -10,11 +10,10 @@ an `additional_formatting` argument to `GPTable`.
     Refer to the Releasing statistics in spreadsheets [guidance](https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/) and consider user needs
     regarding accessiblity before adjusting the formatting.
 
-The code to reproduce these sheets can be found in the examples folder.
+The sample code can be run from thes
+[examples](https://github.com/ONSdigital/gptables/tree/main/gptables/examples) folder.
 
-## Using custom themes
-
-The theme parameter in `gptables.write_workbook()` can be either a folder or a .yaml file.
+## Global formatting
 
 A .yaml can reformat settings across the whole workbook from global settings, as well as
 specified elements of the sheet. A basic example is shown below, where the order in which elements
@@ -42,7 +41,7 @@ description_order:
     - scope
 ```
 
-The path to the file or folder is supplied to the theme argument of `gptables.write_workbook()`
+The path to the theme file or folder is supplied to the theme argument of `gptables.write_workbook()`
 inside of `gptables.Theme()`:
 
 ```python
@@ -60,7 +59,7 @@ This is shown to have changed text colours and sizes as compared to the `gptable
 
 This is combined into an extendible code block below.
 
-??? note "Basic usage of custom themes"
+??? note "global formatting"
     ```python
     from pathlib import Path
     import pandas as pd
@@ -81,12 +80,14 @@ This is combined into an extendible code block below.
     penguins_sheets = {"Penguins": penguins_table}
 
     gpt.write_workbook(
-        filename="gptables_theme_basic.xlsx",
+        filename="gpt_custom_theme.xlsx",
         sheets=penguins_sheets,
         theme=gpt.Theme(example_theme_basic.yaml),
         contentsheet_options={"additional_elements": ["subtitles", "scope"]},
     )
     ```
+
+## Element-wise formatting
 
 Theme files can also be used to modify specific elements, such as the titles and subtitles
 on the cover:
@@ -117,3 +118,6 @@ This is shown to have formatted the sizes of the cover elements, with the global
 dictating the other font sizes and colour throughout the workbook.
 
 ![](../static/howto_theme_cover.png)
+
+Additional options available for element-wise formatting can be found in the 
+[template theme](https://github.com/ONSdigital/gptables/blob/main/gptables/themes/gptheme.yaml) file.
