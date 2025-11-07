@@ -172,8 +172,7 @@ penguins_table = gpt.GPTable(
     ...
 )
 ```
-
-The note table to appear on the Notes sheet must be provided as a `pandas.DataFrame` to the
+For the note table to appear on the notes sheet, it must be provided as a `pandas.DataFrame` to the
 `notes_table` argument of `gptables.write_workbook()`. This should contain the text of the placeholder
 or reference, the text for the note, and optionally any links to include with the note.
 
