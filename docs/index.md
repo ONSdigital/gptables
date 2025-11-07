@@ -27,6 +27,7 @@ Get in touch at [ASAP@ons.gov.uk](mailto:ASAP@ons.gov.uk) if you use `gptables` 
 Got a feature request, or found a bug? Raise an [issue](https://github.com/ONSdigital/gptables/issues) on GitHub.
 
 ## Related Packages
+`gptables` is built on top of [`XlsxWriter`](https://xlsxwriter.readthedocs.io/index.html), bringing with it much of the `XlsxWriter` functionality.
 Users may also be interested in [aftables](https://best-practice-and-impact.github.io/aftables/), an R native equivalent to
 `gptables`, and [csvcubed](https://onsdigital.github.io/csvcubed-docs/external/), a package for turning data and metadata into
 machine-readable CSV-W files.

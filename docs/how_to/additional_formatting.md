@@ -1,7 +1,7 @@
 # Add additional formatting
-There may be specific user needs or organisational reasons calling for
+There may be specific user needs or organisational reasons requiring 
 formatting other than the `gptables` defaults. A wide range of options are possible
-with the `gptable.GPTable(..., additional_formatting = ...)` parameter. See the [XlsxWriter documentation](https://xlsxwriter.readthedocs.io/format.html#the-format-class) for the full options.
+with the `gptable.GPTable(..., additional_formatting = ...)` parameter. See the [XlsxWriter documentation](https://xlsxwriter.readthedocs.io/format.html#the-format-class) for all formatting options.
 
 !!! warning "Consider accessibility implications to formatting changes"
     Additional formatting changes the `gptables` defaults, which can introduce accessibility issues.
@@ -16,9 +16,6 @@ columns, rows, and/or cells and the corresponding formatting changes to make.
 !!! warning "Formatting conflicts"
     There are some conflicts between additional formatting options, for example wrapping
     and shrinking text. Outputs should be reviewed for correctness.
-
-Columns can be referenced by name or number. Rows may only be referenced by number, with `-1`
-corresponding to the last row. Column and row numbers include indexes and column headings. Numeric indexing refers to position within the table, not the position in the output Excel sheet. Cell formatting takes highest precedence, followed by row formatting, and finally column formatting.
 
 The option of what to format is specified, followed by the specific columns, rows, or cells,
 and then the formatting changes. To change the properties of columns called Species and Island
@@ -37,6 +34,8 @@ sample_additional_formatting = [
     }
 ]
 ```
+Columns can be referenced by name or number. Rows may only be referenced by number, with `-1`
+corresponding to the last row. Column and row numbers include indexes and column headings. Numeric indexing refers to position within the table, not the position in the output Excel sheet. Cell formatting takes highest precedence, followed by row formatting, and finally column formatting.
 
 Multiple selections of columns, rows, and cells can be made in a single `additional_formatting` list.
 
@@ -71,7 +70,6 @@ italicisation of two columns, left bordering on the 4th column, and indentation 
 
 ??? "Using additional formatting"
     ```python
-    from pathlib import Path
     import pandas as pd
     import gptables as gpt
 
