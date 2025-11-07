@@ -119,7 +119,7 @@ italicisation of two columns, left bordering on the 4th column, and indentation 
     wb.close()
     ```
 
-![](../static/additional_formatting.png)
+![](../static/howto_additional_formatting.png)
 
 ## Formatting text
 
