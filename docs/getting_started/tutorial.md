@@ -213,7 +213,7 @@ The resulting spreadsheet contains a sheet called Notes. In a table, the automat
 generated note numbers are alongside the note text and link (if supplied). The note numbers 
 correspond to where placeholders were inserted in the title and subtitle.
 
-![](../static/notes.png)
+![](../static/tutorial_adding_notes.png)
 
 This is combined into a full example below in an extendable tab.
 
