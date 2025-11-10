@@ -18,7 +18,6 @@ nav:
   - API:
     - API reference: api/api_reference.md
     - Functions: api/functions.md
-    - Table of contents: api/table_of_contents.md
     - Cover: api/cover.md
     - Notes sheet: api/notes_sheet.md
     - Theme: api/theme.md
