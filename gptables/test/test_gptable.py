@@ -348,9 +348,9 @@ class TestAttrValidationGPTable:
     @pytest.mark.parametrize("column_id", ["columnA", 0])
     def test_table_notes_placement(self, column_id, create_gptable_with_kwargs):
         """
-        Test that units are placed correctly under column headers.
+        Test that notes are placed correctly under column headers.
         """
-        table_with_notes = pd.DataFrame(columns=["columnA\n$$note_reference$$"])
+        expected_columns = pd.Index(["columnA"])
 
         gptable = create_gptable_with_kwargs(
             {"table": pd.DataFrame(columns=["columnA"])}
@@ -358,7 +358,12 @@ class TestAttrValidationGPTable:
 
         gptable.set_table_notes(new_table_notes={column_id: "$$note_reference$$"})
 
-        assert gptable.table.columns == table_with_notes.columns
+        assert gptable.table.columns.equals(expected_columns)
+
+        note_key = column_id if isinstance(column_id, int) else "columnA"
+        assert gptable.table_notes == {note_key: "$$note_reference$$"}
+
+        assert all("$$" not in str(h) for h in gptable.table.columns)
 
     @pytest.mark.parametrize("column_id", ["columnA", 0])
     def test_table_units_and_notes_placement(
@@ -367,9 +372,7 @@ class TestAttrValidationGPTable:
         """
         Test that units and notes are placed correctly under column headers.
         """
-        table_with_units_and_notes = pd.DataFrame(
-            columns=["columnA\n(unit)\n$$note_reference$$"]
-        )
+        expected_columns = pd.Index(["columnA\n(unit)"])
 
         gptable = create_gptable_with_kwargs(
             {"table": pd.DataFrame(columns=["columnA"])}
@@ -378,7 +381,10 @@ class TestAttrValidationGPTable:
         gptable.set_units(new_units={column_id: "unit"})
         gptable.set_table_notes(new_table_notes={column_id: "$$note_reference$$"})
 
-        assert gptable.table.columns == table_with_units_and_notes.columns
+        assert gptable.table.columns.equals(expected_columns)
+        note_key = column_id if isinstance(column_id, int) else "columnA"
+        assert gptable.table_notes == {note_key: "$$note_reference$$"}
+        assert all("$$" not in str(h) for h in gptable.table.columns)
 
     def test_additional_formatting_with_units(self, create_gptable_with_kwargs):
         """
@@ -415,8 +421,10 @@ class TestAttrValidationGPTable:
         )
 
         assert gptable.additional_formatting == [
-            {"column": {"columns": ["columnA\n$$ref$$"], "format": {"bold": True}}}
+            {"column": {"columns": ["columnA"], "format": {"bold": True}}}
         ]
+        assert gptable.table_notes == {"columnA": "$$ref$$"}
+        assert all("$$" not in str(h) for h in gptable.table.columns)
 
     def test_additional_formatting_with_units_and_table_notes(
         self, create_gptable_with_kwargs
@@ -428,8 +436,8 @@ class TestAttrValidationGPTable:
         gptable = create_gptable_with_kwargs(
             {
                 "table": pd.DataFrame(columns=["columnA"]),
-                "units": {"columnA": "unit"},
-                "table_notes": {"columnA": "$$ref$$"},
+                "units": {0: "unit"},
+                "table_notes": {0: "$$ref$$"},
                 "additional_formatting": [
                     {"column": {"columns": ["columnA"], "format": {"bold": True}}}
                 ],
@@ -439,11 +447,14 @@ class TestAttrValidationGPTable:
         assert gptable.additional_formatting == [
             {
                 "column": {
-                    "columns": ["columnA\n(unit)\n$$ref$$"],
+                    "columns": ["columnA\n(unit)"],
                     "format": {"bold": True},
                 }
             }
         ]
+
+        assert gptable.units == {0: "unit"}
+        assert gptable.table_notes == {0: "$$ref$$"}
 
     @pytest.mark.parametrize(
         "column_names,expectation",

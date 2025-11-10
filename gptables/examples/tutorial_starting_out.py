@@ -19,7 +19,7 @@ penguins_table = gpt.GPTable(
 penguins_sheets = {"Penguins": penguins_table}
 
 if __name__ == "__main__":
-    output_path = parent_dir / "python_penguins_gptable.xlsx"
+    output_path = parent_dir / "gpt_starting_out.xlsx"
     gpt.write_workbook(
         filename=output_path,
         sheets=penguins_sheets,

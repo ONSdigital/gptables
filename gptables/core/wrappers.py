@@ -18,7 +18,7 @@ from .theme import Theme
 
 class GPWorksheet(Worksheet):
     """
-    Wrapper for an XlsxWriter Worksheet object. Provides a method for writing
+    Wrapper for an `XlsxWriter.Worksheet` object. Provides a method for writing
     a good practice table (GPTable) to a Worksheet.
     """
 
@@ -159,20 +159,36 @@ class GPWorksheet(Worksheet):
         """
         Reference annotations in the table column headings and index columns.
         """
-        table = getattr(gptable, "table")
+        table = gptable.table.copy()
 
-        table.columns = self._replace_reference_in_attr(
-            [x for x in table.columns], reference_order
-        )
+        notes = getattr(gptable, "table_notes", {}) or {}
+        if notes:
+            headers = list(table.columns)
+            rename_map = {}
+
+            for key, note_token in notes.items():
+
+                idx = key if isinstance(key, int) else table.columns.get_loc(key)
+                old = headers[idx]
+
+                rendered = self._replace_reference_in_attr(note_token, reference_order)
+
+                if not (
+                    isinstance(old, str)
+                    and old.splitlines()
+                    and old.splitlines()[-1] == rendered
+                ):
+                    new = f"{old}\n{rendered}"
+                    rename_map[old] = new
+            if rename_map:
+                table = table.rename(columns=rename_map)
 
         index_columns = gptable.index_columns.values()
-
         for col in index_columns:
             table.iloc[:, col] = table.iloc[:, col].apply(
                 lambda x: self._replace_reference_in_attr(x, reference_order)
             )
-
-        setattr(gptable, "table", table)
+        gptable.table = table
 
     def _replace_reference_in_attr(
         self,
@@ -993,8 +1009,7 @@ class GPWorksheet(Worksheet):
 
 class GPWorkbook(Workbook):
     """
-    Wrapper for and XlsxWriter Workbook object. The Worksheets class has been
-    replaced by an alternative with a method for writting GPTable objects.
+    Wrapper for an `XlsxWriter.Workbook` object.
     """
 
     def __init__(self, filename: str = None, options: dict = {}) -> None:
@@ -1096,9 +1111,9 @@ class GPWorkbook(Workbook):
             description of the page layout
             defaults to "This worksheet contains one table."
 
-        Return
+        Returns
         ------
-        gpt.GPTable
+        gptables.GPTable
         """
         if column_names is None:
             column_names = ["Sheet name", "Table description"]
@@ -1202,11 +1217,10 @@ class GPWorkbook(Workbook):
             description of the page layout
             defaults to "This worksheet contains one table."
 
-        Return
+        Returns
         ------
-        gpt.GPTable
+        gptables.GPTable
         """
-        # set defaults
         if table_name is None:
             table_name = "notes_table"
 
