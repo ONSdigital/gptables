@@ -26,7 +26,7 @@ Good Practice Tables (gptables)
 
 ``gptables`` is an opinionated python package for spreadsheet production.
 It produces ``.xlsx`` files from your ``pandas`` dataframes or using
-``reticulate`` in R. You define the mapping from your data to elements of the
+```` in R. You define the mapping from your data to elements of the
 table. It does the rest.
 
 ``gptables`` uses the official `guidance on good practice spreadsheets`_

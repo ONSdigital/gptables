@@ -4,6 +4,8 @@ The tables below indicate your accessibility responsibilities when publishing
 statistics in spreadsheets. It is based on the Analysis Function [checklist of
 the basics](https://analysisfunction.civilservice.gov.uk/policy-store/making-spreadsheets-accessible-a-brief-checklist-of-the-basics/) and heavily inspired by the [aftables documentation](https://best-practice-and-impact.github.io/aftables/articles/checklist.html).
 
+If you need further advice on applying accessibility and presentation standards, you can contact your department's [GSS Presentation Champion](https://analysisfunction.civilservice.gov.uk/government-statistical-service-and-statistician-group/champion-networks/presentation-champions/). Presentation Champions work across government to promote best practice in the presentation of statistics and can direct you to appropriate guidance and support.
+
 #### NOTE
 The tables show which checklist items are automatically met by
 gptables. This applies to workbooks created using the default `gptheme`
