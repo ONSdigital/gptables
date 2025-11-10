@@ -13,7 +13,6 @@ nav:
     - Tutorial: getting_started/tutorial.md
     - Table elements: getting_started/elements.md
   - How to:
-    - Multiple sheets: how_to/multiple_sheets.md
     - Add additional formatting: how_to/additional_formatting.md
     - Add a custom theme: how_to/custom_theme.md
   - API:
