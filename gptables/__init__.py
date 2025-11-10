@@ -25,8 +25,7 @@ Good Practice Tables (gptables)
 
 
 ``gptables`` is an opinionated python package for spreadsheet production.
-It produces ``.xlsx`` files from your ``pandas`` dataframes or using
-```` in R. You define the mapping from your data to elements of the
+It produces ``.xlsx`` files from your ``pandas`` dataframes. You define the mapping from your data to elements of the
 table. It does the rest.
 
 ``gptables`` uses the official `guidance on good practice spreadsheets`_
@@ -34,6 +33,8 @@ It advocates a strong adherence to the guidance by restricting the range of
 operations possible. The default theme ``gptheme`` should accommodate most use
 cases. However, the ``Theme`` object allows development of custom themes, where
 other formatting is required.
+
+R users should check out `aftables`_, an R native equivalent to ``gptables``.
 
 ``gptables`` is developed and maintained by the `Analysis Function`_.
 
