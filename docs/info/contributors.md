@@ -1,13 +1,8 @@
-# Contributers
+# Contributors
 
-Code was contributed to this package by:
+`gptables` is maintained by the Analysis Standards and Pipelines team at the Office
+for National Statistics.
 
-* David Foster
-* Alexander Newton
-* Rowan Hemsi
-* Jaehee Ryoo
-* Jacob Cole
-* Daniel Shiloh
+Our thanks goes to users and stakeholders who have contributed and continue to give feedback on `gptables`.
 
-Thanks also goes to Hannah Thomas and the users and stakeholders who gave
-feedback on how to improve `gptables`.
+If you'd like to contribute contact the team at [ASAP@ons.gov.uk](mailto:ASAP@ons.gov.uk), or get involved in the [GitHub Issue](https://github.com/ONSdigital/gptables/issues) discussions.
