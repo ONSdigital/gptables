@@ -1,16 +1,14 @@
-from gptables.core.theme import Theme
-from gptables.core.cover import Cover
-from gptables.core.gptable import GPTable
-from gptables.core.wrappers import GPWorkbook
-
-from gptables.utils.unpickle_themes import gptheme
-
+# flake8: noqa
 
 from gptables.core.api import (
-        # API functions
-        produce_workbook,
-	    write_workbook,
-        )
+    produce_workbook,
+    write_workbook,
+)
+from gptables.core.cover import Cover
+from gptables.core.gptable import GPTable
+from gptables.core.theme import Theme
+from gptables.core.wrappers import GPWorkbook
+from gptables.utils.unpickle_themes import gptheme
 
 __doc__ = """
 *******************************
@@ -27,8 +25,7 @@ Good Practice Tables (gptables)
 
 
 ``gptables`` is an opinionated python package for spreadsheet production.
-It produces ``.xlsx`` files from your ``pandas`` dataframes or using
-``reticulate`` in R. You define the mapping from your data to elements of the
+It produces ``.xlsx`` files from your ``pandas`` dataframes. You define the mapping from your data to elements of the
 table. It does the rest.
 
 ``gptables`` uses the official `guidance on good practice spreadsheets`_
@@ -36,6 +33,8 @@ It advocates a strong adherence to the guidance by restricting the range of
 operations possible. The default theme ``gptheme`` should accommodate most use
 cases. However, the ``Theme`` object allows development of custom themes, where
 other formatting is required.
+
+R users should check out `aftables`_, an R native equivalent to ``gptables``.
 
 ``gptables`` is developed and maintained by the `Analysis Function`_.
 

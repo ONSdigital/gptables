@@ -1,27 +1,33 @@
 import warnings
-import pandas as pd
 from pathlib import Path
+from typing import Any, Dict, Optional, Union
 
-from gptables import GPWorkbook, GPTable
+import pandas as pd
+
+from gptables.core.cover import Cover
+from gptables.core.gptable import GPTable
+from gptables.core.theme import Theme
+from gptables.core.wrappers import GPWorkbook
 
 
 def produce_workbook(
-        filename,
-        sheets,
-        theme = None,
-        cover = None,
-        contentsheet_label = "Contents",
-        contentsheet_options = {},
-        notes_table = None,
-        notesheet_label = "Notes",
-        notesheet_options = {},
-        auto_width = True,
-        gridlines = "hide_all",
-        cover_gridlines = False
-        ):
+    filename: str,
+    sheets: Dict[str, "GPTable"],
+    theme: Optional["Theme"] = None,
+    cover: Optional["Cover"] = None,
+    contentsheet_label: str = "Contents",
+    contentsheet_options: Optional[Dict[str, Any]] = None,
+    notes_table: Optional[pd.DataFrame] = None,
+    notesheet_label: str = "Notes",
+    notesheet_options: Optional[Dict[str, Any]] = None,
+    auto_width: Union[bool, Dict[str, bool]] = True,
+    gridlines: str = "hide_all",
+    cover_gridlines: bool = False,
+) -> GPWorkbook:
     """
-    Produces a GPWorkbook, ready to be written to the specified `.xlsx` file
-    using the ``.close()`` method.
+    Produces a formatted workbook.
+
+    Can be written to an `.xlsx` file as specified in `filename` using `.close()`.
 
     Parameters
     ----------
@@ -49,21 +55,25 @@ def produce_workbook(
     notesheet_options : dict, optional
         dictionary of notesheet customisation parameters. Valid keys are
         `table_name`, `title` and `instructions`.
-    auto_width : bool, optional
-        indicate if column widths should be automatically determined. True
-        by default.
+    auto_width : bool or dict, optional
+        If bool, applies to all sheets. If dict, should map sheet labels to bools.
     gridlines : string, optional
-        option to hide or show gridlines on worksheets. "show_all" - don't 
-        hide gridlines, "hide_printed" - hide printed gridlines only, or 
+        option to hide or show gridlines on worksheets. "show_all" - don't
+        hide gridlines, "hide_printed" - hide printed gridlines only, or
         "hide_all" - hide screen and printed gridlines.
     cover_gridlines : bool, optional
-        indication if gridlines should apply to the cover worksheet. False 
+        indication if gridlines should apply to the cover worksheet. False
         by default.
-        
+
     Returns
     -------
     workbook : gptables.GPWorkbook
     """
+    if contentsheet_options is None:
+        contentsheet_options = {}
+    if notesheet_options is None:
+        notesheet_options = {}
+
     if isinstance(filename, Path):
         filename = filename.as_posix()
 
@@ -82,11 +92,19 @@ def produce_workbook(
     contentsheet = {}
     if contentsheet_label is not None:
         if contentsheet_options:
-            valid_keys = ["additional_elements", "column_names",
-                "table_name", "title", "subtitles", "instructions"]
+            valid_keys = [
+                "additional_elements",
+                "column_names",
+                "table_name",
+                "title",
+                "subtitles",
+                "instructions",
+            ]
             if not all(key in valid_keys for key in contentsheet_options.keys()):
-                msg = ("Valid `contentsheet_options` keys are 'additional_elements',"
-                    "'column_names', 'table_name', 'title', 'subtitles', 'instructions'")
+                msg = (
+                    "Valid `contentsheet_options` keys are 'additional_elements',"
+                    "'column_names', 'table_name', 'title', 'subtitles', 'instructions'"
+                )
                 raise ValueError(msg)
         contents_gptable = wb.make_table_of_contents(sheets, **contentsheet_options)
         contentsheet = {contentsheet_label: contents_gptable}
@@ -103,36 +121,32 @@ def produce_workbook(
     sheets = {**contentsheet, **notesheet, **sheets}
     for label, gptable in sheets.items():
         ws = wb.add_worksheet(label, gridlines=gridlines)
-        ws.write_gptable(gptable, auto_width, wb._annotations)
-    
+        if isinstance(auto_width, dict):
+            sheet_auto_width = auto_width.get(label, True)
+        else:
+            sheet_auto_width = auto_width
+        ws.write_gptable(gptable, sheet_auto_width, wb._annotations)
+
     return wb
 
 
 def write_workbook(
-        filename,
-        sheets,
-        theme = None,
-        cover = None,
-        contentsheet = None,
-        contentsheet_label = "Contents",
-        contentsheet_options = {},
-        notes_table = None,
-        notesheet_label = "Notes",
-        notesheet_options = {},
-        auto_width = True,
-        gridlines = "hide_all",
-        cover_gridlines = False
-        ):
-
+    filename: str,
+    sheets: Dict[str, "GPTable"],
+    theme: Optional["Theme"] = None,
+    cover: Optional["Cover"] = None,
+    contentsheet: Optional[str] = None,
+    contentsheet_label: str = "Contents",
+    contentsheet_options: Optional[Dict[str, Any]] = None,
+    notes_table: Optional[pd.DataFrame] = None,
+    notesheet_label: str = "Notes",
+    notesheet_options: Optional[Dict[str, Any]] = None,
+    auto_width: Union[bool, Dict[str, bool]] = True,
+    gridlines: str = "hide_all",
+    cover_gridlines: bool = False,
+) -> None:
     """
-    Writes a GPWorkbook to the specified `.xlsx` file.
-
-    This is an alternative main function that will take in data and theme
-    information. It calls upon the package to write a formatted `.xlsx`
-    file to the specified path.
-
-    .. note:: Deprecated in v1.1.0: `contentsheet` will be removed
-        in v2, it is replaced by `contentsheet_label`
+    Writes a formatted Excel workbook to `filename`.
 
     Parameters
     ----------
@@ -152,7 +166,7 @@ def write_workbook(
         dictionary of contentsheet customisation parameters. Valid keys are
         `additional_elements`, `column_names`, `table_name`, `title`,
         `subtitles` and `instructions`
-    note_table : pd.DataFrame, optional
+    notes_table : pd.DataFrame, optional
         table with notes reference, text and (optional) link columns. If None,
         notes sheet will not be generated.
     notesheet_label : str, optional
@@ -164,21 +178,22 @@ def write_workbook(
         indicate if column widths should be automatically determined. True by
         default.
     gridlines : string, optional
-        option to hide or show gridlines on worksheets. "show_all" - don't 
-        hide gridlines, "hide_printed" - hide printed gridlines only, or 
+        option to hide or show gridlines on worksheets. "show_all" - don't
+        hide gridlines, "hide_printed" - hide printed gridlines only, or
         "hide_all" - hide screen and printed gridlines.
     cover_gridlines : bool, optional
-        indication if gridlines should apply to the cover worksheet. False 
+        indication if gridlines should apply to the cover worksheet. False
         by default.
-    contentsheet : str
-        alias for contentsheet_label, deprecated in v1.1.0
 
     Returns
     -------
     None
     """
-    if contentsheet is not None:
-        contentsheet_label = contentsheet
+
+    if contentsheet_options is None:
+        contentsheet_options = {}
+    if notesheet_options is None:
+        notesheet_options = {}
 
     wb = produce_workbook(
         filename,
@@ -192,6 +207,6 @@ def write_workbook(
         notesheet_options,
         auto_width,
         gridlines,
-        cover_gridlines
-        )
+        cover_gridlines,
+    )
     wb.close()
