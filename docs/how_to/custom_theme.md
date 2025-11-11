@@ -10,7 +10,7 @@ an `additional_formatting` argument to `GPTable`.
     Refer to the Releasing statistics in spreadsheets [guidance](https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/) and consider user needs
     regarding accessiblity before adjusting the formatting.
 
-The sample code can be run from thes
+The sample code can be run from the
 [examples](https://github.com/ONSdigital/gptables/tree/main/gptables/examples) folder.
 
 ## Global formatting
