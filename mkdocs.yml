@@ -29,7 +29,7 @@ nav:
   - Reference:
     - Accessibility checklist: reference/checklist.md
     - Examples: reference/examples.md
-    #- Glossary: reference/glossary.md
+    - Glossary: reference/glossary.md
   - About GPTables:
     - Contributing guidance: info/contributing.md
     - Changelog: info/changelog.md
