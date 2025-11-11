@@ -10,3 +10,4 @@ gptables/test/actual_workbook.xlsx
 .vscode/
 site/
 .venv
+*.xlsx
