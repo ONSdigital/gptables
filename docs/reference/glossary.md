@@ -12,7 +12,7 @@ A [`Good Practice Table object`](../api/classes/gptable.md), which has data and 
 associated with it.
 
 ## Placeholder
-A [note](../getting_started/tutorial.md#adding-notes) reference denoted by double dollar notation, e.g. `$$placeholder_text$$`. These are 
+A [note](../getting_started/tutorial.md#adding-notes) reference denoted by double dollar notation, e.g. `$$placeholder_text$$`. These are
 replaced by numbers when the workbook is written to file.
 
 ## Theme
