@@ -27,6 +27,8 @@ Requirements
 ------------
 - Python 3.9+
 
+Using an earlier version? Install `gptables` version before 2.0.0.
+
 Install
 -------
 gptables is available from `PyPI`_.
