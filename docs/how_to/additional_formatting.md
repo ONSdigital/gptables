@@ -79,7 +79,7 @@ italicisation of two columns, left bordering on the 4th column, and indentation 
     import pandas as pd
     import gptables as gpt
 
-    penguins_data = pd.read_csv("spenguins.csv")
+    penguins_data = pd.read_csv("penguins.csv")
 
     penguins_additional_formatting = [
         {
