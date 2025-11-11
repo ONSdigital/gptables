@@ -10,16 +10,18 @@ and this project tries its very best to adhere to
 
 ---
 
-## Unreleased
+## Latest
 
 * **Date:**
-  2025-10-08
+  2025-11-11
 
 **Added**
 
 * Merged pull request templates to create new one
 * Requirements and installation steps to README
 * Pre-commit hooks
+* Code owners file
+* More examples
 
 **Removed**
 
@@ -32,8 +34,7 @@ and this project tries its very best to adhere to
 * Updated pull request template
 * Docs moved from readthedocs to mkdocs
 * Docs are restructured
-
-## Released (PyPI)
+* Fixed auto column widths
 
 ### v1.2.0
 
