@@ -51,11 +51,11 @@ class GPTable:
         source: Optional[str] = None,
         units: Optional[Dict[Any, Any]] = None,
         table_notes: Optional[Dict[Any, Any]] = None,
-        subtitles: Optional[List[Any]] = None,
+        subtitles: Optional[List[Any]] = [],
         instructions: str = "",
-        legend: Optional[List[Any]] = None,
+        legend: Optional[List[Any]] = [],
         index_columns: Optional[Dict[int, int]] = None,
-        additional_formatting: Optional[List[Dict[str, Any]]] = None,
+        additional_formatting: Optional[List[Dict[str, Any]]] = [],
     ) -> None:
 
         # Attributes
