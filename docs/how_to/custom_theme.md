@@ -61,7 +61,6 @@ This is combined into an extendible code block below.
 
 ??? note "global formatting"
     ```python
-    from pathlib import Path
     import pandas as pd
     import gptables as gpt
 
