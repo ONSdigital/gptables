@@ -1,12 +1,18 @@
 # Add additional formatting
-There may be specific user needs or organisational reasons calling for
-formatting other than the `gptables` defaults. A wide range of options are possible
-with the `gptable.GPTable(..., additional_formatting = ...)` parameter. See the [XlsxWriter documentation](https://xlsxwriter.readthedocs.io/format.html#the-format-class) for the full options.
+There may be specific user needs or organisational reasons requiring
+formatting other than the `gptables` defaults. If this is required regularly, consider
+the use of a [theme](custom_theme.md).
+
+A wide range of options are possible
+with the `gptable.GPTable(..., additional_formatting = ...)` parameter. See the [XlsxWriter documentation](https://xlsxwriter.readthedocs.io/format.html#format-methods-and-format-properties) for all formatting options.
 
 !!! warning "Consider accessibility implications to formatting changes"
     Additional formatting changes the `gptables` defaults, which can introduce accessibility issues.
     Refer to the Releasing statistics in spreadsheets [guidance](https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/) and consider user needs
     regarding accessiblity before adjusting the formatting.
+
+The sample code can be run from thes
+[examples](https://github.com/ONSdigital/gptables/tree/main/gptables/examples) folder.
 
 ## Using `additional_formatting`
 
@@ -16,9 +22,6 @@ columns, rows, and/or cells and the corresponding formatting changes to make.
 !!! warning "Formatting conflicts"
     There are some conflicts between additional formatting options, for example wrapping
     and shrinking text. Outputs should be reviewed for correctness.
-
-Columns can be referenced by name or number. Rows may only be referenced by number, with `-1`
-corresponding to the last row. Column and row numbers include indexes and column headings. Numeric indexing refers to position within the table, not the position in the output Excel sheet. Cell formatting takes highest precedence, followed by row formatting, and finally column formatting.
 
 The option of what to format is specified, followed by the specific columns, rows, or cells,
 and then the formatting changes. To change the properties of columns called Species and Island
@@ -37,6 +40,8 @@ sample_additional_formatting = [
     }
 ]
 ```
+Columns can be referenced by name or number. Rows may only be referenced by number, with `-1`
+corresponding to the last row. Column and row numbers include indices and column headings. Numeric indexing refers to position within the table, not the position in the output Excel sheet. Cell formatting takes highest precedence, followed by row formatting, and finally column formatting.
 
 Multiple selections of columns, rows, and cells can be made in a single `additional_formatting` list.
 
@@ -71,11 +76,10 @@ italicisation of two columns, left bordering on the 4th column, and indentation 
 
 ??? "Using additional formatting"
     ```python
-    from pathlib import Path
     import pandas as pd
     import gptables as gpt
 
-    penguins_data = pd.read_csv("spenguins.csv")
+    penguins_data = pd.read_csv("penguins.csv")
 
     penguins_additional_formatting = [
         {
@@ -115,18 +119,18 @@ italicisation of two columns, left bordering on the 4th column, and indentation 
     penguins_sheets = {"Penguins": penguins_table}
 
     wb = gpt.produce_workbook(
-        filename="gptables_additional_formatting_example.xlsx",
+        filename="gpt_additional_formatting.xlsx",
         sheets=penguins_sheets
     )
     wb.close()
     ```
 
-![](../static/additional_formatting.png)
+![](../static/howto_additional_formatting.png)
 
 ## Formatting text
 
 Formatting can also be applied to the text in `title`, `subtitles`, `scope`, `source`
-and `legend` elements, without using `additional_formatting`. Avoid using text formatting to represent data or important information, as most formatting is neither accessible nor machine readable.
+and `legend` elements without using `additional_formatting`. Avoid using text formatting to represent data or important information, as most formatting is neither accessible nor machine readable.
 
 Instead of a string, provide a list of strings and dictionaries containing valid [XlsxWriter format properties](https://xlsxwriter.readthedocs.io/format.html#format-methods-and-format-properties)
 and values to the relevant parameter. The formatting defined in these dictionaries will be applied to the
@@ -139,11 +143,12 @@ formatted_subtitles = [
 ]
 ```
 
+![](../static/howto_additional_formatting_text.png)
+
 This is combined with a basic example below in an extendable tab.
 
 ??? "Formatting text"
     ```python
-    from pathlib import Path
     import pandas as pd
     import gptables as gpt
 
@@ -174,6 +179,7 @@ This is combined with a basic example below in an extendable tab.
 
 This formatting is applied in addition to the
 formatting of that element specified in the [`Theme`](../api/classes/theme.md).
+
 !!! warning "Formatting of note references and links"
     Text formatting is not currently supported if the cell also contains note
     references or links. This may be changed in the future if there is
@@ -208,91 +214,3 @@ ws.set_column(
     2, 3, 10, italic_format
 )
 ```
-
-### Formatting methods
-
-The following tables show the Excel format categories, along with an example demonstrating the syntax required
-for use in gptables. Some formatting methods use indexing to map to Excel’s built-in formats. This information
-can be found in the applicable sections below.
-
-#### Font formatting
-
-This table demonstrates the font formatting methods available. You can find all options
-for [underline styles in the XlsxWriter documentation](https://xlsxwriter.readthedocs.io/format.html#format-set-underline).
-
-| Description     | Example usage                                                                           |
-|-----------------|-----------------------------------------------------------------------------------------|
-| Font type       | {“font_name”: “Arial”}                                                                  |
-| Font size       | {“font_size”: 30}                                                                       |
-| Font colour     | {“font_color”: “red”}                                                                   |
-| Bold            | {“bold”: True}                                                                          |
-| Italic          | {“italic”: True}                                                                        |
-| Underline       | {“underline”: 1}                                                                        |
-| Strikeout       | {“font_strikeout”: True}                                                                |
-| Super/Subscript | {“font_script”: 1} # Superscript<br/><br/><br/>{“font_script”: 2} # Subscript<br/><br/> |
-
-#### Number formatting
-
-This table demonstrates how to set the numeric format using indexing and string arguments. You can find all
-options for [numeric formats in the XlsxWriter documentation](https://xlsxwriter.readthedocs.io/format.html#format-set-num-format).
-
-| Description    | Example usage                                                                                         |
-|----------------|-------------------------------------------------------------------------------------------------------|
-| Numeric format | {“num_format”: 1} # Format index<br/><br/><br/>{“num_format”: “d mmm yyyy”} # Format string<br/><br/> |
-
-#### Protection formatting
-
-This table demonstrates the protection methods available.
-
-| Description   | Example usage    |
-|---------------|------------------|
-| Lock cells    | {“locked”: True} |
-| Hide formulas | {“hidden”: True} |
-
-#### Alignment formatting
-
-This table demonstrates the alignment formatting options available. You can find all options for
-[horizontal and vertical alignment in the XlsxWriter documentation](https://xlsxwriter.readthedocs.io/format.html#format-set-align).
-
-| Description      | Example usage               |
-|------------------|-----------------------------|
-| Horizontal align | {“align”: “center”}         |
-| Vertical align   | {“align”: “vcenter”}        |
-| Rotation         | {“rotation”: 30}            |
-| Text wrap        | {“text_wrap”: True}         |
-| Center across    | {“set_center_across”: True} |
-| Indentation      | {“indentation”:2}           |
-| Shrink to fit    | {“shrink”: True}            |
-
-#### Pattern formatting
-
-This table demonstrates the pattern formatting options available.
-
-| Description       | Example usage         |
-|-------------------|-----------------------|
-| Cell pattern      | {“pattern”: 1}        |
-| Background colour | {“bg_color”: “white”} |
-| Foreground colour | {“fg_color”: “white”} |
-
-#### Border formatting
-
-This table demonstrates the border formatting options available. You can find all options
-for [border styles in the XlsxWriter documentation](https://xlsxwriter.readthedocs.io/format.html#format-set-border).
-
-| Description   | Example usage              |
-|---------------|----------------------------|
-| Cell border   | {“border”: 1}              |
-| Bottom border | {“bottom”: 1}              |
-| Top border    | {“top”: 1}                 |
-| Left border   | {“left”: 1}                |
-| Right border  | {“right”: 1}               |
-| Border colour | {“border_color”: “red”}    |
-| Bottom colour | {“bottom_color”:”#FF0000”} |
-| Top colour    | {“top_color”: “red”}       |
-| Left colour   | {“left_color”: “#FF0000”}  |
-| Right colour  | {“right_color”: “red”}     |
-
-For any formatting beyond this, if the package should support it then please raise an issue
-or create a pull request. Otherwise, you will need to modify the underlying
-[`GPWorkbook`](../api/classes/gpworkbook.md) or [`GPWorksheet`](../api/classes/gpworksheet.md) objects
-before they are written to Excel.

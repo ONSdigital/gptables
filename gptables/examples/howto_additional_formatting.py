@@ -47,7 +47,7 @@ penguins_table = gpt.GPTable(
 penguins_sheets = {"Penguins": penguins_table}
 
 if __name__ == "__main__":
-    output_path = parent_dir / "gptables_additional_formatting.xlsx"
+    output_path = parent_dir / "gpt_additional_formatting.xlsx"
     wb = gpt.produce_workbook(filename=output_path, sheets=penguins_sheets)
     wb.close()
     print("Output written at: ", output_path)
