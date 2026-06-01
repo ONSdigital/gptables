@@ -27,7 +27,8 @@ dependencies = [
     "pandas>=2.3.2",
     "xlrd>=2.0.2",
     "XlsxWriter>=3.2.9",
-    "pyyaml>=6.0.2"
+    "pyyaml>=6.0.2",
+    "importlib_resources"
 ]
 
 [project.optional-dependencies]
@@ -45,7 +46,6 @@ dev = [
     "pytest>=8.4.2",
     "pytest-cov",
     "pre-commit",
-    "importlib_resources",
     "pytest-regressions"
 ]
 
