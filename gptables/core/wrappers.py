@@ -303,17 +303,8 @@ class GPWorksheet(Worksheet):
         Parse URLs in table.
         """
         table = getattr(gptable, "table")
-        rows, columns = table.shape
 
-        for c in range(columns):
-            for r in range(rows):
-                cell = self._replace_url_in_attr(table.iloc[r, c])
-                if isinstance(cell, dict):
-                    table.iloc[r, c] = [cell]
-                else:
-                    table.iloc[r, c] = cell
-
-        setattr(gptable, "table", table)
+        setattr(gptable, "table", table.map(self._replace_url_in_attr))
 
     def _replace_url_in_attr(self, data: object) -> object:
         """
