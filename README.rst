@@ -80,3 +80,17 @@ Requests and fixes are managed according to resource capacity, and we aim to ack
 .. _`aftables`: https://best-practice-and-impact.github.io/aftables/index.html
 .. _`csvcubed`: https://onsdigital.github.io/csvcubed-docs/external/
 .. _`issue`: https://github.com/best-practice-and-impact/gptables/issues
+
+
+Publishing changes
+------------------
+Internal contributors can trigger a new release of ``gptables`` to PyPI.
+
+To publish a new release, follow these steps:
+
+1. Update the version number in ``pyproject.toml`` and commit the change.
+
+2. Create a new version tag using ``git tag <tag_name>``.
+
+3. Push the tag to the remote repository using ``git push origin <tag_name>``.
+
