@@ -470,3 +470,25 @@ The code is combined into a full example below in an extendable tab.
         contentsheet_options={"additional_elements": ["subtitles", "scope"]},
     )
     ```
+
+## Setting table position
+
+By default, `gptables` places the data table directly beneath the title,
+subtitles, and other descriptive elements. You can override this with
+`table_row_index` on `GPTable`, which sets the 0-indexed worksheet row where
+column headings are written.
+
+```python
+penguins_table = gpt.GPTable(
+    table=penguins_data,
+    table_name="penguins_statistics",
+    title="The Palmer Penguins Dataset",
+    subtitles=["This is the first subtitle", "This is another subtitle"],
+    scope="Penguins",
+    source="Palmer Station, Antarctica",
+    table_row_index=10,
+)
+```
+
+When set, `table_row_index` must be high enough to leave room for the text
+elements above the table.

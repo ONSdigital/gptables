@@ -95,6 +95,7 @@ class GPWorksheet(Worksheet):
         self._parse_urls(gptable)
 
         gptable = deepcopy(gptable)
+        gptable._set_data_range()
 
         pos = self._write_element(pos, gptable.title, theme.title_format)
 
@@ -519,8 +520,8 @@ class GPWorksheet(Worksheet):
         # Get theme
         theme = self.theme
 
-        # Reset position to left col on next row
-        pos[1] = 0
+        # Reset position to left col and align row with table start.
+        pos = [gptable.data_range[0], 0]
 
         # Create data array
         index_levels = gptable.index_levels
