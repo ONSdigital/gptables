@@ -470,3 +470,12 @@ The code is combined into a full example below in an extendable tab.
         contentsheet_options={"additional_elements": ["subtitles", "scope"]},
     )
     ```
+## Further worked examples
+
+If you are comfortable with the basics above, these examples show complete workflows
+using the same penguins data:
+
+- [penguins_wide_vs_long.py](https://github.com/ONSdigital/gptables/blob/main/gptables/examples/penguins_wide_vs_long.py): compare wide and long layouts, then write both as separate sheets in one workbook.
+- [penguins_data_end_to_end.py](https://github.com/ONSdigital/gptables/blob/main/gptables/examples/penguins_data_end_to_end.py): clean data, recode values, round measurements, reshape to long format, and apply additional formatting.
+
+Run either script from the [examples](https://github.com/ONSdigital/gptables/tree/main/gptables/examples) folder to generate a workbook locally.
