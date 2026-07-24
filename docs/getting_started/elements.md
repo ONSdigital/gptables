@@ -10,6 +10,8 @@ The title is in large bold text.
 
 The data table is underneath, with the column headings in bold. In the same row on new lines are the units and any table note references. These can be defined in the `GPTables` object.
 
+If needed, the starting row for the table can be set with `GPTable(..., table_row_index=...)`.
+
 Column headings, indices, and data are defined in a `pandas.DataFrame`. Up to the first 3
 columns of the `pandas.DataFrame` can be used as index columns for the data in the rest of the columns.
 

@@ -445,6 +445,26 @@ class TestGPWorksheetTable:
             exp_heading_format = testbook.wb.add_format(table_format.iloc[0, n])
             assert got_heading_format.__dict__ == exp_heading_format.__dict__
 
+    def test_write_gptable_respects_table_row_index(
+        self, testbook, create_gptable_with_kwargs
+    ):
+        df = pd.DataFrame({"col1": ["x", "y"], "col2": [0, 1]})
+        gptable = create_gptable_with_kwargs(
+            {
+                "table": df,
+                "title": "Example title",
+                "subtitles": ["Example subtitle"],
+                "table_row_index": 8,
+            }
+        )
+
+        testbook.ws.write_gptable(gptable, auto_width=True)
+
+        table = testbook.ws.tables[0]
+        got_table_range = table["a_range"]
+        exp_table_range = xlsxwriter.utility.xl_range(8, 0, 10, 1)
+        assert got_table_range == exp_table_range
+
     @pytest.mark.parametrize(
         "data,format,exp_width",
         [
