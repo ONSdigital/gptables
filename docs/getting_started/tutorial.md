@@ -473,22 +473,47 @@ The code is combined into a full example below in an extendable tab.
 
 ## Setting table position
 
-By default, `gptables` places the data table directly beneath the title,
-subtitles, and other descriptive elements. You can override this with
-`table_row_index` on `GPTable`, which sets the 0-indexed worksheet row where
-column headings are written.
+By default, `GPTable` automatically positions the table below all descriptive elements such as titles and subtitles. The exact starting row is determined by the number and content of these elements.
+
+If you need more control over where the table appears on the worksheet, you can specify the starting row using the `table_row_index` parameter. This parameter uses 0-based indexing, where row 0 is the first row of the worksheet.
+
+The worksheet layout follows this pattern by default:
+- Row 0: Title
+- Row 1: Subtitles (if present)
+- Row 2: Scope (if present)
+- Row 3+: Source, legend, and other elements
+- Row N: Table headings begin
+
+To position your table at a specific row, set `table_row_index` to a value that is greater than the position of the last descriptive element:
 
 ```python
 penguins_table = gpt.GPTable(
-    table=penguins_data,
-    table_name="penguins_statistics",
-    title="The Palmer Penguins Dataset",
-    subtitles=["This is the first subtitle", "This is another subtitle"],
-    scope="Penguins",
-    source="Palmer Station, Antarctica",
-    table_row_index=10,
+    table = penguins_data,
+    table_name = "penguins_statistics",
+    title = "The Palmer Penguins Dataset",
+    subtitles = ["This is the first subtitle", "This is another subtitle"],
+    scope = "Penguins",
+    source = "Palmer Station, Antarctica",
+    table_row_index = 10,  # Table headings start at row 10
+)
+
+penguins_sheets = {"Penguins": penguins_table}
+
+gpt.write_workbook(
+    filename="gpt_table_position.xlsx",
+    sheets=penguins_sheets,
+    contentsheet_options={"additional_elements": ["subtitles", "scope"]},
 )
 ```
 
-When set, `table_row_index` must be high enough to leave room for the text
-elements above the table.
+If you specify a `table_row_index` that is too small (overlapping with descriptive elements), a `ValueError` will be raised. The parameter must be set to a value at least as large as the row needed to accommodate all descriptive elements.
+
+## Further worked examples
+
+If you are comfortable with the basics above, these examples show complete workflows
+using the same penguins data:
+
+- [penguins_wide_vs_long.py](https://github.com/ONSdigital/gptables/blob/main/gptables/examples/penguins_wide_vs_long.py): compare wide and long layouts, then write both as separate sheets in one workbook.
+- [penguins_data_end_to_end.py](https://github.com/ONSdigital/gptables/blob/main/gptables/examples/penguins_data_end_to_end.py): clean data, recode values, round measurements, reshape to long format, and apply additional formatting.
+
+Run either script from the [examples](https://github.com/ONSdigital/gptables/tree/main/gptables/examples) folder to generate a workbook locally.
