@@ -470,7 +470,7 @@ The code is combined into a full example below in an extendable tab.
         contentsheet_options={"additional_elements": ["subtitles", "scope"]},
     )
     ```
-    
+
 ## Setting table position
 
 By default, `GPTable` automatically positions the table below all descriptive elements such as titles and subtitles. The exact starting row is determined by the number and content of these elements.
