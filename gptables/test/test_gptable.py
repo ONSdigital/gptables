@@ -474,6 +474,22 @@ class TestAttrValidationGPTable:
             create_gptable_with_kwargs({"table": pd.DataFrame(columns=column_names)})
 
     @pytest.mark.parametrize(
+        "column_names",
+        [
+            ["columnA$$note$$", "columnB"],
+            ["columnA", "columnB$$note$$"],
+        ],
+    )
+    def test_column_names_with_note_markers_raise_value_error(
+        self, column_names, create_gptable_with_kwargs
+    ):
+        """
+        Test that GPTable rejects note markers embedded in column names.
+        """
+        with pytest.raises(ValueError, match="Notes inside column headers"):
+            create_gptable_with_kwargs({"table": pd.DataFrame(columns=column_names)})
+
+    @pytest.mark.parametrize(
         "column_names,expectation",
         [
             (["columnA", "columnB", "columnC"], does_not_raise()),
