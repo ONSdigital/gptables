@@ -96,3 +96,99 @@ def test_end_to_end(create_gpworkbook, file_regression):
     ect.ignore_elements = {}
     ect.assertExcelEqual()
     ect.tearDown()
+
+
+def test_contentsheet_location_invalid():
+    """
+    Test that an invalid contentsheet_location raises ValueError.
+    """
+    import os
+    import tempfile
+
+    table = pd.DataFrame({"A": ["x"], "B": [0]})
+    gptable = gpt.GPTable(table=table, table_name="t", title="T", index_columns={2: 0})
+
+    with pytest.raises(ValueError, match="contentsheet_location"):
+        gpt.produce_workbook(
+            filename=os.path.join(tempfile.gettempdir(), "test_invalid.xlsx"),
+            sheets={"Sheet1": gptable},
+            contentsheet_label="Contents",
+            contentsheet_location="invalid",
+            notes_table=pd.DataFrame({"Note reference": ["r1"], "Note text": ["t1"]}),
+        )
+
+
+def test_contentsheet_location_cover_requires_cover():
+    """
+    Test that contentsheet_location='cover' without a cover raises ValueError.
+    """
+    import os
+    import tempfile
+
+    table = pd.DataFrame({"A": ["x"], "B": [0]})
+    gptable = gpt.GPTable(table=table, table_name="t", title="T", index_columns={2: 0})
+
+    with pytest.raises(ValueError, match="cover"):
+        gpt.produce_workbook(
+            filename=os.path.join(tempfile.gettempdir(), "test_no_cover.xlsx"),
+            sheets={"Sheet1": gptable},
+            contentsheet_label="Contents",
+            contentsheet_location="cover",
+            notes_table=pd.DataFrame({"Note reference": ["r1"], "Note text": ["t1"]}),
+        )
+
+
+def test_contentsheet_location_cover(tmp_path):
+    """
+    Test that contentsheet_location='cover' writes the ToC on the cover sheet
+    instead of creating a separate worksheet.
+    """
+    table = pd.DataFrame({"A": ["x"], "B": [0]})
+    gptable = gpt.GPTable(
+        table=table, table_name="t", title="My Table", index_columns={2: 0}
+    )
+
+    cover = gpt.Cover(title="My Workbook", intro=["Introduction text"])
+
+    wb = gpt.produce_workbook(
+        filename=str(tmp_path / "toc_on_cover.xlsx"),
+        sheets={"Sheet1": gptable},
+        cover=cover,
+        contentsheet_label="Table of contents",
+        contentsheet_location="cover",
+        notes_table=pd.DataFrame({"Note reference": ["r1"], "Note text": ["t1"]}),
+    )
+
+    sheet_names = [ws.get_name() for ws in wb.worksheets()]
+    # Cover sheet should exist, no separate "Table of contents" sheet
+    assert "Cover" in sheet_names
+    assert "Table of contents" not in sheet_names
+    assert "Sheet1" in sheet_names
+    wb.fileclosed = 1
+
+
+def test_contentsheet_location_sheet_default(tmp_path):
+    """
+    Test that contentsheet_location='sheet' (default) creates a separate ToC sheet.
+    """
+    table = pd.DataFrame({"A": ["x"], "B": [0]})
+    gptable = gpt.GPTable(
+        table=table, table_name="t", title="My Table", index_columns={2: 0}
+    )
+
+    cover = gpt.Cover(title="My Workbook")
+
+    wb = gpt.produce_workbook(
+        filename=str(tmp_path / "toc_as_sheet.xlsx"),
+        sheets={"Sheet1": gptable},
+        cover=cover,
+        contentsheet_label="Table of contents",
+        contentsheet_location="sheet",
+        notes_table=pd.DataFrame({"Note reference": ["r1"], "Note text": ["t1"]}),
+    )
+
+    sheet_names = [ws.get_name() for ws in wb.worksheets()]
+    assert "Cover" in sheet_names
+    assert "Table of contents" in sheet_names
+    assert "Sheet1" in sheet_names
+    wb.fileclosed = 1

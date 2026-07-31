@@ -22,7 +22,7 @@ class GPWorksheet(Worksheet):
     a good practice table (GPTable) to a Worksheet.
     """
 
-    def write_cover(self, cover: "Cover") -> None:
+    def write_cover(self, cover: "Cover") -> list:
         """
         Write a cover page to the Worksheet. Uses text from a Cover object and
         details of the Workbook contents.
@@ -31,6 +31,11 @@ class GPWorksheet(Worksheet):
         ----------
         cover : gptables.Cover
             object containing cover sheet text
+
+        Returns
+        -------
+        pos : list
+            position [row, col] immediately after the last written element
         """
         theme = self.theme
         pos = [0, 0]
@@ -57,11 +62,14 @@ class GPWorksheet(Worksheet):
 
         self.set_column(0, 0, cover.width)
 
+        return pos
+
     def write_gptable(
         self,
         gptable: "GPTable",
         auto_width: bool,
         reference_order: list = [],
+        start_pos: list = None,
     ) -> None:
         """
         Write data from a GPTable object to the worksheet using the workbook
@@ -75,6 +83,8 @@ class GPWorksheet(Worksheet):
         reference_order : list, optional
             order of annotations in workbook
             must be provided if gptable uses annotations
+        start_pos : list, optional
+            [row, col] position to begin writing from, defaults to [0, 0]
         Returns
         -------
         None
@@ -89,12 +99,17 @@ class GPWorksheet(Worksheet):
         theme = self.theme
 
         # Write each GPTable element using appropriate Theme attr
-        pos = [0, 0]
+        pos = list(start_pos) if start_pos is not None else [0, 0]
 
         self._reference_annotations(gptable, reference_order)
         self._parse_urls(gptable)
 
         gptable = deepcopy(gptable)
+
+        # Offset the pre-computed data_range if writing at a non-zero row
+        if pos[0] > 0:
+            gptable.data_range[0] += pos[0]
+            gptable.data_range[2] += pos[0]
 
         pos = self._write_element(pos, gptable.title, theme.title_format)
 
