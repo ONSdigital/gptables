@@ -375,6 +375,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#setting-table-position" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting table position
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#further-worked-examples" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1622,6 +1633,35 @@ followed by the introduction, information about the data, and contact details.</
 <span class="p">)</span>
 </code></pre></div>
 </details>
+<h2 id="setting-table-position">Setting table position</h2>
+<p>By default, <code>GPTable</code> automatically positions the table below all descriptive elements such as titles and subtitles. The exact starting row is determined by the number and content of these elements.</p>
+<p>If you need more control over where the table appears on the worksheet, you can specify the starting row using the <code>table_row_index</code> parameter. This parameter uses 0-based indexing, where row 0 is the first row of the worksheet.</p>
+<p>The worksheet layout follows this pattern by default:
+- Row 0: Title
+- Row 1: Subtitles (if present)
+- Row 2: Scope (if present)
+- Row 3+: Source, legend, and other elements
+- Row N: Table headings begin</p>
+<p>To position your table at a specific row, set <code>table_row_index</code> to a value that is greater than the position of the last descriptive element:</p>
+<div class="highlight"><pre><span></span><code><span class="n">penguins_table</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">penguins_data</span><span class="p">,</span>
+    <span class="n">table_name</span> <span class="o">=</span> <span class="s2">&quot;penguins_statistics&quot;</span><span class="p">,</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;The Palmer Penguins Dataset&quot;</span><span class="p">,</span>
+    <span class="n">subtitles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;This is the first subtitle&quot;</span><span class="p">,</span> <span class="s2">&quot;This is another subtitle&quot;</span><span class="p">],</span>
+    <span class="n">scope</span> <span class="o">=</span> <span class="s2">&quot;Penguins&quot;</span><span class="p">,</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;Palmer Station, Antarctica&quot;</span><span class="p">,</span>
+    <span class="n">table_row_index</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>  <span class="c1"># Table headings start at row 10</span>
+<span class="p">)</span>
+
+<span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Penguins&quot;</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">}</span>
+
+<span class="n">gpt</span><span class="o">.</span><span class="n">write_workbook</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;gpt_table_position.xlsx&quot;</span><span class="p">,</span>
+    <span class="n">sheets</span><span class="o">=</span><span class="n">penguins_sheets</span><span class="p">,</span>
+    <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;additional_elements&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;subtitles&quot;</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">]},</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>If you specify a <code>table_row_index</code> that is too small (overlapping with descriptive elements), a <code>ValueError</code> will be raised. The parameter must be set to a value at least as large as the row needed to accommodate all descriptive elements.</p>
 <h2 id="further-worked-examples">Further worked examples</h2>
 <p>If you are comfortable with the basics above, these examples show complete workflows
 using the same penguins data:</p>

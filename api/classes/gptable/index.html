@@ -1266,6 +1266,19 @@ Default is a level two index in the first column ({2: 0}).</p>
               </div>
             </td>
           </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="gptables.core.gptable.GPTable.table_row_index">table_row_index</span></code></td>
+            <td>
+                  <code>(<span title="int">int</span>, <span title="optional">optional</span>)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>0-indexed worksheet row for writing table headings and data. If not
+provided, gptables places the table immediately after the descriptive
+elements.</p>
+              </div>
+            </td>
+          </tr>
       </tbody>
     </table>
 
@@ -1510,6 +1523,24 @@ existing values for these attributes.</p>
         <p>Adds note references to column headers.
 <code>table_notes</code> should be in the format {column: "$$note_reference$$"}.
 Column can be column name or 0-indexed column number in <code>table</code>.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h0 id="gptables.core.gptable.GPTable.set_table_row_index" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">set_table_row_index</span><span class="p">(</span><span class="n">new_table_row_index</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+
+</h0>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Set the worksheet row index where table headings and data should be written.</p>
 
 
     </div>
