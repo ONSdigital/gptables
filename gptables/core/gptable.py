@@ -40,6 +40,10 @@ class GPTable:
         Default is a level two index in the first column ({2: 0}).
     additional_formatting : dict, optional
         table-specific formatting for columns, rows or individual cells
+    table_row_index : int, optional
+        0-indexed worksheet row for writing table headings and data. If not
+        provided, gptables places the table immediately after the descriptive
+        elements.
     """
 
     def __init__(
@@ -56,6 +60,7 @@ class GPTable:
         legend: Optional[List[Any]] = [],
         index_columns: Optional[Dict[int, int]] = None,
         additional_formatting: Optional[List[Dict[str, Any]]] = [],
+        table_row_index: Optional[int] = None,
     ) -> None:
 
         # Attributes
@@ -72,6 +77,7 @@ class GPTable:
         self.table = pd.DataFrame()
         self.table_name = None
         self.data_range = [0] * 4
+        self.table_row_index = None
 
         self.scope = None
         self.source = None
@@ -102,7 +108,26 @@ class GPTable:
         self.set_scope(scope)
         self.set_source(source)
         self.set_legend(legend)
+        self.set_table_row_index(table_row_index)
         self._set_data_range()
+
+    def set_table_row_index(self, new_table_row_index: Optional[int]) -> None:
+        """
+        Set the worksheet row index where table headings and data should be written.
+        """
+        if new_table_row_index is None:
+            self.table_row_index = None
+            return
+
+        if not isinstance(new_table_row_index, int):
+            msg = "`table_row_index` must be provided as an integer"
+            raise TypeError(msg)
+
+        if new_table_row_index < 0:
+            msg = "`table_row_index` must be greater than or equal to 0"
+            raise ValueError(msg)
+
+        self.table_row_index = new_table_row_index
 
     def set_table(
         self,
@@ -629,10 +654,21 @@ class GPTable:
         if self.legend is not None:
             row_offset += len(self.legend)
 
+        if self.table_row_index is None:
+            start_row = row_offset
+        else:
+            if self.table_row_index < row_offset:
+                msg = (
+                    "`table_row_index` cannot be less than the row required for "
+                    "title/subtitle/description elements"
+                )
+                raise ValueError(msg)
+            start_row = self.table_row_index
+
         self.data_range = [
-            row_offset,
+            start_row,
             0,
-            self.table.shape[0] + row_offset,
+            self.table.shape[0] + start_row,
             self.table.shape[1] - 1,
         ]
 
