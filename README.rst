@@ -93,4 +93,3 @@ To publish a new release, follow these steps:
 2. Create a new version tag using ``git tag <tag_name>``.
 
 3. Push the tag to the remote repository using ``git push origin <tag_name>``.
-
