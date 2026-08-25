@@ -4,6 +4,7 @@ import pandas as pd
 import pytest
 
 import gptables as gpt
+from gptables.core import api as gpt_api
 from gptables.test.test_utils.excel_comparison_test import ExcelComparisonTest
 
 
@@ -96,3 +97,68 @@ def test_end_to_end(create_gpworkbook, file_regression):
     ect.ignore_elements = {}
     ect.assertExcelEqual()
     ect.tearDown()
+
+
+def test_produce_workbook_applies_workbook_options_default_date_format(tmp_path):
+    table = pd.DataFrame({"Date Egg": pd.to_datetime(["2020-01-01"])})
+    gptable = gpt.GPTable(
+        table=table,
+        table_name="penguins_dates",
+        title="Penguins dates",
+    )
+
+    with pytest.warns(UserWarning, match="No note text provided"):
+        wb = gpt.produce_workbook(
+            filename=tmp_path / "workbook_options.obtained.xlsx",
+            sheets={"Penguins": gptable},
+            workbook_options={"default_date_format": "dd/mm/yy"},
+        )
+
+    assert wb.default_date_format is not None
+    assert wb.default_date_format.num_format == "dd/mm/yy"
+    wb.close()
+
+
+def test_write_workbook_forwards_workbook_options(tmp_path):
+    recorded = {}
+
+    class DummyWorkbook:
+        def __init__(self):
+            self.closed = False
+
+        def close(self):
+            self.closed = True
+
+    dummy_workbook = DummyWorkbook()
+
+    def fake_produce_workbook(
+        filename,
+        sheets,
+        theme,
+        cover,
+        contentsheet_label,
+        contentsheet_options,
+        notes_table,
+        notesheet_label,
+        notesheet_options,
+        auto_width,
+        gridlines,
+        cover_gridlines,
+        workbook_options,
+    ):
+        recorded["workbook_options"] = workbook_options
+        return dummy_workbook
+
+    original_produce_workbook = gpt_api.produce_workbook
+    try:
+        gpt_api.produce_workbook = fake_produce_workbook
+        gpt_api.write_workbook(
+            filename=tmp_path / "dummy.xlsx",
+            sheets={},
+            workbook_options={"default_date_format": "dd/mm/yy"},
+        )
+    finally:
+        gpt_api.produce_workbook = original_produce_workbook
+
+    assert recorded["workbook_options"] == {"default_date_format": "dd/mm/yy"}
+    assert dummy_workbook.closed is True
