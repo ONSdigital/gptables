@@ -121,6 +121,7 @@ def test_produce_workbook_applies_workbook_options_default_date_format(tmp_path)
 
 def test_write_workbook_forwards_workbook_options(tmp_path):
     recorded = {}
+    passed_workbook_options = {"strings_to_numbers": True, "nan_inf_to_errors": True}
 
     class DummyWorkbook:
         def __init__(self):
@@ -155,10 +156,10 @@ def test_write_workbook_forwards_workbook_options(tmp_path):
         gpt_api.write_workbook(
             filename=tmp_path / "dummy.xlsx",
             sheets={},
-            workbook_options={"default_date_format": "dd/mm/yy"},
+            workbook_options=passed_workbook_options,
         )
     finally:
         gpt_api.produce_workbook = original_produce_workbook
 
-    assert recorded["workbook_options"] == {"default_date_format": "dd/mm/yy"}
+    assert recorded["workbook_options"] is passed_workbook_options
     assert dummy_workbook.closed is True
