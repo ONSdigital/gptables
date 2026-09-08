@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../additional_formatting/">
+        <link rel="prev" href="../custom_theme/">
       
       
-        <link rel="next" href="../config_file/">
+        <link rel="next" href="../../api/api_reference/">
       
       
         
@@ -23,7 +23,7 @@
     
     
       
-        <title>Add a custom theme - gptables</title>
+        <title>Use a config file for pages - gptables</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#custom-themes-with-gptables" class="md-skip">
+        <a href="#using-a-config-file-for-cover-and-notes-pages" class="md-skip">
           Skip to content
         </a>
       
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Add a custom theme
+              Use a config file for pages
             
           </span>
         </div>
@@ -395,6 +395,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom_theme/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Add a custom theme
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -414,7 +442,7 @@
   <span class="md-ellipsis">
     
   
-    Add a custom theme
+    Use a config file for pages
   
 
     
@@ -432,7 +460,7 @@
   <span class="md-ellipsis">
     
   
-    Add a custom theme
+    Use a config file for pages
   
 
     
@@ -458,10 +486,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#global-formatting" class="md-nav__link">
+  <a href="#creating-a-config-file" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Global formatting
+        Creating a config file
       
     </span>
   </a>
@@ -469,10 +497,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#element-wise-formatting" class="md-nav__link">
+  <a href="#using-the-config-in-python" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Element-wise formatting
+        Using the config in Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full example
       
     </span>
   </a>
@@ -483,34 +522,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../config_file/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Use a config file for pages
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -1207,58 +1218,159 @@
   
 
 
-<h1 id="custom-themes-with-gptables">Custom themes with <code>gptables</code></h1>
-<p>It might be necessary to diverge from the <code>gptables</code> defaults for organisational
-needs or user requirements. Where this is required regularly or across multiple teams, it can
-be helpful for reproducibility and code readability to create a custom theme as opposed to supplying
-an <code>additional_formatting</code> argument to <code>GPTable</code>.</p>
-<div class="admonition warning">
-<p class="admonition-title">Consider accessibility implications from custom themes</p>
-<p>Using custom themes changes the <code>gptables</code> defaults, which can introduce accessibility issues.
-Refer to the Releasing statistics in spreadsheets <a href="https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/">guidance</a> and consider user needs
-regarding accessiblity before adjusting the formatting.</p>
-</div>
+<h1 id="using-a-config-file-for-cover-and-notes-pages">Using a config file for cover and notes pages</h1>
+<p>A YAML config file can be used to define the content and settings for the introduction (cover) page
+and the notes page, rather than passing them as arguments directly to <code>write_workbook()</code> or
+<code>produce_workbook()</code>. This is useful when the same cover and notes configuration is reused across
+multiple scripts, or when you want to separate publication metadata from data processing code.</p>
 <p>The sample code can be run from the
 <a href="https://github.com/ONSdigital/gptables/tree/main/gptables/examples">examples</a> folder.</p>
-<h2 id="global-formatting">Global formatting</h2>
-<p>A .yaml can reformat settings across the whole workbook from global settings, as well as
-specified elements of the sheet. A basic example is shown below, where the order in which elements
-appear on the datasheet is supplied under <code>description_order</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">global</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">font_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">13</span>
-<span class="w">    </span><span class="nt">font_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Arial</span>
-<span class="w">    </span><span class="nt">font_color</span><span class="p">:</span><span class="w"> </span><span class="s">'#AD0000'</span>
+<h2 id="creating-a-config-file">Creating a config file</h2>
+<p>A pages config file is a YAML file with two optional top-level sections: <code>cover</code> and <code>notesheet</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">cover</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">cover_label</span><span class="p">:</span><span class="w"> </span><span class="s">"Cover"</span>
+<span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">"Publication</span><span class="nv"> </span><span class="s">Title"</span>
+<span class="w">  </span><span class="nt">intro</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"Introductory</span><span class="nv"> </span><span class="s">text</span><span class="nv"> </span><span class="s">paragraph."</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"Second</span><span class="nv"> </span><span class="s">introductory</span><span class="nv"> </span><span class="s">paragraph."</span>
+<span class="w">  </span><span class="nt">about</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"About</span><span class="nv"> </span><span class="s">these</span><span class="nv"> </span><span class="s">data."</span>
+<span class="w">  </span><span class="nt">contact</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"Tel:</span><span class="nv"> </span><span class="s">01234</span><span class="nv"> </span><span class="s">567890"</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"Email:</span><span class="nv"> </span><span class="s">example@email.address"</span>
+<span class="w">  </span><span class="nt">width</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">85</span>
 
-<span class="nt">title</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">font_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
-
-<span class="nt">subtitle</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">font_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">16</span>
-
-<span class="nt">data</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">text_wrap</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-
-<span class="nt">description_order</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">instructions</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">source</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">legend</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">scope</span>
+<span class="nt">notesheet</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="s">"Notes"</span>
+<span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">"Notes"</span>
+<span class="w">  </span><span class="nt">instructions</span><span class="p">:</span><span class="w"> </span><span class="s">"This</span><span class="nv"> </span><span class="s">worksheet</span><span class="nv"> </span><span class="s">contains</span><span class="nv"> </span><span class="s">one</span><span class="nv"> </span><span class="s">table."</span>
 </code></pre></div>
-<p>The path to the theme file or folder is supplied to the theme argument of <code>gptables.write_workbook()</code>
-inside of <code>gptables.Theme()</code>:</p>
-<div class="highlight"><pre><span></span><code>    <span class="n">gptables</span><span class="o">.</span><span class="n">write_workbook</span><span class="p">(</span>
-        <span class="n">filename</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span>
-        <span class="n">sheets</span><span class="o">=</span><span class="n">sheets</span><span class="p">,</span>
-        <span class="n">theme</span><span class="o">=</span><span class="n">gptables</span><span class="o">.</span><span class="n">Theme</span><span class="p">(</span><span class="n">theme_path</span><span class="p">),</span>
-        <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">"additional_elements"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"subtitles"</span><span class="p">,</span> <span class="s2">"scope"</span><span class="p">]},</span>
-    <span class="p">)</span>
+<p>Valid keys for each section are:</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cover</code></td>
+<td><code>title</code></td>
+<td>Cover page title (required)</td>
+</tr>
+<tr>
+<td><code>cover</code></td>
+<td><code>cover_label</code></td>
+<td>Tab label (default <code>"Cover"</code>)</td>
+</tr>
+<tr>
+<td><code>cover</code></td>
+<td><code>intro</code></td>
+<td>List of introductory text paragraphs</td>
+</tr>
+<tr>
+<td><code>cover</code></td>
+<td><code>about</code></td>
+<td>List of "about these data" paragraphs</td>
+</tr>
+<tr>
+<td><code>cover</code></td>
+<td><code>contact</code></td>
+<td>List of contact detail paragraphs</td>
+</tr>
+<tr>
+<td><code>cover</code></td>
+<td><code>width</code></td>
+<td>Column width in characters (default <code>85</code>)</td>
+</tr>
+<tr>
+<td><code>notesheet</code></td>
+<td><code>label</code></td>
+<td>Sheet tab label (default <code>"Notes"</code>)</td>
+</tr>
+<tr>
+<td><code>notesheet</code></td>
+<td><code>title</code></td>
+<td>Notes page title (default <code>"Notes"</code>)</td>
+</tr>
+<tr>
+<td><code>notesheet</code></td>
+<td><code>table_name</code></td>
+<td>Notes table name (default <code>"notes_table"</code>)</td>
+</tr>
+<tr>
+<td><code>notesheet</code></td>
+<td><code>instructions</code></td>
+<td>Notes page instructions text</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rich-text-in-the-config">Rich text in the config</h3>
+<p>Bold or otherwise formatted subheadings can be added to <code>intro</code>, <code>about</code> and <code>contact</code> using
+nested YAML lists where the first element is a format dictionary:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">about</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"Plain</span><span class="nv"> </span><span class="s">paragraph."</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">bold</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="nt"> font_size</span><span class="p">:</span><span class="w"> </span><span class="nv">14</span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"Bold</span><span class="nv"> </span><span class="s">subheading"</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"Another</span><span class="nv"> </span><span class="s">plain</span><span class="nv"> </span><span class="s">paragraph."</span>
 </code></pre></div>
-<p>This is shown to have changed text colours and sizes as compared to the <code>gptables</code> defaults:</p>
-<p><img alt="" src="../../static/howto_theme_basic.png" /></p>
-<p>This is combined into an extendible code block below.</p>
-<details class="note">
-<summary>global formatting</summary>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<h2 id="using-the-config-in-python">Using the config in Python</h2>
+<p>Load the YAML file, build the <code>Cover</code> object, and extract the notesheet settings before
+passing them to <code>write_workbook()</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gptables</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpt</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"penguins_pages_config.yaml"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">cover</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">Cover</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">[</span><span class="s2">"cover"</span><span class="p">])</span>
+
+<span class="n">notesheet</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"notesheet"</span><span class="p">,</span> <span class="p">{})</span>
+<span class="n">notesheet_label</span> <span class="o">=</span> <span class="n">notesheet</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"label"</span><span class="p">,</span> <span class="s2">"Notes"</span><span class="p">)</span>
+<span class="n">notesheet_options</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">notesheet</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s2">"label"</span><span class="p">}</span>
+
+<span class="n">gpt</span><span class="o">.</span><span class="n">write_workbook</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">"output.xlsx"</span><span class="p">,</span>
+    <span class="n">sheets</span><span class="o">=</span><span class="p">{</span><span class="s2">"Penguins"</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">},</span>
+    <span class="n">notes_table</span><span class="o">=</span><span class="n">penguins_notes_table</span><span class="p">,</span>
+    <span class="n">cover</span><span class="o">=</span><span class="n">cover</span><span class="p">,</span>
+    <span class="n">notesheet_label</span><span class="o">=</span><span class="n">notesheet_label</span><span class="p">,</span>
+    <span class="n">notesheet_options</span><span class="o">=</span><span class="n">notesheet_options</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<h2 id="full-example">Full example</h2>
+<details>
+<summary>Using a config file</summary>
+<p><strong><code>penguins_pages_config.yaml</code></strong>
+<div class="highlight"><pre><span></span><code><span class="nt">cover</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">cover_label</span><span class="p">:</span><span class="w"> </span><span class="s">"Cover"</span>
+<span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">"Palmer</span><span class="nv"> </span><span class="s">Penguins</span><span class="nv"> </span><span class="s">Dataset"</span>
+<span class="w">  </span><span class="nt">intro</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"This</span><span class="nv"> </span><span class="s">spreadsheet</span><span class="nv"> </span><span class="s">contains</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">table</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">data</span><span class="nv"> </span><span class="s">obtained</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">palmerpenguins</span><span class="nv"> </span><span class="s">package."</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"This</span><span class="nv"> </span><span class="s">example</span><span class="nv"> </span><span class="s">demonstrates</span><span class="nv"> </span><span class="s">how</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">use</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">config</span><span class="nv"> </span><span class="s">file</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">define</span><span class="nv"> </span><span class="s">cover</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">notes</span><span class="nv"> </span><span class="s">page</span><span class="nv"> </span><span class="s">settings."</span>
+<span class="w">  </span><span class="nt">about</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">bold</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"About</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">data"</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"The</span><span class="nv"> </span><span class="s">Palmer</span><span class="nv"> </span><span class="s">Penguins</span><span class="nv"> </span><span class="s">dataset</span><span class="nv"> </span><span class="s">contains</span><span class="nv"> </span><span class="s">size</span><span class="nv"> </span><span class="s">measurements</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">three</span><span class="nv"> </span><span class="s">penguin</span><span class="nv"> </span><span class="s">species."</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">bold</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"Notes,</span><span class="nv"> </span><span class="s">blank</span><span class="nv"> </span><span class="s">cells</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">units"</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"Some</span><span class="nv"> </span><span class="s">cells</span><span class="nv"> </span><span class="s">refer</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">notes</span><span class="nv"> </span><span class="s">which</span><span class="nv"> </span><span class="s">can</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">found</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">notes</span><span class="nv"> </span><span class="s">worksheet."</span>
+<span class="w">  </span><span class="nt">contact</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"Tel:</span><span class="nv"> </span><span class="s">01234</span><span class="nv"> </span><span class="s">567890"</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"Email:</span><span class="nv"> </span><span class="s">example@email.address"</span>
+
+<span class="nt">notesheet</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="s">"Notes"</span>
+<span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s">"Notes"</span>
+<span class="w">  </span><span class="nt">instructions</span><span class="p">:</span><span class="w"> </span><span class="s">"This</span><span class="nv"> </span><span class="s">worksheet</span><span class="nv"> </span><span class="s">contains</span><span class="nv"> </span><span class="s">one</span><span class="nv"> </span><span class="s">table.</span><span class="nv"> </span><span class="s">Note</span><span class="nv"> </span><span class="s">numbers</span><span class="nv"> </span><span class="s">correspond</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">references</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">data</span><span class="nv"> </span><span class="s">sheets."</span>
+</code></pre></div></p>
+<p><strong><code>tutorial_config_file.py</code></strong>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">gptables</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpt</span>
 
 <span class="n">penguins_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"penguins.csv"</span><span class="p">)</span>
@@ -1266,51 +1378,38 @@ inside of <code>gptables.Theme()</code>:</p>
 <span class="n">penguins_table</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span>
     <span class="n">table</span><span class="o">=</span><span class="n">penguins_data</span><span class="p">,</span>
     <span class="n">table_name</span><span class="o">=</span><span class="s2">"penguins_statistics"</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">"The Palmer Penguins Dataset"</span><span class="p">,</span>
-    <span class="n">subtitles</span><span class="o">=</span><span class="p">[</span><span class="s2">"This is the first subtitle"</span><span class="p">,</span>
-               <span class="s2">"This is another subtitle"</span><span class="p">],</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"The Palmer Penguins Dataset$$note_about_x$$"</span><span class="p">,</span>
+    <span class="n">subtitles</span><span class="o">=</span><span class="p">[</span><span class="s2">"This is the first subtitle"</span><span class="p">,</span> <span class="s2">"This is another subtitle"</span><span class="p">],</span>
     <span class="n">scope</span><span class="o">=</span><span class="s2">"Penguins"</span><span class="p">,</span>
     <span class="n">source</span><span class="o">=</span><span class="s2">"Palmer Station, Antarctica"</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Penguins"</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">}</span>
+<span class="n">notes</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"Note reference"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"note_about_x"</span><span class="p">],</span>
+    <span class="s2">"Note text"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"Data collected from the Palmer Station, Antarctica LTER."</span><span class="p">],</span>
+    <span class="s2">"Useful link"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"[palmerpenguins](https://allisonhorst.github.io/palmerpenguins/)"</span><span class="p">],</span>
+<span class="p">}</span>
+<span class="n">penguins_notes_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"penguins_pages_config.yaml"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="n">cover</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">Cover</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">[</span><span class="s2">"cover"</span><span class="p">])</span>
+<span class="n">notesheet</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"notesheet"</span><span class="p">,</span> <span class="p">{})</span>
+<span class="n">notesheet_label</span> <span class="o">=</span> <span class="n">notesheet</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"label"</span><span class="p">,</span> <span class="s2">"Notes"</span><span class="p">)</span>
+<span class="n">notesheet_options</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">notesheet</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s2">"label"</span><span class="p">}</span>
 
 <span class="n">gpt</span><span class="o">.</span><span class="n">write_workbook</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s2">"gpt_custom_theme.xlsx"</span><span class="p">,</span>
-    <span class="n">sheets</span><span class="o">=</span><span class="n">penguins_sheets</span><span class="p">,</span>
-    <span class="n">theme</span><span class="o">=</span><span class="n">gpt</span><span class="o">.</span><span class="n">Theme</span><span class="p">(</span><span class="n">example_theme_basic</span><span class="o">.</span><span class="n">yaml</span><span class="p">),</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">"gpt_tutorial_config_file.xlsx"</span><span class="p">,</span>
+    <span class="n">sheets</span><span class="o">=</span><span class="p">{</span><span class="s2">"Penguins"</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">},</span>
+    <span class="n">notes_table</span><span class="o">=</span><span class="n">penguins_notes_table</span><span class="p">,</span>
+    <span class="n">cover</span><span class="o">=</span><span class="n">cover</span><span class="p">,</span>
+    <span class="n">notesheet_label</span><span class="o">=</span><span class="n">notesheet_label</span><span class="p">,</span>
+    <span class="n">notesheet_options</span><span class="o">=</span><span class="n">notesheet_options</span><span class="p">,</span>
     <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">"additional_elements"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"subtitles"</span><span class="p">,</span> <span class="s2">"scope"</span><span class="p">]},</span>
 <span class="p">)</span>
-</code></pre></div>
+</code></pre></div></p>
 </details>
-<h2 id="element-wise-formatting">Element-wise formatting</h2>
-<p>Theme files can also be used to modify specific elements, such as the titles and subtitles
-on the cover:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">global</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">font_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">13</span>
-<span class="w">    </span><span class="nt">font_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Arial</span>
-<span class="w">    </span><span class="nt">font_color</span><span class="p">:</span><span class="w"> </span><span class="s">'#AD0000'</span>
-
-<span class="nt">cover_title</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">font_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
-
-<span class="nt">cover_subtitle</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">font_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">18</span>
-
-<span class="nt">data</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">text_wrap</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-
-<span class="nt">description_order</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">instructions</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">source</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">legend</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">scope</span>
-</code></pre></div>
-<p>This is shown to have formatted the sizes of the cover elements, with the global settings
-dictating the other font sizes and colour throughout the workbook.</p>
-<p><img alt="" src="../../static/howto_theme_cover.png" /></p>
-<p>Additional options available for element-wise formatting can be found in the
-<a href="https://github.com/ONSdigital/gptables/blob/main/gptables/themes/gptheme.yaml">theme</a> file.</p>
 
 
 
