@@ -1184,62 +1184,62 @@ on data from December 2020.</p>
 <span class="c1"># Read data and arrange</span>
 <span class="n">parent_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
 
-<span class="n">labour_market_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">parent_dir</span> <span class="o">/</span> <span class="s2">&quot;survey_data.csv&quot;</span><span class="p">)</span>
+<span class="n">labour_market_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">parent_dir</span> <span class="o">/</span> <span class="s2">"survey_data.csv"</span><span class="p">)</span>
 <span class="n">labour_market_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span>
-    <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">"all"</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>  <span class="c1"># Remove empty rows in the data</span>
 <span class="n">labour_market_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span>
-    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">"all"</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>  <span class="c1"># Remove columns rows in the data</span>
 <span class="n">col_names</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;Time period and dataset code row&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Number of people&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Economically active&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Employment level&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Unemployment level&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Economically inactive&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Economically active rate&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Employment rate&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Unemployment rate&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Economically inactive rate&quot;</span><span class="p">,</span>
+    <span class="s2">"Time period and dataset code row"</span><span class="p">,</span>
+    <span class="s2">"Number of people"</span><span class="p">,</span>
+    <span class="s2">"Economically active"</span><span class="p">,</span>
+    <span class="s2">"Employment level"</span><span class="p">,</span>
+    <span class="s2">"Unemployment level"</span><span class="p">,</span>
+    <span class="s2">"Economically inactive"</span><span class="p">,</span>
+    <span class="s2">"Economically active rate"</span><span class="p">,</span>
+    <span class="s2">"Employment rate"</span><span class="p">,</span>
+    <span class="s2">"Unemployment rate"</span><span class="p">,</span>
+    <span class="s2">"Economically inactive rate"</span><span class="p">,</span>
 <span class="p">]</span>
 <span class="n">labour_market_data</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">col_names</span>
 
 
 <span class="c1"># Define table elements</span>
-<span class="n">table_name</span> <span class="o">=</span> <span class="s2">&quot;Labour_market_overview_accessibility_example_Nov21&quot;</span>
-<span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Number and percentage of population aged 16 and over in each labour market activity group, UK, seasonally adjusted&quot;</span>
+<span class="n">table_name</span> <span class="o">=</span> <span class="s2">"Labour_market_overview_accessibility_example_Nov21"</span>
+<span class="n">title</span> <span class="o">=</span> <span class="s2">"Number and percentage of population aged 16 and over in each labour market activity group, UK, seasonally adjusted"</span>
 <span class="n">subtitles</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;This worksheet contains one table. Some cells refer to notes which can be found on the notes worksheet.&quot;</span>
+    <span class="s2">"This worksheet contains one table. Some cells refer to notes which can be found on the notes worksheet."</span>
 <span class="p">]</span>
 <span class="n">units</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;thousands&quot;</span><span class="p">,</span>
-    <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;thousands&quot;</span><span class="p">,</span>
-    <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;thousands&quot;</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;thousands&quot;</span><span class="p">,</span>
-    <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;thousands&quot;</span><span class="p">,</span>
-    <span class="mi">6</span><span class="p">:</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
-    <span class="mi">7</span><span class="p">:</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
-    <span class="mi">8</span><span class="p">:</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
-    <span class="mi">9</span><span class="p">:</span> <span class="s2">&quot;%&quot;</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="s2">"thousands"</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="s2">"thousands"</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="s2">"thousands"</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="s2">"thousands"</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">:</span> <span class="s2">"thousands"</span><span class="p">,</span>
+    <span class="mi">6</span><span class="p">:</span> <span class="s2">"%"</span><span class="p">,</span>
+    <span class="mi">7</span><span class="p">:</span> <span class="s2">"%"</span><span class="p">,</span>
+    <span class="mi">8</span><span class="p">:</span> <span class="s2">"%"</span><span class="p">,</span>
+    <span class="mi">9</span><span class="p">:</span> <span class="s2">"%"</span><span class="p">,</span>
 <span class="p">}</span>
 <span class="n">table_notes</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;$$note 1$$&quot;</span><span class="p">,</span>
-    <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;$$note 2$$&quot;</span><span class="p">,</span>
-    <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;$$note 2$$&quot;</span><span class="p">,</span>
-    <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;$$note 3$$&quot;</span><span class="p">,</span>
-    <span class="mi">7</span><span class="p">:</span> <span class="s2">&quot;$$note 4$$&quot;</span><span class="p">,</span>
-    <span class="mi">8</span><span class="p">:</span> <span class="s2">&quot;$$note 4$$&quot;</span><span class="p">,</span>
-    <span class="mi">9</span><span class="p">:</span> <span class="s2">&quot;$$note 4$$&quot;</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="s2">"$$note 1$$"</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="s2">"$$note 2$$"</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="s2">"$$note 2$$"</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">:</span> <span class="s2">"$$note 3$$"</span><span class="p">,</span>
+    <span class="mi">7</span><span class="p">:</span> <span class="s2">"$$note 4$$"</span><span class="p">,</span>
+    <span class="mi">8</span><span class="p">:</span> <span class="s2">"$$note 4$$"</span><span class="p">,</span>
+    <span class="mi">9</span><span class="p">:</span> <span class="s2">"$$note 4$$"</span><span class="p">,</span>
 <span class="p">}</span>
-<span class="n">scope</span> <span class="o">=</span> <span class="s2">&quot;Labour Market&quot;</span>
-<span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;Source: Office for National Statistics&quot;</span>
+<span class="n">scope</span> <span class="o">=</span> <span class="s2">"Labour Market"</span>
+<span class="n">source</span> <span class="o">=</span> <span class="s2">"Source: Office for National Statistics"</span>
 <span class="n">index</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>  <span class="c1"># Column 0 is a level 2 index</span>
 <span class="n">additional_formatting</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span>
-        <span class="s2">&quot;row&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;rows&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-            <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;bold&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;font_size&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span>
+        <span class="s2">"row"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"rows"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="s2">"format"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"bold"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"font_size"</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">]</span>
@@ -1247,64 +1247,64 @@ on data from December 2020.</p>
 <span class="c1"># Define our GPTable</span>
 <span class="n">survey_table</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span><span class="n">table</span><span class="o">=</span><span class="n">labour_market_data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<span class="n">sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;sheet 1a&quot;</span><span class="p">:</span> <span class="n">survey_table</span><span class="p">}</span>
+<span class="n">sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"sheet 1a"</span><span class="p">:</span> <span class="n">survey_table</span><span class="p">}</span>
 
 <span class="n">cover</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">Cover</span><span class="p">(</span>
-    <span class="n">cover_label</span><span class="o">=</span><span class="s2">&quot;Cover&quot;</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Labour market overview data tables, UK, December 2020 (accessibility example)&quot;</span><span class="p">,</span>
+    <span class="n">cover_label</span><span class="o">=</span><span class="s2">"Cover"</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"Labour market overview data tables, UK, December 2020 (accessibility example)"</span><span class="p">,</span>
     <span class="n">intro</span><span class="o">=</span><span class="p">[</span>
-        <span class="s2">&quot;This spreadsheet contains a selection of the data tables published alongside the Office for National Statistics&#39; Labour market overview for December 2020. We have edited these data tables and the accompanying cover sheet, table of contents and notes worksheet to meet the legal accessibility regulations. It is intended to be an example of an accessible spreadsheet. The data tables and accompanying information have not been quality assured. Please see the original statistical release if you are looking for accurate data.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;[Labour market overview, UK: December 2020](https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/bulletins/uklabourmarket/december2020)&quot;</span><span class="p">,</span>
+        <span class="s2">"This spreadsheet contains a selection of the data tables published alongside the Office for National Statistics' Labour market overview for December 2020. We have edited these data tables and the accompanying cover sheet, table of contents and notes worksheet to meet the legal accessibility regulations. It is intended to be an example of an accessible spreadsheet. The data tables and accompanying information have not been quality assured. Please see the original statistical release if you are looking for accurate data."</span><span class="p">,</span>
+        <span class="s2">"[Labour market overview, UK: December 2020](https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/bulletins/uklabourmarket/december2020)"</span><span class="p">,</span>
     <span class="p">],</span>
     <span class="n">about</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">[{</span><span class="s2">&quot;bold&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;font_size&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span> <span class="s2">&quot;Publication dates&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;This data tables in this spreadsheet were originally published at 7:00am 15 December 2020&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;The next publication was published at 7:00am 26 January 2021.&quot;</span><span class="p">,</span>
-        <span class="p">[{</span><span class="s2">&quot;bold&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;font_size&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span> <span class="s2">&quot;Note on weighting methodology&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;Due to the coronavirus (COVID19) pandemic, all face to face interviewing for the Labour Force Survey was suspended and replaced with telephone interviewing. This change in mode for first interviews has changed the non-response bias of the survey, affecting interviews from March 2020 onwards. All data included in this spreadsheet have now been updated and are based on latest weighting methodology.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;More information about the impact of COVID19 on the Labour Force Survey&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Dataset identifier codes&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;The four-character identification codes appearing in the tables are the ONS&#39; references for the data series.&quot;</span><span class="p">,</span>
-        <span class="p">[{</span><span class="s2">&quot;bold&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;font_size&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span> <span class="s2">&quot;Comparing quarterly changes&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;When comparing quarterly changes ONS recommends comparing with the previous non-overlapping three-month average time period, for example, compare Apr to Jun with Jan to Mar, not with Mar to May.&quot;</span><span class="p">,</span>
-        <span class="p">[{</span><span class="s2">&quot;bold&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;font_size&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span> <span class="s2">&quot;Units, notes and no data&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;Some cells in the tables refer to notes which can be found in the notes worksheet. Note markers are presented in square brackets, for example: [note 1].&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Some cells have no data, when this is the case the words &#39;no data&#39; are presented in square brackets, for example: &#39;[no data]&#39;. An explanation of why there is no data is given in the notes worksheet, see the column headings for which notes you should refer to.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Some column headings give units, when this is the case the units are presented in round brackets to differentiate them from note markers.&quot;</span><span class="p">,</span>
+        <span class="p">[{</span><span class="s2">"bold"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"font_size"</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span> <span class="s2">"Publication dates"</span><span class="p">],</span>
+        <span class="s2">"This data tables in this spreadsheet were originally published at 7:00am 15 December 2020"</span><span class="p">,</span>
+        <span class="s2">"The next publication was published at 7:00am 26 January 2021."</span><span class="p">,</span>
+        <span class="p">[{</span><span class="s2">"bold"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"font_size"</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span> <span class="s2">"Note on weighting methodology"</span><span class="p">],</span>
+        <span class="s2">"Due to the coronavirus (COVID19) pandemic, all face to face interviewing for the Labour Force Survey was suspended and replaced with telephone interviewing. This change in mode for first interviews has changed the non-response bias of the survey, affecting interviews from March 2020 onwards. All data included in this spreadsheet have now been updated and are based on latest weighting methodology."</span><span class="p">,</span>
+        <span class="s2">"More information about the impact of COVID19 on the Labour Force Survey"</span><span class="p">,</span>
+        <span class="s2">"Dataset identifier codes"</span><span class="p">,</span>
+        <span class="s2">"The four-character identification codes appearing in the tables are the ONS' references for the data series."</span><span class="p">,</span>
+        <span class="p">[{</span><span class="s2">"bold"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"font_size"</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span> <span class="s2">"Comparing quarterly changes"</span><span class="p">],</span>
+        <span class="s2">"When comparing quarterly changes ONS recommends comparing with the previous non-overlapping three-month average time period, for example, compare Apr to Jun with Jan to Mar, not with Mar to May."</span><span class="p">,</span>
+        <span class="p">[{</span><span class="s2">"bold"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"font_size"</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span> <span class="s2">"Units, notes and no data"</span><span class="p">],</span>
+        <span class="s2">"Some cells in the tables refer to notes which can be found in the notes worksheet. Note markers are presented in square brackets, for example: [note 1]."</span><span class="p">,</span>
+        <span class="s2">"Some cells have no data, when this is the case the words 'no data' are presented in square brackets, for example: '[no data]'. An explanation of why there is no data is given in the notes worksheet, see the column headings for which notes you should refer to."</span><span class="p">,</span>
+        <span class="s2">"Some column headings give units, when this is the case the units are presented in round brackets to differentiate them from note markers."</span><span class="p">,</span>
         <span class="p">[</span>
-            <span class="p">{</span><span class="s2">&quot;bold&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;font_size&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span>
-            <span class="s2">&quot;Historic publication dates for labour market statistics&quot;</span><span class="p">,</span>
-            <span class="s2">&quot; &quot;</span><span class="p">,</span>
+            <span class="p">{</span><span class="s2">"bold"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"font_size"</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span>
+            <span class="s2">"Historic publication dates for labour market statistics"</span><span class="p">,</span>
+            <span class="s2">" "</span><span class="p">,</span>
         <span class="p">],</span>
-        <span class="s2">&quot;The monthly labour market statistics release was first published in April 1998. Prior to April 1998 there was no integrated monthly release and the Labour Force Survey estimates were published separately, on different dates, from other labour market statistics. From April 2018 the usual publication day for the release was changed from Wednesday to Tuesday.&quot;</span><span class="p">,</span>
-        <span class="p">[{</span><span class="s2">&quot;bold&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;font_size&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span> <span class="s2">&quot;More labour market data&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;Other labour market datasets are available on the ONS website.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Labour market statistics time series dataset on the ONS website.&quot;</span><span class="p">,</span>
+        <span class="s2">"The monthly labour market statistics release was first published in April 1998. Prior to April 1998 there was no integrated monthly release and the Labour Force Survey estimates were published separately, on different dates, from other labour market statistics. From April 2018 the usual publication day for the release was changed from Wednesday to Tuesday."</span><span class="p">,</span>
+        <span class="p">[{</span><span class="s2">"bold"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"font_size"</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span> <span class="s2">"More labour market data"</span><span class="p">],</span>
+        <span class="s2">"Other labour market datasets are available on the ONS website."</span><span class="p">,</span>
+        <span class="s2">"Labour market statistics time series dataset on the ONS website."</span><span class="p">,</span>
     <span class="p">],</span>
     <span class="n">contact</span><span class="o">=</span><span class="p">[</span>
-        <span class="s2">&quot;Tel: 01633455400&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Email: [labour.market@ons.gov.uk](mailto:labour.market@ons.gov.uk)&quot;</span><span class="p">,</span>
+        <span class="s2">"Tel: 01633455400"</span><span class="p">,</span>
+        <span class="s2">"Email: [labour.market@ons.gov.uk](mailto:labour.market@ons.gov.uk)"</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">)</span>
 
 <span class="c1"># Notesheet</span>
-<span class="n">notes_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">parent_dir</span> <span class="o">/</span> <span class="s2">&quot;survey_data_notes.csv&quot;</span><span class="p">)</span>
-<span class="n">notes_table</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Remove empty rows in the data</span>
-<span class="n">notes_table</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Remove columns rows in the data</span>
-<span class="n">notes_table</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Note reference&quot;</span><span class="p">,</span> <span class="s2">&quot;Note text&quot;</span><span class="p">]</span>
+<span class="n">notes_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">parent_dir</span> <span class="o">/</span> <span class="s2">"survey_data_notes.csv"</span><span class="p">)</span>
+<span class="n">notes_table</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">"all"</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Remove empty rows in the data</span>
+<span class="n">notes_table</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">"all"</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Remove columns rows in the data</span>
+<span class="n">notes_table</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Note reference"</span><span class="p">,</span> <span class="s2">"Note text"</span><span class="p">]</span>
 
-<span class="n">output_path</span> <span class="o">=</span> <span class="n">parent_dir</span> <span class="o">/</span> <span class="s2">&quot;python_survey_data_gptable.xlsx&quot;</span>
+<span class="n">output_path</span> <span class="o">=</span> <span class="n">parent_dir</span> <span class="o">/</span> <span class="s2">"python_survey_data_gptable.xlsx"</span>
 <span class="n">gpt</span><span class="o">.</span><span class="n">write_workbook</span><span class="p">(</span>
     <span class="n">filename</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span>
     <span class="n">sheets</span><span class="o">=</span><span class="n">sheets</span><span class="p">,</span>
     <span class="n">cover</span><span class="o">=</span><span class="n">cover</span><span class="p">,</span>
     <span class="n">notes_table</span><span class="o">=</span><span class="n">notes_table</span><span class="p">,</span>
-    <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;additional_elements&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;subtitles&quot;</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">]},</span>
+    <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">"additional_elements"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"subtitles"</span><span class="p">,</span> <span class="s2">"scope"</span><span class="p">]},</span>
     <span class="n">auto_width</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">gridlines</span><span class="o">=</span><span class="s2">&quot;show_all&quot;</span><span class="p">,</span>
+    <span class="n">gridlines</span><span class="o">=</span><span class="s2">"show_all"</span><span class="p">,</span>
     <span class="n">cover_gridlines</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Output written at: &quot;</span><span class="p">,</span> <span class="n">output_path</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Output written at: "</span><span class="p">,</span> <span class="n">output_path</span><span class="p">)</span>
 </code></pre></div>
 </details>
 

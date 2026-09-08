@@ -1199,7 +1199,7 @@ appear on the datasheet is supplied under <code>description_order</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">global</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">font_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">13</span>
 <span class="w">    </span><span class="nt">font_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Arial</span>
-<span class="w">    </span><span class="nt">font_color</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#AD0000&#39;</span>
+<span class="w">    </span><span class="nt">font_color</span><span class="p">:</span><span class="w"> </span><span class="s">'#AD0000'</span>
 
 <span class="nt">title</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">font_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
@@ -1222,7 +1222,7 @@ inside of <code>gptables.Theme()</code>:</p>
         <span class="n">filename</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span>
         <span class="n">sheets</span><span class="o">=</span><span class="n">sheets</span><span class="p">,</span>
         <span class="n">theme</span><span class="o">=</span><span class="n">gptables</span><span class="o">.</span><span class="n">Theme</span><span class="p">(</span><span class="n">theme_path</span><span class="p">),</span>
-        <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;additional_elements&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;subtitles&quot;</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">]},</span>
+        <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">"additional_elements"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"subtitles"</span><span class="p">,</span> <span class="s2">"scope"</span><span class="p">]},</span>
     <span class="p">)</span>
 </code></pre></div>
 <p>This is shown to have changed text colours and sizes as compared to the <code>gptables</code> defaults:</p>
@@ -1233,25 +1233,25 @@ inside of <code>gptables.Theme()</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">gptables</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpt</span>
 
-<span class="n">penguins_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;penguins.csv&quot;</span><span class="p">)</span>
+<span class="n">penguins_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"penguins.csv"</span><span class="p">)</span>
 
 <span class="n">penguins_table</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span>
     <span class="n">table</span><span class="o">=</span><span class="n">penguins_data</span><span class="p">,</span>
-    <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;penguins_statistics&quot;</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Palmer Penguins Dataset&quot;</span><span class="p">,</span>
-    <span class="n">subtitles</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;This is the first subtitle&quot;</span><span class="p">,</span>
-               <span class="s2">&quot;This is another subtitle&quot;</span><span class="p">],</span>
-    <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;Penguins&quot;</span><span class="p">,</span>
-    <span class="n">source</span><span class="o">=</span><span class="s2">&quot;Palmer Station, Antarctica&quot;</span><span class="p">,</span>
+    <span class="n">table_name</span><span class="o">=</span><span class="s2">"penguins_statistics"</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"The Palmer Penguins Dataset"</span><span class="p">,</span>
+    <span class="n">subtitles</span><span class="o">=</span><span class="p">[</span><span class="s2">"This is the first subtitle"</span><span class="p">,</span>
+               <span class="s2">"This is another subtitle"</span><span class="p">],</span>
+    <span class="n">scope</span><span class="o">=</span><span class="s2">"Penguins"</span><span class="p">,</span>
+    <span class="n">source</span><span class="o">=</span><span class="s2">"Palmer Station, Antarctica"</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Penguins&quot;</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">}</span>
+<span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Penguins"</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">}</span>
 
 <span class="n">gpt</span><span class="o">.</span><span class="n">write_workbook</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;gpt_custom_theme.xlsx&quot;</span><span class="p">,</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">"gpt_custom_theme.xlsx"</span><span class="p">,</span>
     <span class="n">sheets</span><span class="o">=</span><span class="n">penguins_sheets</span><span class="p">,</span>
     <span class="n">theme</span><span class="o">=</span><span class="n">gpt</span><span class="o">.</span><span class="n">Theme</span><span class="p">(</span><span class="n">example_theme_basic</span><span class="o">.</span><span class="n">yaml</span><span class="p">),</span>
-    <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;additional_elements&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;subtitles&quot;</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">]},</span>
+    <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">"additional_elements"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"subtitles"</span><span class="p">,</span> <span class="s2">"scope"</span><span class="p">]},</span>
 <span class="p">)</span>
 </code></pre></div>
 </details>
@@ -1261,7 +1261,7 @@ on the cover:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">global</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">font_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">13</span>
 <span class="w">    </span><span class="nt">font_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Arial</span>
-<span class="w">    </span><span class="nt">font_color</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;#AD0000&#39;</span>
+<span class="w">    </span><span class="nt">font_color</span><span class="p">:</span><span class="w"> </span><span class="s">'#AD0000'</span>
 
 <span class="nt">cover_title</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">font_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>

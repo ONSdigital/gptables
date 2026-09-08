@@ -1245,42 +1245,42 @@ usage guides found in the how-tos and <a href="../../api/api_reference/">API doc
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">gptables</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpt</span>
 
-<span class="n">penguins_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;penguins.csv&quot;</span><span class="p">)</span>
+<span class="n">penguins_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"penguins.csv"</span><span class="p">)</span>
 </code></pre></div>
 <p>Perform any data preparation, for example cleaning. Then construct the <code>GPTable</code> by defining some details
 about the data, such as its title and source. The  <code>table</code> containing the data should be a
 <code>pandas.DataFrame</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="n">penguins_table</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span>
     <span class="n">table</span> <span class="o">=</span> <span class="n">penguins_data</span><span class="p">,</span>
-    <span class="n">table_name</span> <span class="o">=</span> <span class="s2">&quot;penguins_statistics&quot;</span><span class="p">,</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;The Palmer Penguins Dataset&quot;</span><span class="p">,</span>
-    <span class="n">subtitles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;This is the first subtitle&quot;</span><span class="p">,</span>
-                 <span class="s2">&quot;This is another subtitle&quot;</span><span class="p">],</span>
-    <span class="n">scope</span> <span class="o">=</span> <span class="s2">&quot;Penguins&quot;</span><span class="p">,</span>
-    <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;Palmer Station, Antarctica&quot;</span><span class="p">,</span>
+    <span class="n">table_name</span> <span class="o">=</span> <span class="s2">"penguins_statistics"</span><span class="p">,</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">"The Palmer Penguins Dataset"</span><span class="p">,</span>
+    <span class="n">subtitles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"This is the first subtitle"</span><span class="p">,</span>
+                 <span class="s2">"This is another subtitle"</span><span class="p">],</span>
+    <span class="n">scope</span> <span class="o">=</span> <span class="s2">"Penguins"</span><span class="p">,</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="s2">"Palmer Station, Antarctica"</span><span class="p">,</span>
 <span class="p">)</span>
 </code></pre></div>
 <p>As a matter of preference, this can alternatively be achieved using a dictionary of keyword arguments:</p>
 <div class="highlight"><pre><span></span><code><span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;penguins_statistics&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;The Palmer Penguins Dataset&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;subtitles&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;This is the first subtitle&quot;</span><span class="p">,</span>
-                 <span class="s2">&quot;This is another subtitle&quot;</span><span class="p">],</span>
-    <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="s2">&quot;Penguins&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;Palmer Station, Antarctica&quot;</span><span class="p">,</span>
+    <span class="s2">"table_name"</span><span class="p">:</span> <span class="s2">"penguins_statistics"</span><span class="p">,</span>
+    <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"The Palmer Penguins Dataset"</span><span class="p">,</span>
+    <span class="s2">"subtitles"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"This is the first subtitle"</span><span class="p">,</span>
+                 <span class="s2">"This is another subtitle"</span><span class="p">],</span>
+    <span class="s2">"scope"</span><span class="p">:</span> <span class="s2">"Penguins"</span><span class="p">,</span>
+    <span class="s2">"source"</span><span class="p">:</span> <span class="s2">"Palmer Station, Antarctica"</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="n">penguins_table</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span><span class="n">table</span> <span class="o">=</span> <span class="n">penguins_data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </code></pre></div>
 <p>Each <code>GPTable</code> should then be associated with a sheet name using a dictionary.</p>
-<div class="highlight"><pre><span></span><code><span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Penguins&quot;</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Penguins"</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">}</span>
 </code></pre></div>
 <p>Finally, use <code>write_workbook()</code> with the output path, sheets, and any additional elements to create
 and write a formatted Excel workbook.</p>
 <div class="highlight"><pre><span></span><code><span class="n">gpt</span><span class="o">.</span><span class="n">write_workbook</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;python_penguins_gptable.xlsx&quot;</span><span class="p">,</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">"python_penguins_gptable.xlsx"</span><span class="p">,</span>
     <span class="n">sheets</span><span class="o">=</span><span class="n">penguins_sheets</span><span class="p">,</span>
-    <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;additional_elements&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;subtitles&quot;</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">]},</span>
+    <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">"additional_elements"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"subtitles"</span><span class="p">,</span> <span class="s2">"scope"</span><span class="p">]},</span>
 <span class="p">)</span>
 </code></pre></div>
 <p>The workbook contains a table of contents, with sheet names linking
@@ -1294,24 +1294,24 @@ font and size.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">gptables</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpt</span>
 
-<span class="n">penguins_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;penguins.csv&quot;</span><span class="p">)</span>
+<span class="n">penguins_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"penguins.csv"</span><span class="p">)</span>
 
 <span class="n">penguins_table</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span>
     <span class="n">table</span> <span class="o">=</span> <span class="n">penguins_data</span><span class="p">,</span>
-    <span class="n">table_name</span> <span class="o">=</span> <span class="s2">&quot;penguins_statistics&quot;</span><span class="p">,</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;The Palmer Penguins Dataset&quot;</span><span class="p">,</span>
-    <span class="n">subtitles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;This is the first subtitle&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;This is another subtitle&quot;</span><span class="p">],</span>
-    <span class="n">scope</span> <span class="o">=</span> <span class="s2">&quot;Penguins&quot;</span><span class="p">,</span>
-    <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;Palmer Station, Antarctica&quot;</span><span class="p">,</span>
+    <span class="n">table_name</span> <span class="o">=</span> <span class="s2">"penguins_statistics"</span><span class="p">,</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">"The Palmer Penguins Dataset"</span><span class="p">,</span>
+    <span class="n">subtitles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"This is the first subtitle"</span><span class="p">,</span>
+                <span class="s2">"This is another subtitle"</span><span class="p">],</span>
+    <span class="n">scope</span> <span class="o">=</span> <span class="s2">"Penguins"</span><span class="p">,</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="s2">"Palmer Station, Antarctica"</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Penguins&quot;</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">}</span>
+<span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Penguins"</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">}</span>
 
 <span class="n">gpt</span><span class="o">.</span><span class="n">write_workbook</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;gpt_starting_out.xlsx&quot;</span><span class="p">,</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">"gpt_starting_out.xlsx"</span><span class="p">,</span>
     <span class="n">sheets</span><span class="o">=</span><span class="n">penguins_sheets</span><span class="p">,</span>
-    <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;additional_elements&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;subtitles&quot;</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">]},</span>
+    <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">"additional_elements"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"subtitles"</span><span class="p">,</span> <span class="s2">"scope"</span><span class="p">]},</span>
 <span class="p">)</span>
 </code></pre></div>
 </details>
@@ -1324,10 +1324,10 @@ of <code>gptables.write_workbook()</code>.</p>
 the workbook:</p>
 <div class="highlight"><pre><span></span><code>    <span class="n">penguins_table</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span>
         <span class="o">...</span>
-        <span class="n">instructions</span><span class="o">=</span><span class="s2">&quot;This workbook contains a single sheet. The name is a link to it.&quot;</span>
-        <span class="n">subtitles</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;This is the first subtitle&quot;</span><span class="p">,</span> <span class="s2">&quot;This is another subtitle&quot;</span><span class="p">],</span>
-        <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;Penguins&quot;</span><span class="p">,</span>
-        <span class="n">source</span><span class="o">=</span><span class="s2">&quot;Palmer Station, Antarctica&quot;</span><span class="p">,</span>
+        <span class="n">instructions</span><span class="o">=</span><span class="s2">"This workbook contains a single sheet. The name is a link to it."</span>
+        <span class="n">subtitles</span><span class="o">=</span><span class="p">[</span><span class="s2">"This is the first subtitle"</span><span class="p">,</span> <span class="s2">"This is another subtitle"</span><span class="p">],</span>
+        <span class="n">scope</span><span class="o">=</span><span class="s2">"Penguins"</span><span class="p">,</span>
+        <span class="n">source</span><span class="o">=</span><span class="s2">"Palmer Station, Antarctica"</span><span class="p">,</span>
         <span class="o">...</span>
     <span class="p">)</span>
 
@@ -1336,7 +1336,7 @@ the workbook:</p>
     <span class="n">gpt</span><span class="o">.</span><span class="n">write_workbook</span><span class="p">(</span>
         <span class="n">filename</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span>
         <span class="n">sheets</span><span class="o">=</span><span class="n">penguins_sheets</span><span class="p">,</span>
-        <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;additional_elements&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;instructions&quot;</span><span class="p">,</span> <span class="s2">&quot;subtitles&quot;</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">,</span> <span class="s2">&quot;source&quot;</span><span class="p">]},</span>
+        <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">"additional_elements"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"instructions"</span><span class="p">,</span> <span class="s2">"subtitles"</span><span class="p">,</span> <span class="s2">"scope"</span><span class="p">,</span> <span class="s2">"source"</span><span class="p">]},</span>
     <span class="p">)</span>
 </code></pre></div>
 <p><img alt="" src="../../static/table_of_contents_additional_elements.png" /></p>
@@ -1345,9 +1345,9 @@ the workbook:</p>
 <div class="highlight"><pre><span></span><code>    <span class="n">gpt</span><span class="o">.</span><span class="n">write_workbook</span><span class="p">(</span>
         <span class="n">filename</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span>
         <span class="n">sheets</span><span class="o">=</span><span class="n">penguins_sheets</span><span class="p">,</span>
-        <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;A title for the table of contents&quot;</span><span class="p">,</span>
-                                <span class="s2">&quot;subtitles&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A subtitle for the table of contents&quot;</span><span class="p">],</span>
-                                <span class="s2">&quot;additional_elements&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;subtitles&quot;</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">]},</span>
+        <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">"title"</span><span class="p">:</span> <span class="s2">"A title for the table of contents"</span><span class="p">,</span>
+                                <span class="s2">"subtitles"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"A subtitle for the table of contents"</span><span class="p">],</span>
+                                <span class="s2">"additional_elements"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"subtitles"</span><span class="p">,</span> <span class="s2">"scope"</span><span class="p">]},</span>
     <span class="p">)</span>
 </code></pre></div>
 <p><img alt="" src="../../static/table_of_contents_customisation.png" /></p>
@@ -1364,9 +1364,9 @@ are replaced with numbered references in the final output. Notes cannot be added
 cells or column headings.</p>
 <p><div class="highlight"><pre><span></span><code><span class="n">penguins_table</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span>
     <span class="o">...</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;The Palmer Penguins Dataset$$note_about_x$$&quot;</span><span class="p">,</span>
-    <span class="n">subtitles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;This is the first subtitle$$note_about_y$$&quot;</span><span class="p">,</span>
-                 <span class="s2">&quot;This is another subtitle&quot;</span><span class="p">],</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">"The Palmer Penguins Dataset$$note_about_x$$"</span><span class="p">,</span>
+    <span class="n">subtitles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"This is the first subtitle$$note_about_y$$"</span><span class="p">,</span>
+                 <span class="s2">"This is another subtitle"</span><span class="p">],</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -1377,17 +1377,17 @@ or reference, the text for the note, and optionally any links to include with th
 <code>pandas.DataFrame</code>. All lists must be the same length - if a note has no link, use an empty
 string (<code>""</code>) or <code>None</code> at that list position.</p>
 <div class="highlight"><pre><span></span><code><span class="n">notes</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;Note reference&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;note_about_x&quot;</span><span class="p">,</span> <span class="s2">&quot;note_about_y&quot;</span><span class="p">,</span> <span class="s2">&quot;note_about_z&quot;</span><span class="p">,</span> <span class="s2">&quot;note_with_no_link&quot;</span><span class="p">],</span>
-    <span class="s2">&quot;Note text&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;This is a note about x linking to google.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;This is a note about y linking to duckduckgo.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;This is a note about z linking to the ONS website.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;This is a note with no link.&quot;</span>
+    <span class="s2">"Note reference"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"note_about_x"</span><span class="p">,</span> <span class="s2">"note_about_y"</span><span class="p">,</span> <span class="s2">"note_about_z"</span><span class="p">,</span> <span class="s2">"note_with_no_link"</span><span class="p">],</span>
+    <span class="s2">"Note text"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"This is a note about x linking to google."</span><span class="p">,</span>
+        <span class="s2">"This is a note about y linking to duckduckgo."</span><span class="p">,</span>
+        <span class="s2">"This is a note about z linking to the ONS website."</span><span class="p">,</span>
+        <span class="s2">"This is a note with no link."</span>
     <span class="p">],</span>
-    <span class="s2">&quot;Useful link&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;[google](https://www.google.com)&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;[duckduckgo](https://duckduckgo.com/)&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;[ONS](https://www.ons.gov.uk)&quot;</span><span class="p">,</span>
+    <span class="s2">"Useful link"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"[google](https://www.google.com)"</span><span class="p">,</span>
+        <span class="s2">"[duckduckgo](https://duckduckgo.com/)"</span><span class="p">,</span>
+        <span class="s2">"[ONS](https://www.ons.gov.uk)"</span><span class="p">,</span>
         <span class="kc">None</span>
     <span class="p">],</span>
 <span class="p">}</span>
@@ -1410,40 +1410,40 @@ correspond to where placeholders were inserted in the title and subtitle.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">gptables</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpt</span>
 
-<span class="n">penguins_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;penguins.csv&quot;</span><span class="p">)</span>
+<span class="n">penguins_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"penguins.csv"</span><span class="p">)</span>
 
 <span class="n">penguins_table</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span><span class="n">table</span><span class="o">=</span><span class="n">penguins_data</span><span class="p">,</span>
-                            <span class="n">table_name</span> <span class="o">=</span> <span class="s2">&quot;penguins_statistics&quot;</span><span class="p">,</span>
-                            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Palmer Penguins Dataset$$note_about_x$$&quot;</span><span class="p">,</span>
-                            <span class="n">subtitles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;This is the first subtitle$$note_about_y$$&quot;</span><span class="p">,</span>
-                                        <span class="s2">&quot;This is another subtitle&quot;</span><span class="p">],</span>
-                            <span class="n">scope</span> <span class="o">=</span> <span class="s2">&quot;Penguins&quot;</span><span class="p">,</span>
-                            <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;Palmer Station, Antarctica&quot;</span><span class="p">)</span>
+                            <span class="n">table_name</span> <span class="o">=</span> <span class="s2">"penguins_statistics"</span><span class="p">,</span>
+                            <span class="n">title</span><span class="o">=</span><span class="s2">"The Palmer Penguins Dataset$$note_about_x$$"</span><span class="p">,</span>
+                            <span class="n">subtitles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"This is the first subtitle$$note_about_y$$"</span><span class="p">,</span>
+                                        <span class="s2">"This is another subtitle"</span><span class="p">],</span>
+                            <span class="n">scope</span> <span class="o">=</span> <span class="s2">"Penguins"</span><span class="p">,</span>
+                            <span class="n">source</span> <span class="o">=</span> <span class="s2">"Palmer Station, Antarctica"</span><span class="p">)</span>
 
-<span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Penguins&quot;</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">}</span>
+<span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Penguins"</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">}</span>
 
 <span class="n">notes</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;Note reference&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;note_about_x&quot;</span><span class="p">,</span> <span class="s2">&quot;note_about_y&quot;</span><span class="p">,</span> <span class="s2">&quot;note_about_z&quot;</span><span class="p">,</span> <span class="s2">&quot;note_with_no_link&quot;</span><span class="p">],</span>
-    <span class="s2">&quot;Note text&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;This is a note about x linking to google.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;This is a note about y linking to duckduckgo.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;This is a note about z linking to the ONS website.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;This is a note with no link.&quot;</span>
+    <span class="s2">"Note reference"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"note_about_x"</span><span class="p">,</span> <span class="s2">"note_about_y"</span><span class="p">,</span> <span class="s2">"note_about_z"</span><span class="p">,</span> <span class="s2">"note_with_no_link"</span><span class="p">],</span>
+    <span class="s2">"Note text"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"This is a note about x linking to google."</span><span class="p">,</span>
+        <span class="s2">"This is a note about y linking to duckduckgo."</span><span class="p">,</span>
+        <span class="s2">"This is a note about z linking to the ONS website."</span><span class="p">,</span>
+        <span class="s2">"This is a note with no link."</span>
     <span class="p">],</span>
-    <span class="s2">&quot;Useful link&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s2">&quot;[google](https://www.google.com)&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;[duckduckgo](https://duckduckgo.com/)&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;[ONS](https://www.ons.gov.uk)&quot;</span><span class="p">,</span>
+    <span class="s2">"Useful link"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"[google](https://www.google.com)"</span><span class="p">,</span>
+        <span class="s2">"[duckduckgo](https://duckduckgo.com/)"</span><span class="p">,</span>
+        <span class="s2">"[ONS](https://www.ons.gov.uk)"</span><span class="p">,</span>
         <span class="kc">None</span>
     <span class="p">],</span>
 <span class="p">}</span>
 <span class="n">penguins_notes_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
 
 <span class="n">gpt</span><span class="o">.</span><span class="n">write_workbook</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;gpt_adding_notes.xlsx&quot;</span><span class="p">,</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">"gpt_adding_notes.xlsx"</span><span class="p">,</span>
     <span class="n">sheets</span><span class="o">=</span><span class="n">penguins_sheets</span><span class="p">,</span>
     <span class="n">notes_table</span><span class="o">=</span><span class="n">penguins_notes_table</span><span class="p">,</span>
-    <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;additional_elements&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;subtitles&quot;</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">]},</span>
+    <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">"additional_elements"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"subtitles"</span><span class="p">,</span> <span class="s2">"scope"</span><span class="p">]},</span>
 <span class="p">)</span>
 </code></pre></div>
 </details>
@@ -1454,45 +1454,45 @@ label can be supplied to <code>notesheet_label</code>.</p>
 <p>Cover sheets can be used to provide information that is general to all tables in a workbook.</p>
 <p>To include a cover sheet, supply text elements to the attributes of a <a href="../../api/classes/cover/"><code>Cover</code></a> object:</p>
 <p><div class="highlight"><pre><span></span><code><span class="n">penguins_cover</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">Cover</span><span class="p">(</span>
-    <span class="n">cover_label</span> <span class="o">=</span> <span class="s2">&quot;Cover&quot;</span><span class="p">,</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Palmer Penguins Dataset&quot;</span><span class="p">,</span>
+    <span class="n">cover_label</span> <span class="o">=</span> <span class="s2">"Cover"</span><span class="p">,</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">"Palmer Penguins Dataset"</span><span class="p">,</span>
     <span class="n">intro</span><span class="o">=</span><span class="p">[</span>
-        <span class="s2">&quot;This spreadsheet contains a table of data obtained from the palmerpenguins package&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;This is intended to be a simple example of how to use the gptables package to create a spreadsheet with a cover sheet and data sheets.&quot;</span><span class="p">,</span>
+        <span class="s2">"This spreadsheet contains a table of data obtained from the palmerpenguins package"</span><span class="p">,</span>
+        <span class="s2">"This is intended to be a simple example of how to use the gptables package to create a spreadsheet with a cover sheet and data sheets."</span><span class="p">,</span>
     <span class="p">],</span>
     <span class="n">about</span><span class="o">=</span><span class="p">[</span>
-        <span class="s2">&quot;Additional information about your publication can go here&quot;</span><span class="p">,</span>
+        <span class="s2">"Additional information about your publication can go here"</span><span class="p">,</span>
     <span class="p">],</span>
     <span class="n">contact</span><span class="o">=</span><span class="p">[</span>
-        <span class="s2">&quot;Tel: 01234 567890&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Email: [example@email.address](mailto: example@email.address)&quot;</span><span class="p">,</span>
+        <span class="s2">"Tel: 01234 567890"</span><span class="p">,</span>
+        <span class="s2">"Email: [example@email.address](mailto: example@email.address)"</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">)</span>
 </code></pre></div>
 This will automatically create a cover sheet with the subheadings "Introductory information", "About these data", and "Contact" if these attributes are included.</p>
 <p>Additional formatting can be introduced to create further subheadings if required:</p>
 <div class="highlight"><pre><span></span><code><span class="n">penguins_cover</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">Cover</span><span class="p">(</span>
-    <span class="n">cover_label</span> <span class="o">=</span> <span class="s2">&quot;Cover&quot;</span><span class="p">,</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Palmer Penguins Dataset&quot;</span><span class="p">,</span>
+    <span class="n">cover_label</span> <span class="o">=</span> <span class="s2">"Cover"</span><span class="p">,</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">"Palmer Penguins Dataset"</span><span class="p">,</span>
     <span class="n">intro</span><span class="o">=</span><span class="p">[</span>
-        <span class="s2">&quot;This spreadsheet contains a table of data obtained from the palmerpenguins package&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;This an example of how to use the gptables package to create a spreadsheet with a cover sheet and data sheets.&quot;</span><span class="p">,</span>
+        <span class="s2">"This spreadsheet contains a table of data obtained from the palmerpenguins package"</span><span class="p">,</span>
+        <span class="s2">"This an example of how to use the gptables package to create a spreadsheet with a cover sheet and data sheets."</span><span class="p">,</span>
     <span class="p">],</span>
     <span class="n">about</span><span class="o">=</span><span class="p">[</span>
-        <span class="s2">&quot;Additional information about your publication can go here&quot;</span><span class="p">,</span>
-        <span class="p">[{</span><span class="s2">&quot;bold&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">&quot;Publication dates&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;This data tables in this spreadsheet were originally published at 7:00am 01 January 2025.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;The next publication will be published at 7:00am 01 January 2026.&quot;</span><span class="p">,</span>
-        <span class="p">[{</span><span class="s2">&quot;bold&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">&quot;Methodology notes&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;Information on methodology can be useful to users of your data&quot;</span><span class="p">,</span>
-        <span class="p">[{</span><span class="s2">&quot;bold&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">&quot;Notes, blank cells and units&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;Some cells in the tables refer to notes which can be found in the notes worksheet. Note markers are presented in square brackets, for example: [note 1].&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Blank cells indicate no data. An explanation of why there is no data is given in the notes worksheet.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Some column headings give units, when this is the case the units are presented in round brackets to differentiate them from note markers.&quot;</span><span class="p">,</span>
+        <span class="s2">"Additional information about your publication can go here"</span><span class="p">,</span>
+        <span class="p">[{</span><span class="s2">"bold"</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">"Publication dates"</span><span class="p">],</span>
+        <span class="s2">"This data tables in this spreadsheet were originally published at 7:00am 01 January 2025."</span><span class="p">,</span>
+        <span class="s2">"The next publication will be published at 7:00am 01 January 2026."</span><span class="p">,</span>
+        <span class="p">[{</span><span class="s2">"bold"</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">"Methodology notes"</span><span class="p">],</span>
+        <span class="s2">"Information on methodology can be useful to users of your data"</span><span class="p">,</span>
+        <span class="p">[{</span><span class="s2">"bold"</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">"Notes, blank cells and units"</span><span class="p">],</span>
+        <span class="s2">"Some cells in the tables refer to notes which can be found in the notes worksheet. Note markers are presented in square brackets, for example: [note 1]."</span><span class="p">,</span>
+        <span class="s2">"Blank cells indicate no data. An explanation of why there is no data is given in the notes worksheet."</span><span class="p">,</span>
+        <span class="s2">"Some column headings give units, when this is the case the units are presented in round brackets to differentiate them from note markers."</span><span class="p">,</span>
     <span class="p">],</span>
     <span class="n">contact</span><span class="o">=</span><span class="p">[</span>
-        <span class="s2">&quot;Tel: 01234 567890&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Email: [example@email.address](mailto: example@email.address)&quot;</span><span class="p">,</span>
+        <span class="s2">"Tel: 01234 567890"</span><span class="p">,</span>
+        <span class="s2">"Email: [example@email.address](mailto: example@email.address)"</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -1512,50 +1512,50 @@ followed by the introduction, information about the data, and contact details.</
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">gptables</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpt</span>
 
-<span class="n">penguins_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;penguins.csv&quot;</span><span class="p">)</span>
+<span class="n">penguins_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"penguins.csv"</span><span class="p">)</span>
 
 <span class="n">penguins_table</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span>
     <span class="n">table</span> <span class="o">=</span> <span class="n">penguins_data</span><span class="p">,</span>
-    <span class="n">table_name</span> <span class="o">=</span> <span class="s2">&quot;penguins_statistics&quot;</span><span class="p">,</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;The Palmer Penguins Dataset&quot;</span><span class="p">,</span>
-    <span class="n">subtitles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;This is the first subtitle&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;This is another subtitle&quot;</span><span class="p">],</span>
-    <span class="n">scope</span> <span class="o">=</span> <span class="s2">&quot;Penguins&quot;</span><span class="p">,</span>
-    <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;Palmer Station, Antarctica&quot;</span><span class="p">,</span>
+    <span class="n">table_name</span> <span class="o">=</span> <span class="s2">"penguins_statistics"</span><span class="p">,</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">"The Palmer Penguins Dataset"</span><span class="p">,</span>
+    <span class="n">subtitles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"This is the first subtitle"</span><span class="p">,</span>
+                <span class="s2">"This is another subtitle"</span><span class="p">],</span>
+    <span class="n">scope</span> <span class="o">=</span> <span class="s2">"Penguins"</span><span class="p">,</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="s2">"Palmer Station, Antarctica"</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Penguins&quot;</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">}</span>
+<span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Penguins"</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">}</span>
 
 <span class="n">penguins_cover</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">Cover</span><span class="p">(</span>
-    <span class="n">cover_label</span> <span class="o">=</span> <span class="s2">&quot;Cover&quot;</span><span class="p">,</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Palmer Penguins Dataset&quot;</span><span class="p">,</span>
+    <span class="n">cover_label</span> <span class="o">=</span> <span class="s2">"Cover"</span><span class="p">,</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">"Palmer Penguins Dataset"</span><span class="p">,</span>
     <span class="n">intro</span><span class="o">=</span><span class="p">[</span>
-        <span class="s2">&quot;This spreadsheet contains a table of data obtained from the palmerpenguins package&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;This is intended to be a simple example of how to use the gptables package to create a spreadsheet with a cover sheet and data sheets.&quot;</span><span class="p">,</span>
+        <span class="s2">"This spreadsheet contains a table of data obtained from the palmerpenguins package"</span><span class="p">,</span>
+        <span class="s2">"This is intended to be a simple example of how to use the gptables package to create a spreadsheet with a cover sheet and data sheets."</span><span class="p">,</span>
     <span class="p">],</span>
     <span class="n">about</span><span class="o">=</span><span class="p">[</span>
-        <span class="s2">&quot;Additional information about your publication can go here&quot;</span><span class="p">,</span>
-        <span class="p">[{</span><span class="s2">&quot;bold&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">&quot;Publication dates&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;Date published: 01 January 2025.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Next release: 01 January 2026.&quot;</span><span class="p">,</span>
-        <span class="p">[{</span><span class="s2">&quot;bold&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">&quot;Methodology notes&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;Information on methodology can be useful to users of your data&quot;</span><span class="p">,</span>
-        <span class="p">[{</span><span class="s2">&quot;bold&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">&quot;Notes, blank cells and units&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;Some cells in the tables refer to notes which can be found in the notes worksheet. Note markers are presented in square brackets, for example: [note 1].&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Blank cells indicate no data. An explanation of why there is no data is given in the notes worksheet, see the column headings for which notes you should refer to.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Some column headings give units, when this is the case the units are presented in round brackets to differentiate them from note markers.&quot;</span><span class="p">,</span>
+        <span class="s2">"Additional information about your publication can go here"</span><span class="p">,</span>
+        <span class="p">[{</span><span class="s2">"bold"</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">"Publication dates"</span><span class="p">],</span>
+        <span class="s2">"Date published: 01 January 2025."</span><span class="p">,</span>
+        <span class="s2">"Next release: 01 January 2026."</span><span class="p">,</span>
+        <span class="p">[{</span><span class="s2">"bold"</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">"Methodology notes"</span><span class="p">],</span>
+        <span class="s2">"Information on methodology can be useful to users of your data"</span><span class="p">,</span>
+        <span class="p">[{</span><span class="s2">"bold"</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">"Notes, blank cells and units"</span><span class="p">],</span>
+        <span class="s2">"Some cells in the tables refer to notes which can be found in the notes worksheet. Note markers are presented in square brackets, for example: [note 1]."</span><span class="p">,</span>
+        <span class="s2">"Blank cells indicate no data. An explanation of why there is no data is given in the notes worksheet, see the column headings for which notes you should refer to."</span><span class="p">,</span>
+        <span class="s2">"Some column headings give units, when this is the case the units are presented in round brackets to differentiate them from note markers."</span><span class="p">,</span>
     <span class="p">],</span>
     <span class="n">contact</span><span class="o">=</span><span class="p">[</span>
-        <span class="s2">&quot;Tel: 01234 567890&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Email: [example@email.address](mailto: example@email.address)&quot;</span><span class="p">,</span>
+        <span class="s2">"Tel: 01234 567890"</span><span class="p">,</span>
+        <span class="s2">"Email: [example@email.address](mailto: example@email.address)"</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">)</span>
 
 <span class="n">gpt</span><span class="o">.</span><span class="n">write_workbook</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;gpt_adding_cover.xlsx&quot;</span><span class="p">,</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">"gpt_adding_cover.xlsx"</span><span class="p">,</span>
     <span class="n">sheets</span><span class="o">=</span><span class="n">penguins_sheets</span><span class="p">,</span>
     <span class="n">cover</span><span class="o">=</span><span class="n">penguins_cover</span><span class="p">,</span>
-    <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;additional_elements&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;subtitles&quot;</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">]},</span>
+    <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">"additional_elements"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"subtitles"</span><span class="p">,</span> <span class="s2">"scope"</span><span class="p">]},</span>
 <span class="p">)</span>
 </code></pre></div>
 </details>
@@ -1563,26 +1563,26 @@ followed by the introduction, information about the data, and contact details.</
 <p>For additional data sheets, construct additional GPTables:</p>
 <div class="highlight"><pre><span></span><code><span class="n">penguins_table_1</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span>
     <span class="n">table</span><span class="o">=</span><span class="n">penguins_data_1</span><span class="p">,</span>
-    <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;penguins_statistics_1&quot;</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Palmer Penguins Dataset (Sheet 1)&quot;</span><span class="p">,</span>
-    <span class="n">subtitles</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;This is the first subtitle&quot;</span><span class="p">,</span> <span class="s2">&quot;This is another subtitle&quot;</span><span class="p">],</span>
-    <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;Penguins&quot;</span><span class="p">,</span>
-    <span class="n">source</span><span class="o">=</span><span class="s2">&quot;Palmer Station, Antarctica&quot;</span><span class="p">,</span>
+    <span class="n">table_name</span><span class="o">=</span><span class="s2">"penguins_statistics_1"</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"The Palmer Penguins Dataset (Sheet 1)"</span><span class="p">,</span>
+    <span class="n">subtitles</span><span class="o">=</span><span class="p">[</span><span class="s2">"This is the first subtitle"</span><span class="p">,</span> <span class="s2">"This is another subtitle"</span><span class="p">],</span>
+    <span class="n">scope</span><span class="o">=</span><span class="s2">"Penguins"</span><span class="p">,</span>
+    <span class="n">source</span><span class="o">=</span><span class="s2">"Palmer Station, Antarctica"</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">penguins_table_2</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span>
     <span class="n">table</span><span class="o">=</span><span class="n">penguins_data_2</span><span class="p">,</span>
-    <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;penguins_statistics_2&quot;</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Palmer Penguins Dataset (Sheet 2)&quot;</span><span class="p">,</span>
-    <span class="n">subtitles</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;This is the first subtitle for sheet 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Another subtitle for sheet 2&quot;</span><span class="p">],</span>
-    <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;Penguins&quot;</span><span class="p">,</span>
-    <span class="n">source</span><span class="o">=</span><span class="s2">&quot;Palmer Station, Antarctica&quot;</span><span class="p">,</span>
+    <span class="n">table_name</span><span class="o">=</span><span class="s2">"penguins_statistics_2"</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"The Palmer Penguins Dataset (Sheet 2)"</span><span class="p">,</span>
+    <span class="n">subtitles</span><span class="o">=</span><span class="p">[</span><span class="s2">"This is the first subtitle for sheet 2"</span><span class="p">,</span> <span class="s2">"Another subtitle for sheet 2"</span><span class="p">],</span>
+    <span class="n">scope</span><span class="o">=</span><span class="s2">"Penguins"</span><span class="p">,</span>
+    <span class="n">source</span><span class="o">=</span><span class="s2">"Palmer Station, Antarctica"</span><span class="p">,</span>
 <span class="p">)</span>
 </code></pre></div>
 <p>Collate the GPTables with their names in a dictionary:</p>
 <div class="highlight"><pre><span></span><code><span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;Penguins 1&quot;</span><span class="p">:</span> <span class="n">penguins_table_1</span><span class="p">,</span>
-        <span class="s2">&quot;Penguins 2&quot;</span><span class="p">:</span> <span class="n">penguins_table_2</span>
+        <span class="s2">"Penguins 1"</span><span class="p">:</span> <span class="n">penguins_table_1</span><span class="p">,</span>
+        <span class="s2">"Penguins 2"</span><span class="p">:</span> <span class="n">penguins_table_2</span>
     <span class="p">}</span>
 </code></pre></div>
 <p>Then, use <code>gptables.write_workbook()</code> to create and write out the workbook:</p>
@@ -1598,38 +1598,38 @@ followed by the introduction, information about the data, and contact details.</
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">gptables</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpt</span>
 
-<span class="n">penguins_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;penguins.csv&quot;</span><span class="p">)</span>
+<span class="n">penguins_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"penguins.csv"</span><span class="p">)</span>
 
 <span class="n">penguins_data_1</span> <span class="o">=</span> <span class="n">penguins_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">10</span><span class="p">]</span>
 <span class="n">penguins_data_2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">penguins_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">penguins_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">10</span><span class="p">:]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">penguins_table_1</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span>
     <span class="n">table</span><span class="o">=</span><span class="n">penguins_data_1</span><span class="p">,</span>
-    <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;penguins_statistics_1&quot;</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Palmer Penguins Dataset (Sheet 1)&quot;</span><span class="p">,</span>
-    <span class="n">subtitles</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;This is the first subtitle&quot;</span><span class="p">,</span> <span class="s2">&quot;This is another subtitle&quot;</span><span class="p">],</span>
-    <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;Penguins&quot;</span><span class="p">,</span>
-    <span class="n">source</span><span class="o">=</span><span class="s2">&quot;Palmer Station, Antarctica&quot;</span><span class="p">,</span>
+    <span class="n">table_name</span><span class="o">=</span><span class="s2">"penguins_statistics_1"</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"The Palmer Penguins Dataset (Sheet 1)"</span><span class="p">,</span>
+    <span class="n">subtitles</span><span class="o">=</span><span class="p">[</span><span class="s2">"This is the first subtitle"</span><span class="p">,</span> <span class="s2">"This is another subtitle"</span><span class="p">],</span>
+    <span class="n">scope</span><span class="o">=</span><span class="s2">"Penguins"</span><span class="p">,</span>
+    <span class="n">source</span><span class="o">=</span><span class="s2">"Palmer Station, Antarctica"</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">penguins_table_2</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span>
     <span class="n">table</span><span class="o">=</span><span class="n">penguins_data_2</span><span class="p">,</span>
-    <span class="n">table_name</span><span class="o">=</span><span class="s2">&quot;penguins_statistics_2&quot;</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;The Palmer Penguins Dataset (Sheet 2)&quot;</span><span class="p">,</span>
-    <span class="n">subtitles</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;This is the first subtitle for sheet 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Another subtitle for sheet 2&quot;</span><span class="p">],</span>
-    <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;Penguins&quot;</span><span class="p">,</span>
-    <span class="n">source</span><span class="o">=</span><span class="s2">&quot;Palmer Station, Antarctica&quot;</span><span class="p">,</span>
+    <span class="n">table_name</span><span class="o">=</span><span class="s2">"penguins_statistics_2"</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"The Palmer Penguins Dataset (Sheet 2)"</span><span class="p">,</span>
+    <span class="n">subtitles</span><span class="o">=</span><span class="p">[</span><span class="s2">"This is the first subtitle for sheet 2"</span><span class="p">,</span> <span class="s2">"Another subtitle for sheet 2"</span><span class="p">],</span>
+    <span class="n">scope</span><span class="o">=</span><span class="s2">"Penguins"</span><span class="p">,</span>
+    <span class="n">source</span><span class="o">=</span><span class="s2">"Palmer Station, Antarctica"</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;Penguins 1&quot;</span><span class="p">:</span> <span class="n">penguins_table_1</span><span class="p">,</span>
-    <span class="s2">&quot;Penguins 2&quot;</span><span class="p">:</span> <span class="n">penguins_table_2</span>
+    <span class="s2">"Penguins 1"</span><span class="p">:</span> <span class="n">penguins_table_1</span><span class="p">,</span>
+    <span class="s2">"Penguins 2"</span><span class="p">:</span> <span class="n">penguins_table_2</span>
 <span class="p">}</span>
 
 <span class="n">gpt</span><span class="o">.</span><span class="n">write_workbook</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;python_penguins_gptable.xlsx&quot;</span><span class="p">,</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">"python_penguins_gptable.xlsx"</span><span class="p">,</span>
     <span class="n">sheets</span><span class="o">=</span><span class="n">penguins_sheets</span><span class="p">,</span>
-    <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;additional_elements&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;subtitles&quot;</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">]},</span>
+    <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">"additional_elements"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"subtitles"</span><span class="p">,</span> <span class="s2">"scope"</span><span class="p">]},</span>
 <span class="p">)</span>
 </code></pre></div>
 </details>
@@ -1645,20 +1645,20 @@ followed by the introduction, information about the data, and contact details.</
 <p>To position your table at a specific row, set <code>table_row_index</code> to a value that is greater than the position of the last descriptive element:</p>
 <div class="highlight"><pre><span></span><code><span class="n">penguins_table</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span>
     <span class="n">table</span> <span class="o">=</span> <span class="n">penguins_data</span><span class="p">,</span>
-    <span class="n">table_name</span> <span class="o">=</span> <span class="s2">&quot;penguins_statistics&quot;</span><span class="p">,</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;The Palmer Penguins Dataset&quot;</span><span class="p">,</span>
-    <span class="n">subtitles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;This is the first subtitle&quot;</span><span class="p">,</span> <span class="s2">&quot;This is another subtitle&quot;</span><span class="p">],</span>
-    <span class="n">scope</span> <span class="o">=</span> <span class="s2">&quot;Penguins&quot;</span><span class="p">,</span>
-    <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;Palmer Station, Antarctica&quot;</span><span class="p">,</span>
+    <span class="n">table_name</span> <span class="o">=</span> <span class="s2">"penguins_statistics"</span><span class="p">,</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">"The Palmer Penguins Dataset"</span><span class="p">,</span>
+    <span class="n">subtitles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"This is the first subtitle"</span><span class="p">,</span> <span class="s2">"This is another subtitle"</span><span class="p">],</span>
+    <span class="n">scope</span> <span class="o">=</span> <span class="s2">"Penguins"</span><span class="p">,</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="s2">"Palmer Station, Antarctica"</span><span class="p">,</span>
     <span class="n">table_row_index</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>  <span class="c1"># Table headings start at row 10</span>
 <span class="p">)</span>
 
-<span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Penguins&quot;</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">}</span>
+<span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Penguins"</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">}</span>
 
 <span class="n">gpt</span><span class="o">.</span><span class="n">write_workbook</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;gpt_table_position.xlsx&quot;</span><span class="p">,</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">"gpt_table_position.xlsx"</span><span class="p">,</span>
     <span class="n">sheets</span><span class="o">=</span><span class="n">penguins_sheets</span><span class="p">,</span>
-    <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;additional_elements&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;subtitles&quot;</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">]},</span>
+    <span class="n">contentsheet_options</span><span class="o">=</span><span class="p">{</span><span class="s2">"additional_elements"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"subtitles"</span><span class="p">,</span> <span class="s2">"scope"</span><span class="p">]},</span>
 <span class="p">)</span>
 </code></pre></div>
 <p>If you specify a <code>table_row_index</code> that is too small (overlapping with descriptive elements), a <code>ValueError</code> will be raised. The parameter must be set to a value at least as large as the row needed to accommodate all descriptive elements.</p>

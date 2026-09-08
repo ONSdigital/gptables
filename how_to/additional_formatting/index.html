@@ -1217,11 +1217,11 @@ and then the formatting changes. To change the properties of columns called Spec
 to be center-aligned and italic, for example:</p>
 <p><div class="highlight"><pre><span></span><code><span class="n">sample_additional_formatting</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span>
-        <span class="s2">&quot;column&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;columns&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Species&quot;</span><span class="p">,</span> <span class="s2">&quot;Island&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;align&quot;</span><span class="p">:</span> <span class="s2">&quot;center&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;italic&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">"column"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"columns"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"Species"</span><span class="p">,</span> <span class="s2">"Island"</span><span class="p">],</span>
+            <span class="s2">"format"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"align"</span><span class="p">:</span> <span class="s2">"center"</span><span class="p">,</span>
+                <span class="s2">"italic"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -1232,23 +1232,23 @@ corresponding to the last row. Column and row numbers include indices and column
 <p>Multiple selections of columns, rows, and cells can be made in a single <code>additional_formatting</code> list.</p>
 <div class="highlight"><pre><span></span><code><span class="n">penguins_additional_formatting</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span>
-        <span class="s2">&quot;column&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;columns&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Species&quot;</span><span class="p">,</span> <span class="s2">&quot;Island&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;align&quot;</span><span class="p">:</span> <span class="s2">&quot;center&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;italic&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">"column"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"columns"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"Species"</span><span class="p">,</span> <span class="s2">"Island"</span><span class="p">],</span>
+            <span class="s2">"format"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"align"</span><span class="p">:</span> <span class="s2">"center"</span><span class="p">,</span>
+                <span class="s2">"italic"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">}</span>
     <span class="p">},</span>
     <span class="p">{</span>
-        <span class="s2">&quot;column&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;columns&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;left&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}</span>
+        <span class="s2">"column"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"columns"</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="s2">"format"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"left"</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}</span>
     <span class="p">},</span>
     <span class="p">{</span>
-        <span class="s2">&quot;row&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;rows&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-            <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;bottom&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                <span class="s2">&quot;indent&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">"row"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"rows"</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+            <span class="s2">"format"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"bottom"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">"indent"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">}</span>
     <span class="p">},</span>
@@ -1261,27 +1261,27 @@ italicisation of two columns, left bordering on the 4th column, and indentation 
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">gptables</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpt</span>
 
-<span class="n">penguins_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;penguins.csv&quot;</span><span class="p">)</span>
+<span class="n">penguins_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"penguins.csv"</span><span class="p">)</span>
 
 <span class="n">penguins_additional_formatting</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span>
-        <span class="s2">&quot;column&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;columns&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Species&quot;</span><span class="p">,</span> <span class="s2">&quot;Island&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;align&quot;</span><span class="p">:</span> <span class="s2">&quot;center&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;italic&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">"column"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"columns"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"Species"</span><span class="p">,</span> <span class="s2">"Island"</span><span class="p">],</span>
+            <span class="s2">"format"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"align"</span><span class="p">:</span> <span class="s2">"center"</span><span class="p">,</span>
+                <span class="s2">"italic"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">}</span>
     <span class="p">},</span>
     <span class="p">{</span>
-        <span class="s2">&quot;column&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;columns&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;left&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}</span>
+        <span class="s2">"column"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"columns"</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="s2">"format"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"left"</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}</span>
     <span class="p">},</span>
     <span class="p">{</span>
-        <span class="s2">&quot;row&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;rows&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-            <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;bottom&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                <span class="s2">&quot;indent&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">"row"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"rows"</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+            <span class="s2">"format"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"bottom"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">"indent"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">}</span>
     <span class="p">},</span>
@@ -1289,19 +1289,19 @@ italicisation of two columns, left bordering on the 4th column, and indentation 
 
 <span class="n">penguins_table</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span>
     <span class="n">table</span> <span class="o">=</span> <span class="n">penguins_data</span><span class="p">,</span>
-    <span class="n">table_name</span> <span class="o">=</span> <span class="s2">&quot;penguins_statistics&quot;</span><span class="p">,</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;The Palmer Penguins Dataset&quot;</span><span class="p">,</span>
-    <span class="n">subtitles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;This is the first subtitle&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;This is another subtitle&quot;</span><span class="p">],</span>
-    <span class="n">scope</span> <span class="o">=</span> <span class="s2">&quot;Penguins&quot;</span><span class="p">,</span>
-    <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;Palmer Station, Antarctica&quot;</span><span class="p">,</span>
+    <span class="n">table_name</span> <span class="o">=</span> <span class="s2">"penguins_statistics"</span><span class="p">,</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">"The Palmer Penguins Dataset"</span><span class="p">,</span>
+    <span class="n">subtitles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"This is the first subtitle"</span><span class="p">,</span>
+                <span class="s2">"This is another subtitle"</span><span class="p">],</span>
+    <span class="n">scope</span> <span class="o">=</span> <span class="s2">"Penguins"</span><span class="p">,</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="s2">"Palmer Station, Antarctica"</span><span class="p">,</span>
     <span class="n">additional_formatting</span> <span class="o">=</span> <span class="n">penguins_additional_formatting</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Penguins&quot;</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">}</span>
+<span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Penguins"</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">}</span>
 
 <span class="n">wb</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">produce_workbook</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;gpt_additional_formatting.xlsx&quot;</span><span class="p">,</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">"gpt_additional_formatting.xlsx"</span><span class="p">,</span>
     <span class="n">sheets</span><span class="o">=</span><span class="n">penguins_sheets</span>
 <span class="p">)</span>
 <span class="n">wb</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -1315,8 +1315,8 @@ and <code>legend</code> elements without using <code>additional_formatting</code
 and values to the relevant parameter. The formatting defined in these dictionaries will be applied to the
 next string in the list.  For example:</p>
 <div class="highlight"><pre><span></span><code><span class="n">formatted_subtitles</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;The first subtitle&quot;</span><span class="p">,</span>
-    <span class="p">[{</span><span class="s2">&quot;bold&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">&quot;This&quot;</span><span class="p">,</span> <span class="s2">&quot; is another subtitle&quot;</span><span class="p">],</span>
+    <span class="s2">"The first subtitle"</span><span class="p">,</span>
+    <span class="p">[{</span><span class="s2">"bold"</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">"This"</span><span class="p">,</span> <span class="s2">" is another subtitle"</span><span class="p">],</span>
 <span class="p">]</span>
 </code></pre></div>
 <p><img alt="" src="../../static/howto_additional_formatting_text.png" /></p>
@@ -1326,26 +1326,26 @@ next string in the list.  For example:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">gptables</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpt</span>
 
-<span class="n">penguins_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;penguins.csv&quot;</span><span class="p">)</span>
+<span class="n">penguins_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"penguins.csv"</span><span class="p">)</span>
 
 <span class="n">formatted_subtitles</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;The first subtitle&quot;</span><span class="p">,</span>
-    <span class="p">[{</span><span class="s2">&quot;bold&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">&quot;This&quot;</span><span class="p">,</span> <span class="s2">&quot; is another subtitle&quot;</span><span class="p">],</span>
+    <span class="s2">"The first subtitle"</span><span class="p">,</span>
+    <span class="p">[{</span><span class="s2">"bold"</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s2">"This"</span><span class="p">,</span> <span class="s2">" is another subtitle"</span><span class="p">],</span>
 <span class="p">]</span>
 
 <span class="n">penguins_table</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span>
     <span class="n">table</span> <span class="o">=</span> <span class="n">penguins_data</span><span class="p">,</span>
-    <span class="n">table_name</span> <span class="o">=</span> <span class="s2">&quot;penguins_statistics&quot;</span><span class="p">,</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;The Palmer Penguins Dataset&quot;</span><span class="p">,</span>
+    <span class="n">table_name</span> <span class="o">=</span> <span class="s2">"penguins_statistics"</span><span class="p">,</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">"The Palmer Penguins Dataset"</span><span class="p">,</span>
     <span class="n">subtitles</span> <span class="o">=</span> <span class="n">formatted_subtitles</span>
-    <span class="n">scope</span> <span class="o">=</span> <span class="s2">&quot;Penguins&quot;</span><span class="p">,</span>
-    <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;Palmer Station, Antarctica&quot;</span><span class="p">,</span>
+    <span class="n">scope</span> <span class="o">=</span> <span class="s2">"Penguins"</span><span class="p">,</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="s2">"Palmer Station, Antarctica"</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Penguins&quot;</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">}</span>
+<span class="n">penguins_sheets</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Penguins"</span><span class="p">:</span> <span class="n">penguins_table</span><span class="p">}</span>
 
 <span class="n">wb</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">produce_workbook</span><span class="p">(</span>
-    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;additional_formatting_example.xlsx&quot;</span><span class="p">,</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">"additional_formatting_example.xlsx"</span><span class="p">,</span>
     <span class="n">sheets</span><span class="o">=</span><span class="n">penguins_sheets</span>
 <span class="p">)</span>
 <span class="n">wb</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -1375,7 +1375,7 @@ for example in the <code>gptables</code> global <a href="https://github.com/ONSd
 <span class="n">ws</span><span class="o">.</span><span class="n">set_row</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
 </code></pre></div>
 <p>Or, by using <code>Format</code> objects:</p>
-<div class="highlight"><pre><span></span><code><span class="n">italic_format</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">add_format</span><span class="p">({</span><span class="s2">&quot;italic&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+<div class="highlight"><pre><span></span><code><span class="n">italic_format</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">add_format</span><span class="p">({</span><span class="s2">"italic"</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
 <span class="n">ws</span><span class="o">.</span><span class="n">set_column</span><span class="p">(</span>
     <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">italic_format</span>
 <span class="p">)</span>
