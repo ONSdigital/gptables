@@ -4,7 +4,6 @@ import pandas as pd
 import pytest
 
 import gptables as gpt
-from gptables.core import api as gpt_api
 from gptables.test.test_utils.excel_comparison_test import ExcelComparisonTest
 
 
@@ -119,47 +118,25 @@ def test_produce_workbook_applies_workbook_options_default_date_format(tmp_path)
     wb.close()
 
 
-def test_write_workbook_forwards_workbook_options(tmp_path):
-    recorded = {}
-    passed_workbook_options = {"strings_to_numbers": True, "nan_inf_to_errors": True}
+def test_produce_workbook_rejects_invalid_workbook_options_type(tmp_path):
+    """Verify that invalid workbook_options types raise a TypeError."""
+    table = pd.DataFrame({"col": [1, 2]})
+    gptable = gpt.GPTable(
+        table=table,
+        table_name="test",
+        title="Test",
+    )
 
-    class DummyWorkbook:
-        def __init__(self):
-            self.closed = False
-
-        def close(self):
-            self.closed = True
-
-    dummy_workbook = DummyWorkbook()
-
-    def fake_produce_workbook(
-        filename,
-        sheets,
-        theme,
-        cover,
-        contentsheet_label,
-        contentsheet_options,
-        notes_table,
-        notesheet_label,
-        notesheet_options,
-        auto_width,
-        gridlines,
-        cover_gridlines,
-        workbook_options,
-    ):
-        recorded["workbook_options"] = workbook_options
-        return dummy_workbook
-
-    original_produce_workbook = gpt_api.produce_workbook
-    try:
-        gpt_api.produce_workbook = fake_produce_workbook
-        gpt_api.write_workbook(
-            filename=tmp_path / "dummy.xlsx",
-            sheets={},
-            workbook_options=passed_workbook_options,
+    with pytest.raises(TypeError, match="workbook_options.*must be a dict"):
+        gpt.produce_workbook(
+            filename=tmp_path / "invalid.xlsx",
+            sheets={"Sheet": gptable},
+            workbook_options="invalid",
         )
-    finally:
-        gpt_api.produce_workbook = original_produce_workbook
 
-    assert recorded["workbook_options"] is passed_workbook_options
-    assert dummy_workbook.closed is True
+    with pytest.raises(TypeError, match="workbook_options.*must be a dict"):
+        gpt.produce_workbook(
+            filename=tmp_path / "invalid.xlsx",
+            sheets={"Sheet": gptable},
+            workbook_options=["invalid"],
+        )

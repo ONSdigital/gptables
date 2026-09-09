@@ -81,6 +81,10 @@ def produce_workbook(
 
     if workbook_options is None:
         workbook_options = {}
+    elif not isinstance(workbook_options, dict):
+        raise TypeError(
+            f"`workbook_options` must be a dict, not {type(workbook_options).__name__}"
+        )
 
     if isinstance(filename, Path):
         filename = filename.as_posix()
