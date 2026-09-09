@@ -23,6 +23,7 @@ def produce_workbook(
     auto_width: Union[bool, Dict[str, bool]] = True,
     gridlines: str = "hide_all",
     cover_gridlines: bool = False,
+    workbook_options: Optional[Dict[str, Any]] = None,
 ) -> GPWorkbook:
     """
     Produces a formatted workbook.
@@ -64,6 +65,10 @@ def produce_workbook(
     cover_gridlines : bool, optional
         indication if gridlines should apply to the cover worksheet. False
         by default.
+    workbook_options : dict, optional
+        options to pass to the underlying ``xlsxwriter.Workbook`` constructor.
+        See the `xlsxwriter docs <https://xlsxwriter.readthedocs.io/workbook.html>`_
+        for available options (e.g. ``{'strings_to_numbers': True}``).
 
     Returns
     -------
@@ -74,10 +79,17 @@ def produce_workbook(
     if notesheet_options is None:
         notesheet_options = {}
 
+    if workbook_options is None:
+        workbook_options = {}
+    elif not isinstance(workbook_options, dict):
+        raise TypeError(
+            f"`workbook_options` must be a dict, not {type(workbook_options).__name__}"
+        )
+
     if isinstance(filename, Path):
         filename = filename.as_posix()
 
-    wb = GPWorkbook(filename)
+    wb = GPWorkbook(filename, options=workbook_options)
 
     if theme is not None:
         wb.set_theme(theme)
@@ -144,6 +156,7 @@ def write_workbook(
     auto_width: Union[bool, Dict[str, bool]] = True,
     gridlines: str = "hide_all",
     cover_gridlines: bool = False,
+    workbook_options: Optional[Dict[str, Any]] = None,
 ) -> None:
     """
     Writes a formatted Excel workbook to `filename`.
@@ -184,6 +197,10 @@ def write_workbook(
     cover_gridlines : bool, optional
         indication if gridlines should apply to the cover worksheet. False
         by default.
+    workbook_options : dict, optional
+        options to pass to the underlying ``xlsxwriter.Workbook`` constructor.
+        See the `xlsxwriter docs <https://xlsxwriter.readthedocs.io/workbook.html>`_
+        for available options (e.g. ``{'strings_to_numbers': True}``).
 
     Returns
     -------
@@ -208,5 +225,6 @@ def write_workbook(
         auto_width,
         gridlines,
         cover_gridlines,
+        workbook_options,
     )
     wb.close()
