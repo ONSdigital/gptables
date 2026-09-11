@@ -465,6 +465,62 @@ class TestGPWorksheetTable:
         exp_table_range = xlsxwriter.utility.xl_range(8, 0, 10, 1)
         assert got_table_range == exp_table_range
 
+    def test_write_gptable_supports_header_part_formatting(
+        self, testbook, create_gptable_with_kwargs
+    ):
+        gptable = create_gptable_with_kwargs(
+            {
+                "table": pd.DataFrame({"columnA": [1], "columnB": [2]}),
+                "units": {"columnA": "unit"},
+                "table_notes": {"columnA": "$$ref$$"},
+                "additional_formatting": [
+                    {
+                        "header": {
+                            "columns": ["columnA"],
+                            "target": "units",
+                            "format": {"italic": True},
+                        }
+                    },
+                    {
+                        "header": {
+                            "columns": ["columnA"],
+                            "target": "note",
+                            "format": {"font_color": "red"},
+                        }
+                    },
+                ],
+            }
+        )
+
+        testbook.ws.write_gptable(gptable, auto_width=True, reference_order=["ref"])
+
+        header_row = gptable.data_range[0]
+        cell = testbook.ws.table[header_row][0]
+        assert isinstance(cell[0], int)
+
+        rich_strings = list(testbook.ws.str_table.string_table.keys())
+        assert any("(unit)" in value and "<i/>" in value for value in rich_strings)
+        assert any(
+            "[note 1]" in value and "FFFF0000" in value for value in rich_strings
+        )
+        assert len(testbook.ws.tables) == 0
+
+    def test_write_gptable_keeps_plain_header_notes_in_table_definition(
+        self, testbook, create_gptable_with_kwargs
+    ):
+        gptable = create_gptable_with_kwargs(
+            {
+                "table": pd.DataFrame({"columnA": [1], "columnB": [2]}),
+                "units": {"columnB": "unit"},
+                "table_notes": {"columnB": "$$ref$$"},
+            }
+        )
+
+        testbook.ws.write_gptable(gptable, auto_width=True, reference_order=["ref"])
+
+        table = testbook.ws.tables[0]
+        assert table["columns"][1]["name"] == "columnB\n(unit)\n[note 1]"
+
     @pytest.mark.parametrize(
         "data,format,exp_width",
         [
