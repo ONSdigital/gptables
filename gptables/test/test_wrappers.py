@@ -505,6 +505,22 @@ class TestGPWorksheetTable:
         )
         assert len(testbook.ws.tables) == 0
 
+    def test_write_gptable_keeps_plain_header_notes_in_table_definition(
+        self, testbook, create_gptable_with_kwargs
+    ):
+        gptable = create_gptable_with_kwargs(
+            {
+                "table": pd.DataFrame({"columnA": [1], "columnB": [2]}),
+                "units": {"columnB": "unit"},
+                "table_notes": {"columnB": "$$ref$$"},
+            }
+        )
+
+        testbook.ws.write_gptable(gptable, auto_width=True, reference_order=["ref"])
+
+        table = testbook.ws.tables[0]
+        assert table["columns"][1]["name"] == "columnB\n(unit)\n[note 1]"
+
     @pytest.mark.parametrize(
         "data,format,exp_width",
         [

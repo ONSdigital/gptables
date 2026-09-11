@@ -566,7 +566,7 @@ class GPWorksheet(Worksheet):
             self._set_column_widths(widths)
 
         if not any(isinstance(header, FormatList) for header in header_row):
-            self._mark_data_as_worksheet_table(gptable, formats)
+            self._mark_data_as_worksheet_table(gptable, formats, header_row)
 
         return pos
 
@@ -792,7 +792,10 @@ class GPWorksheet(Worksheet):
         return pos
 
     def _mark_data_as_worksheet_table(
-        self, gptable: "GPTable", formats_dataframe: pd.DataFrame
+        self,
+        gptable: "GPTable",
+        formats_dataframe: pd.DataFrame,
+        header_row: list = None,
     ) -> None:
         """
         Marks the data to be recognised as a Worksheet Table in Excel.
@@ -807,7 +810,10 @@ class GPWorksheet(Worksheet):
         """
         data_range = gptable.data_range
 
-        column_list = gptable.table.columns.tolist()
+        if header_row is None:
+            column_list = gptable.table.columns.tolist()
+        else:
+            column_list = header_row
         formats_list = [
             self._workbook.add_format(format_dict)
             for format_dict in formats_dataframe.iloc[0, :].tolist()
