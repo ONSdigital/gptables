@@ -13,6 +13,9 @@ from gptables.test.test_gptable import does_not_raise
 
 Tb = namedtuple("Testbook", "wb ws")
 
+H_ALIGN_LEFT = 1
+H_ALIGN_RIGHT = 3
+
 valid_text_elements = [  # Not None
     "This is a string",
     FormatList(["More than ", {"italic": True}, "just ", "a string"]),
@@ -38,6 +41,10 @@ def testbook():
     ws = wb.add_worksheet()
     yield Tb(wb, ws)
     wb.fileclosed = 1
+
+
+def get_cell_horizontal_alignment(worksheet, row, col):
+    return worksheet.table[row][col][-1].text_h_align
 
 
 class TestGPWorksheetInit:
@@ -301,6 +308,106 @@ class TestGPWorksheetWriting:
         )
 
         assert_frame_equal(format_table, exp_format_table)
+
+    @pytest.mark.parametrize(
+        "index_columns",
+        [
+            {},
+            {1: 0},
+            {2: 0},
+            {1: 1},
+            {1: 0, 2: 1},
+        ],
+        ids=[
+            "no_index_columns",
+            "index_level_1_first_column",
+            "index_level_2_first_column",
+            "index_level_1_second_column",
+            "two_index_columns",
+        ],
+    )
+    def test_write_gptable_notesheet_alignment_regression(
+        self,
+        testbook,
+        index_columns,
+    ):
+        source_gptable = gptables.GPTable(
+            table=pd.DataFrame(
+                {
+                    "Row id": [101, 102, 103],
+                    "Category": ["Adelie", "Chinstrap", "Gentoo"],
+                    "Group": ["North", "South", "East"],
+                    "Count": [1200, 950, 1430],
+                    "Rate": [12.4, 10.1, 14.8],
+                }
+            ),
+            table_name="alignment_regression_table",
+            title="Alignment regression check",
+            subtitles=["Checks notes and numeric alignment together."],
+            scope="Regression coverage",
+            source="Test data",
+            index_columns=index_columns,
+            table_notes={3: "$$count_note$$", 4: "$$rate_note$$"},
+        )
+
+        notes_table = pd.DataFrame(
+            {
+                "Note reference": ["count_note", "rate_note"],
+                "Note text": [
+                    "Count should stay right aligned.",
+                    "Rate should stay right aligned.",
+                ],
+            }
+        )
+
+        testbook.wb._update_annotations({"Main": source_gptable})
+        notes_gptable = testbook.wb.make_notesheet(notes_table)
+
+        main_ws = testbook.wb.add_worksheet("Main")
+        notes_ws = testbook.wb.add_worksheet("Notes")
+
+        main_ws.write_gptable(
+            source_gptable,
+            auto_width=True,
+            reference_order=testbook.wb._annotations,
+        )
+        notes_ws.write_gptable(
+            notes_gptable,
+            auto_width=True,
+            reference_order=testbook.wb._annotations,
+        )
+
+        main_first_data_row = source_gptable.data_range[0] + 1
+        count_col = 3
+        rate_col = 4
+
+        for row in range(
+            main_first_data_row,
+            main_first_data_row + source_gptable.table.shape[0],
+        ):
+            assert (
+                get_cell_horizontal_alignment(main_ws, row, count_col) == H_ALIGN_RIGHT
+            )
+            assert (
+                get_cell_horizontal_alignment(main_ws, row, rate_col) == H_ALIGN_RIGHT
+            )
+
+        notes_first_data_row = notes_gptable.data_range[0] + 1
+        note_number_col = notes_gptable.table.columns.get_loc("Note number")
+        note_text_col = notes_gptable.table.columns.get_loc("Note text")
+
+        for row in range(
+            notes_first_data_row,
+            notes_first_data_row + notes_gptable.table.shape[0],
+        ):
+            assert (
+                get_cell_horizontal_alignment(notes_ws, row, note_number_col)
+                == H_ALIGN_LEFT
+            )
+            assert (
+                get_cell_horizontal_alignment(notes_ws, row, note_text_col)
+                == H_ALIGN_LEFT
+            )
 
 
 class TestGPWorksheetReferences:
