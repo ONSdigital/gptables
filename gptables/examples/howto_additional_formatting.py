@@ -14,21 +14,30 @@ formatted_subtitles = [
 
 sample_additional_formatting = [
     {
-        "column": {
-            "columns": ["Species", "Island"],
+        "header": {
+            "columns": ["Species"],
+            "target": "name",
             "format": {
-                "align": "center",
+                "bold": True,
+                "font_color": "#0000FF",
+            },
+        }
+    },
+    {
+        "header": {
+            "columns": [3],
+            "target": "units",
+            "format": {
                 "italic": True,
             },
         }
     },
-    {"column": {"columns": [3], "format": {"left": 1}}},
     {
-        "row": {
-            "rows": -1,
+        "header": {
+            "columns": ["Body Mass (g)"],
+            "target": "note",
             "format": {
-                "bottom": 1,
-                "indent": 2,
+                "font_color": "#B30000",
             },
         }
     },
@@ -41,6 +50,8 @@ penguins_table = gpt.GPTable(
     subtitles=formatted_subtitles,
     scope="Penguins",
     source="Palmer Station, Antarctica",
+    units={3: "mm", "Body Mass (g)": "grams"},
+    table_notes={"Body Mass (g)": "$$body_mass_note$$"},
     additional_formatting=sample_additional_formatting,
 )
 

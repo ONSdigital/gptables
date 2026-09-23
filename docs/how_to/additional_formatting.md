@@ -11,19 +11,21 @@ with the `gptable.GPTable(..., additional_formatting = ...)` parameter. See the 
     Refer to the Releasing statistics in spreadsheets [guidance](https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/) and consider user needs
     regarding accessiblity before adjusting the formatting.
 
+    If you use coloured text, do not rely on colour alone to convey meaning. Important distinctions should still be understandable through the text itself, symbols, notes, or labels, and the spreadsheet should remain understandable in black and white or when read by assistive technology.
+
 The sample code can be run from thes
 [examples](https://github.com/ONSdigital/gptables/tree/main/gptables/examples) folder.
 
 ## Using `additional_formatting`
 
 The `gptable.GPTable(..., additional_formatting = ...)` parameter allows for specifying
-columns, rows, and/or cells and the corresponding formatting changes to make.
+columns, rows, cells, and selected header parts and the corresponding formatting changes to make.
 
 !!! warning "Formatting conflicts"
     There are some conflicts between additional formatting options, for example wrapping
     and shrinking text. Outputs should be reviewed for correctness.
 
-The option of what to format is specified, followed by the specific columns, rows, or cells,
+The option of what to format is specified, followed by the specific columns, rows, cells, or header parts,
 and then the formatting changes. To change the properties of columns called Species and Island
 to be center-aligned and italic, for example:
 
@@ -43,36 +45,55 @@ sample_additional_formatting = [
 Columns can be referenced by name or number. Rows may only be referenced by number, with `-1`
 corresponding to the last row. Column and row numbers include indices and column headings. Numeric indexing refers to position within the table, not the position in the output Excel sheet. Cell formatting takes highest precedence, followed by row formatting, and finally column formatting.
 
-Multiple selections of columns, rows, and cells can be made in a single `additional_formatting` list.
+Header formatting uses a `header` entry with:
+
+- `columns`: a list of column names and/or 0-indexed column positions
+- `target`: one of `name`, `units`, or `note`
+- `format`: a dictionary of valid XlsxWriter format properties
+
+This makes it possible to format the visible column name, the units line, and the note marker separately within the same header cell.
+
+Multiple selections of columns, rows, cells, and header parts can be made in a single `additional_formatting` list.
 
 ```python
 penguins_additional_formatting = [
     {
-        "column": {
-            "columns": ["Species", "Island"],
+        "header": {
+            "columns": ["Species"],
+            "target": "name",
             "format": {
-                "align": "center",
+                "bold": True,
+                "font_color": "#0000FF",
+            },
+        }
+    },
+    {
+        "header": {
+            "columns": [3],
+            "target": "units",
+            "format": {
                 "italic": True,
             },
         }
     },
     {
-        "column": {"columns": [3], "format": {"left": 1}}
-    },
-    {
-        "row": {
-            "rows": -1,
+        "header": {
+            "columns": ["Body Mass (g)"],
+            "target": "note",
             "format": {
-                "bottom": 1,
-                "indent": 2,
+                "font_color": "#B30000",
             },
         }
     },
 ]
 ```
 
-This is combined with a basic example below in an extendable tab. The result is
-italicisation of two columns, left bordering on the 4th column, and indentation in the final row.
+This focused example shows all of the new header-targeting behaviour in one place:
+
+- formatting a specific header name
+- formatting units differently
+- formatting a note marker differently
+- targeting columns by both name and index
 
 ??? "Using additional formatting"
     ```python
@@ -83,23 +104,30 @@ italicisation of two columns, left bordering on the 4th column, and indentation 
 
     penguins_additional_formatting = [
         {
-            "column": {
-                "columns": ["Species", "Island"],
+            "header": {
+                "columns": ["Species"],
+                "target": "name",
                 "format": {
-                    "align": "center",
+                    "bold": True,
+                    "font_color": "#0000FF",
+                },
+            }
+        },
+        {
+            "header": {
+                "columns": [3],
+                "target": "units",
+                "format": {
                     "italic": True,
                 },
             }
         },
         {
-            "column": {"columns": [3], "format": {"left": 1}}
-        },
-        {
-            "row": {
-                "rows": -1,
+            "header": {
+                "columns": ["Body Mass (g)"],
+                "target": "note",
                 "format": {
-                    "bottom": 1,
-                    "indent": 2,
+                    "font_color": "#B30000",
                 },
             }
         },
@@ -113,6 +141,8 @@ italicisation of two columns, left bordering on the 4th column, and indentation 
                     "This is another subtitle"],
         scope = "Penguins",
         source = "Palmer Station, Antarctica",
+        units = {3: "mm", "Body Mass (g)": "grams"},
+        table_notes = {"Body Mass (g)": "$$body_mass_note$$"},
         additional_formatting = penguins_additional_formatting,
     )
 
@@ -124,6 +154,10 @@ italicisation of two columns, left bordering on the 4th column, and indentation 
     )
     wb.close()
     ```
+
+For example, the first entry targets the `Species` column by name and formats the header text itself. The second targets the fourth column by index and applies formatting only to the units line. The third targets the `Body Mass (g)` column by name and formats only the rendered note marker.
+
+The example uses blue `#0000FF` and red `#B30000`, which are listed in the guidance as accessible text colours on a no-fill background. Even so, the colour is only decorative here: the note marker remains visible as text, and the header text remains understandable without colour.
 
 ![](../static/howto_additional_formatting.png)
 

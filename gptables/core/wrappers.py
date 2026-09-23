@@ -160,31 +160,16 @@ class GPWorksheet(Worksheet):
         """
         Reference annotations in the table column headings and index columns.
         """
-        table = gptable.table.copy()
-
         notes = getattr(gptable, "table_notes", {}) or {}
         if notes:
-            headers = list(table.columns)
-            rename_map = {}
-
+            rendered_notes = {}
             for key, note_token in notes.items():
-
-                idx = key if isinstance(key, int) else table.columns.get_loc(key)
-                old = headers[idx]
-
                 rendered = self._replace_reference_in_attr(note_token, reference_order)
-
-                if not (
-                    isinstance(old, str)
-                    and old.splitlines()
-                    and old.splitlines()[-1] == rendered
-                ):
-                    new = f"{old}\n{rendered}"
-                    rename_map[old] = new
-            if rename_map:
-                table = table.rename(columns=rename_map)
+                rendered_notes[key] = rendered
+            gptable.table_notes = rendered_notes
 
         index_columns = gptable.index_columns.values()
+        table = gptable.table.copy()
         for col in index_columns:
             table.iloc[:, col] = table.iloc[:, col].apply(
                 lambda x: self._replace_reference_in_attr(x, reference_order)
@@ -528,8 +513,13 @@ class GPWorksheet(Worksheet):
         index_columns = [col for col in gptable.index_columns.values()]
         data = pd.DataFrame(gptable.table, copy=True)
 
+        header_formatting, table_formatting = self._split_header_formatting(
+            gptable.additional_formatting
+        )
+
         # Create row containing column headings
-        data.loc[-1] = data.columns
+        header_row = self._build_header_row(gptable, header_formatting)
+        data.loc[-1] = header_row
         data.index = data.index + 1
         data.sort_index(inplace=True)
 
@@ -564,7 +554,7 @@ class GPWorksheet(Worksheet):
 
         # Add additional table-specific formatting from GPTable
         self._apply_additional_formatting(
-            formats, gptable.additional_formatting, gptable.index_levels
+            formats, table_formatting, gptable.index_levels
         )
 
         # Write table
@@ -575,9 +565,95 @@ class GPWorksheet(Worksheet):
             widths = self._calculate_column_widths(data, formats)
             self._set_column_widths(widths)
 
-        self._mark_data_as_worksheet_table(gptable, formats)
+        if not any(isinstance(header, FormatList) for header in header_row):
+            self._mark_data_as_worksheet_table(gptable, formats, header_row)
 
         return pos
+
+    @staticmethod
+    def _split_header_formatting(additional_formatting: list) -> tuple:
+        """
+        Separate header rich text formatting from cell-level formatting.
+        """
+        header_formatting = []
+        table_formatting = []
+
+        for item in additional_formatting:
+            if "header" in item:
+                header_formatting.append(item["header"])
+            else:
+                table_formatting.append(item)
+
+        return header_formatting, table_formatting
+
+    def _build_header_row(self, gptable: "GPTable", header_formatting: list) -> list:
+        """
+        Build rendered header values from name, units and note parts.
+        """
+        header_format_map = self._group_header_formatting(gptable, header_formatting)
+        header_row = []
+
+        for column_index in range(gptable.table.shape[1]):
+            parts = gptable.get_header_parts(column_index)
+            part_formats = header_format_map.get(column_index, {})
+            header_row.append(self._compose_header_text(parts, part_formats))
+
+        return header_row
+
+    @staticmethod
+    def _compose_header_text(parts: dict, part_formats: dict) -> object:
+        """
+        Combine header parts into a plain string or rich text value.
+        """
+        rendered_parts = []
+
+        name = parts.get("name")
+        units = parts.get("units")
+        note = parts.get("note")
+
+        if name not in [None, ""]:
+            rendered_parts.append((name, part_formats.get("name")))
+        if units not in [None, ""]:
+            rendered_parts.append((f"({units})", part_formats.get("units")))
+        if note not in [None, ""]:
+            rendered_parts.append((note, part_formats.get("note")))
+
+        if not any(fmt for _, fmt in rendered_parts):
+            return "\n".join(str(text) for text, _ in rendered_parts)
+
+        rich_items = []
+        for index, (text, fmt) in enumerate(rendered_parts):
+            text = str(text)
+            if index > 0:
+                text = "\n" + text
+
+            if fmt:
+                rich_items.extend([fmt, text])
+            else:
+                rich_items.append(text)
+
+        return FormatList(rich_items)
+
+    @staticmethod
+    def _group_header_formatting(gptable: "GPTable", header_formatting: list) -> dict:
+        """
+        Group header formatting descriptors by column index and target part.
+        """
+        grouped = {}
+
+        for format_desc in header_formatting:
+            target = format_desc["target"]
+            formatting = format_desc["format"]
+            for column_id in format_desc["columns"]:
+                column_index = gptable._resolve_column_identifier(column_id)
+                if column_index not in grouped:
+                    grouped[column_index] = {}
+
+                current_format = grouped[column_index].get(target, {}).copy()
+                current_format.update(formatting)
+                grouped[column_index][target] = current_format
+
+        return grouped
 
     def _apply_column_alignments(
         self, data_table: pd.DataFrame, formats_table: pd.DataFrame, index_columns: list
@@ -716,7 +792,10 @@ class GPWorksheet(Worksheet):
         return pos
 
     def _mark_data_as_worksheet_table(
-        self, gptable: "GPTable", formats_dataframe: pd.DataFrame
+        self,
+        gptable: "GPTable",
+        formats_dataframe: pd.DataFrame,
+        header_row: list = None,
     ) -> None:
         """
         Marks the data to be recognised as a Worksheet Table in Excel.
@@ -731,7 +810,10 @@ class GPWorksheet(Worksheet):
         """
         data_range = gptable.data_range
 
-        column_list = gptable.table.columns.tolist()
+        if header_row is None:
+            column_list = gptable.table.columns.tolist()
+        else:
+            column_list = header_row
         formats_list = [
             self._workbook.add_format(format_dict)
             for format_dict in formats_dataframe.iloc[0, :].tolist()
