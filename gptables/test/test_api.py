@@ -241,6 +241,8 @@ def test_contentsheet_label_none_does_not_create_contents(tmp_path):
     assert sheet_names == ["Cover", "Notes", "Sheet1"]
     assert not wb.worksheets()[0].tables
     wb.fileclosed = 1
+
+
 def test_produce_workbook_applies_workbook_options_default_date_format(tmp_path):
     table = pd.DataFrame({"Date Egg": pd.to_datetime(["2020-01-01"])})
     gptable = gpt.GPTable(
