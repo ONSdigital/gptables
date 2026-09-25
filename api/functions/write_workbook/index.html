@@ -1268,6 +1268,26 @@ of contents will not be generated.</p>
           </tr>
           <tr class="doc-section-item">
             <td>
+                <code>contentsheet_location</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Either <code>"sheet"</code> or <code>"cover"</code>. Defaults to <code>"sheet"</code>, which
+creates the table of contents on a separate worksheet named by
+<code>contentsheet_label</code>. Set to <code>"cover"</code> to append the table of
+contents to the cover worksheet; this requires <code>cover</code> to be
+provided. Any other value raises <code>ValueError</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;sheet&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
                 <code>notes_table</code>
             </td>
             <td>

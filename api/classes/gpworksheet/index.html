@@ -1184,7 +1184,7 @@ a good practice table (GPTable) to a Worksheet.</p>
 
 
 <h0 id="gptables.core.wrappers.GPWorksheet.write_cover" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">write_cover</span><span class="p">(</span><span class="n">cover</span><span class="p">:</span> <span class="n">Cover</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+            <code class="highlight language-python"><span class="n">write_cover</span><span class="p">(</span><span class="n">cover</span><span class="p">:</span> <span class="n">Cover</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span></code>
 
 </h0>
 
@@ -1226,6 +1226,29 @@ details of the Workbook contents.</p>
     </table>
 
 
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>pos</code></td>            <td>
+                  <code><span title="list">list</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>position [row, col] immediately after the last written element</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
     </div>
 
 </div>
@@ -1234,7 +1257,7 @@ details of the Workbook contents.</p>
 
 
 <h0 id="gptables.core.wrappers.GPWorksheet.write_gptable" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">write_gptable</span><span class="p">(</span><span class="n">gptable</span><span class="p">:</span> <span class="n">GPTable</span><span class="p">,</span> <span class="n">auto_width</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">reference_order</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[])</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
+            <code class="highlight language-python"><span class="n">write_gptable</span><span class="p">(</span><span class="n">gptable</span><span class="p">:</span> <span class="n">GPTable</span><span class="p">,</span> <span class="n">auto_width</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">reference_order</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">start_pos</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span></code>
 
 </h0>
 
@@ -1288,6 +1311,22 @@ must be provided if gptable uses annotations</p>
             </td>
             <td>
                   <code>[]</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>start_pos</code>
+            </td>
+            <td>
+                  <code><span title="list">list</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>[row, col] position to begin writing from, defaults to [0, 0]</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
