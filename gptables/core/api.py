@@ -49,10 +49,11 @@ def produce_workbook(
         `additional_elements`, `column_names`, `table_name`, `title`,
         `subtitles` and `instructions`.
     contentsheet_location : str, optional
-        where to place the table of contents. ``"sheet"`` (default) places it
-        on its own worksheet named by ``contentsheet_label``. ``"cover"``
-        appends it to the cover sheet. Requires ``cover`` to be provided when
-        set to ``"cover"``.
+        Either ``"sheet"`` or ``"cover"``. Defaults to ``"sheet"``, which
+        creates the table of contents on a separate worksheet named by
+        ``contentsheet_label``. Set to ``"cover"`` to append the table of
+        contents to the cover worksheet; this requires ``cover`` to be
+        provided. Any other value raises ``ValueError``.
     notes_table : pd.DataFrame, optional
         table with notes reference, text and (optional) link columns. If None,
         notes sheet will not be generated.
@@ -202,10 +203,11 @@ def write_workbook(
         `additional_elements`, `column_names`, `table_name`, `title`,
         `subtitles` and `instructions`
     contentsheet_location : str, optional
-        where to place the table of contents. ``"sheet"`` (default) places it
-        on its own worksheet named by ``contentsheet_label``. ``"cover"``
-        appends it to the cover sheet. Requires ``cover`` to be provided when
-        set to ``"cover"``.
+        Either ``"sheet"`` or ``"cover"``. Defaults to ``"sheet"``, which
+        creates the table of contents on a separate worksheet named by
+        ``contentsheet_label``. Set to ``"cover"`` to append the table of
+        contents to the cover worksheet; this requires ``cover`` to be
+        provided. Any other value raises ``ValueError``.
     notes_table : pd.DataFrame, optional
         table with notes reference, text and (optional) link columns. If None,
         notes sheet will not be generated.

@@ -192,3 +192,52 @@ def test_contentsheet_location_sheet_default(tmp_path):
     assert "Table of contents" in sheet_names
     assert "Sheet1" in sheet_names
     wb.fileclosed = 1
+
+
+def test_contentsheet_location_sheet_without_cover(tmp_path):
+    """
+    Test that a separate table of contents can be generated without a cover.
+    """
+    table = pd.DataFrame({"A": ["x"], "B": [0]})
+    gptable = gpt.GPTable(
+        table=table, table_name="t", title="My Table", index_columns={2: 0}
+    )
+
+    wb = gpt.produce_workbook(
+        filename=str(tmp_path / "toc_without_cover.xlsx"),
+        sheets={"Sheet1": gptable},
+        cover=None,
+        contentsheet_label="Table of contents",
+        contentsheet_location="sheet",
+        notes_table=pd.DataFrame({"Note reference": ["r1"], "Note text": ["t1"]}),
+    )
+
+    sheet_names = [ws.get_name() for ws in wb.worksheets()]
+    assert "Cover" not in sheet_names
+    assert "Table of contents" in sheet_names
+    assert "Sheet1" in sheet_names
+    wb.fileclosed = 1
+
+
+def test_contentsheet_label_none_does_not_create_contents(tmp_path):
+    """
+    Test that None disables table of contents generation in all locations.
+    """
+    table = pd.DataFrame({"A": ["x"], "B": [0]})
+    gptable = gpt.GPTable(
+        table=table, table_name="t", title="My Table", index_columns={2: 0}
+    )
+
+    wb = gpt.produce_workbook(
+        filename=str(tmp_path / "no_toc.xlsx"),
+        sheets={"Sheet1": gptable},
+        cover=gpt.Cover(title="My Workbook"),
+        contentsheet_label=None,
+        contentsheet_location="cover",
+        notes_table=pd.DataFrame({"Note reference": ["r1"], "Note text": ["t1"]}),
+    )
+
+    sheet_names = [ws.get_name() for ws in wb.worksheets()]
+    assert sheet_names == ["Cover", "Notes", "Sheet1"]
+    assert not wb.worksheets()[0].tables
+    wb.fileclosed = 1
