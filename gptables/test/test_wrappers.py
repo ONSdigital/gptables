@@ -773,3 +773,43 @@ class TestGPWorkbook:
         exp_notesheet.table = None
 
         assert got_notesheet.__dict__ == exp_notesheet.__dict__
+
+
+class TestWriteGptableStartPos:
+    """
+    Tests for write_gptable with start_pos parameter.
+    """
+
+    def test_write_gptable_start_pos_does_not_mutate_original(self, testbook):
+        """
+        Test that write_gptable with start_pos does not mutate the original gptable.
+        """
+        table = pd.DataFrame({"A": ["x", "y"], "B": [1, 2]})
+        gptable = gptables.GPTable(
+            table=table,
+            table_name="test_table",
+            title="My Title",
+            index_columns={2: 0},
+        )
+
+        original_data_range = list(gptable.data_range)
+
+        # Write at row offset 10 - should not raise
+        testbook.ws.write_gptable(gptable, auto_width=False, start_pos=[10, 0])
+
+        # The original gptable should not be mutated
+        assert gptable.data_range == original_data_range
+
+    def test_write_gptable_default_start_pos_is_zero(self, testbook):
+        """
+        Test that write_gptable without start_pos still works as before (starts at [0,0]).
+        """
+        table = pd.DataFrame({"A": ["x"], "B": [1]})
+        gptable = gptables.GPTable(
+            table=table,
+            table_name="default_pos_table",
+            title="Title",
+            index_columns={2: 0},
+        )
+        # Should not raise
+        testbook.ws.write_gptable(gptable, auto_width=False)

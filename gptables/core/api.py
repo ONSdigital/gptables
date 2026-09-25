@@ -17,6 +17,7 @@ def produce_workbook(
     cover: Optional["Cover"] = None,
     contentsheet_label: str = "Contents",
     contentsheet_options: Optional[Dict[str, Any]] = None,
+    contentsheet_location: str = "sheet",
     notes_table: Optional[pd.DataFrame] = None,
     notesheet_label: str = "Notes",
     notesheet_options: Optional[Dict[str, Any]] = None,
@@ -48,6 +49,12 @@ def produce_workbook(
         dictionary of contentsheet customisation parameters. Valid keys are
         `additional_elements`, `column_names`, `table_name`, `title`,
         `subtitles` and `instructions`.
+    contentsheet_location : str, optional
+        Either ``"sheet"`` or ``"cover"``. Defaults to ``"sheet"``, which
+        creates the table of contents on a separate worksheet named by
+        ``contentsheet_label``. Set to ``"cover"`` to append the table of
+        contents to the cover worksheet; this requires ``cover`` to be
+        provided. Any other value raises ``ValueError``.
     notes_table : pd.DataFrame, optional
         table with notes reference, text and (optional) link columns. If None,
         notes sheet will not be generated.
@@ -74,6 +81,17 @@ def produce_workbook(
     -------
     workbook : gptables.GPWorkbook
     """
+    valid_locations = ("sheet", "cover")
+    if contentsheet_location not in valid_locations:
+        raise ValueError(
+            f"`contentsheet_location` must be one of {valid_locations},"
+            f" got '{contentsheet_location}'"
+        )
+    if contentsheet_location == "cover" and cover is None:
+        raise ValueError(
+            "`contentsheet_location='cover'` requires a `cover` to be provided"
+        )
+
     if contentsheet_options is None:
         contentsheet_options = {}
     if notesheet_options is None:
@@ -94,14 +112,16 @@ def produce_workbook(
     if theme is not None:
         wb.set_theme(theme)
 
+    cover_ws = None
+    cover_pos = None
     if cover is not None:
         if cover_gridlines:
-            ws = wb.add_worksheet(cover.cover_label, gridlines=gridlines)
+            cover_ws = wb.add_worksheet(cover.cover_label, gridlines=gridlines)
         else:
-            ws = wb.add_worksheet(cover.cover_label, gridlines="hide_all")
-        ws.write_cover(cover)
+            cover_ws = wb.add_worksheet(cover.cover_label, gridlines="hide_all")
+        cover_pos = cover_ws.write_cover(cover)
 
-    contentsheet = {}
+    contents_gptable = None
     if contentsheet_label is not None:
         if contentsheet_options:
             valid_keys = [
@@ -119,9 +139,24 @@ def produce_workbook(
                 )
                 raise ValueError(msg)
         contents_gptable = wb.make_table_of_contents(sheets, **contentsheet_options)
-        contentsheet = {contentsheet_label: contents_gptable}
 
     wb._update_annotations(sheets)
+
+    contentsheet = {}
+    if contents_gptable is not None:
+        if contentsheet_location == "cover":
+            if isinstance(auto_width, dict):
+                toc_auto_width = auto_width.get(cover.cover_label, True)
+            else:
+                toc_auto_width = auto_width
+            cover_ws.write_gptable(
+                contents_gptable, toc_auto_width, [], start_pos=cover_pos
+            )
+            # Restore column A width: write_gptable auto-width overwrites the
+            # width set by write_cover, making cover text wrap too narrowly.
+            cover_ws.set_column(0, 0, cover.width)
+        else:
+            contentsheet = {contentsheet_label: contents_gptable}
 
     notesheet = {}
     if notes_table is None:
@@ -150,6 +185,7 @@ def write_workbook(
     contentsheet: Optional[str] = None,
     contentsheet_label: str = "Contents",
     contentsheet_options: Optional[Dict[str, Any]] = None,
+    contentsheet_location: str = "sheet",
     notes_table: Optional[pd.DataFrame] = None,
     notesheet_label: str = "Notes",
     notesheet_options: Optional[Dict[str, Any]] = None,
@@ -179,6 +215,12 @@ def write_workbook(
         dictionary of contentsheet customisation parameters. Valid keys are
         `additional_elements`, `column_names`, `table_name`, `title`,
         `subtitles` and `instructions`
+    contentsheet_location : str, optional
+        Either ``"sheet"`` or ``"cover"``. Defaults to ``"sheet"``, which
+        creates the table of contents on a separate worksheet named by
+        ``contentsheet_label``. Set to ``"cover"`` to append the table of
+        contents to the cover worksheet; this requires ``cover`` to be
+        provided. Any other value raises ``ValueError``.
     notes_table : pd.DataFrame, optional
         table with notes reference, text and (optional) link columns. If None,
         notes sheet will not be generated.
@@ -219,6 +261,7 @@ def write_workbook(
         cover,
         contentsheet_label,
         contentsheet_options,
+        contentsheet_location,
         notes_table,
         notesheet_label,
         notesheet_options,
