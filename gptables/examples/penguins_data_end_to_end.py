@@ -83,6 +83,7 @@ penguins_table = gpt.GPTable(
     subtitles=subtitles,
     scope=scope,
     source=source,
+    table_row_index=10,
     additional_formatting=additional_formatting,
 )
 

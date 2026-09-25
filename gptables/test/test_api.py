@@ -241,3 +241,45 @@ def test_contentsheet_label_none_does_not_create_contents(tmp_path):
     assert sheet_names == ["Cover", "Notes", "Sheet1"]
     assert not wb.worksheets()[0].tables
     wb.fileclosed = 1
+def test_produce_workbook_applies_workbook_options_default_date_format(tmp_path):
+    table = pd.DataFrame({"Date Egg": pd.to_datetime(["2020-01-01"])})
+    gptable = gpt.GPTable(
+        table=table,
+        table_name="penguins_dates",
+        title="Penguins dates",
+    )
+
+    with pytest.warns(UserWarning, match="No note text provided"):
+        wb = gpt.produce_workbook(
+            filename=tmp_path / "workbook_options.obtained.xlsx",
+            sheets={"Penguins": gptable},
+            workbook_options={"default_date_format": "dd/mm/yy"},
+        )
+
+    assert wb.default_date_format is not None
+    assert wb.default_date_format.num_format == "dd/mm/yy"
+    wb.close()
+
+
+def test_produce_workbook_rejects_invalid_workbook_options_type(tmp_path):
+    """Verify that invalid workbook_options types raise a TypeError."""
+    table = pd.DataFrame({"col": [1, 2]})
+    gptable = gpt.GPTable(
+        table=table,
+        table_name="test",
+        title="Test",
+    )
+
+    with pytest.raises(TypeError, match="workbook_options.*must be a dict"):
+        gpt.produce_workbook(
+            filename=tmp_path / "invalid.xlsx",
+            sheets={"Sheet": gptable},
+            workbook_options="invalid",
+        )
+
+    with pytest.raises(TypeError, match="workbook_options.*must be a dict"):
+        gpt.produce_workbook(
+            filename=tmp_path / "invalid.xlsx",
+            sheets={"Sheet": gptable},
+            workbook_options=["invalid"],
+        )

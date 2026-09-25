@@ -105,6 +105,7 @@ class GPWorksheet(Worksheet):
         self._parse_urls(gptable)
 
         gptable = deepcopy(gptable)
+        gptable._set_data_range()
 
         # Offset the pre-computed data_range if writing at a non-zero row
         if pos[0] > 0:
@@ -534,8 +535,8 @@ class GPWorksheet(Worksheet):
         # Get theme
         theme = self.theme
 
-        # Reset position to left col on next row
-        pos[1] = 0
+        # Reset position to left col and align row with table start.
+        pos = [gptable.data_range[0], 0]
 
         # Create data array
         index_levels = gptable.index_levels
@@ -713,13 +714,16 @@ class GPWorksheet(Worksheet):
             raise ValueError("data and formats arrays must be of equal shape")
 
         rows, cols = data.shape
+
+        data_rows = data.values.tolist()
+        format_rows = formats.values.tolist()
         for row in range(rows):
             for col in range(cols):
-                cell_data = data.iloc[row, col]
-                cell_format_dict = formats.iloc[row, col]
-
                 self._smart_write(
-                    pos[0] + row, pos[1] + col, cell_data, cell_format_dict
+                    pos[0] + row,
+                    pos[1] + col,
+                    data_rows[row][col],
+                    format_rows[row][col],
                 )
 
         pos = [pos[0] + rows, 0]
@@ -962,12 +966,16 @@ class GPWorksheet(Worksheet):
         """
         cols = table.shape[1]
         col_widths = []
+
+        data_rows = table.values.tolist()
+        format_rows = formats_table.values.tolist()
+        num_rows = table.shape[0]
         for col in range(cols):
             cell_widths = []
-            for row in range(table.shape[0]):
-                cell_val = table.iloc[row, col]
+            for row in range(num_rows):
+                cell_val = data_rows[row][col]
                 longest_line = self._get_longest_line(cell_val)
-                format_dict = formats_table.iloc[row, col]
+                format_dict = format_rows[row][col]
                 scaling_factor = self._get_scaling_factor(format_dict, longest_line)
                 width = ceil(cell_autofit_width(longest_line) * scaling_factor)
                 cell_widths.append(width)
@@ -1019,11 +1027,21 @@ class GPWorkbook(Workbook):
     """
 
     def __init__(self, filename: str = None, options: dict = {}) -> None:
+        self._format_cache: dict = {}
         super(GPWorkbook, self).__init__(filename=filename, options=options)
         self.theme = None
         self._annotations = None
         # Set default theme
         self.set_theme(gptheme)
+
+    def add_format(self, properties: dict = None) -> object:
+        """Cache Format objects by their property dict to avoid redundant allocations."""
+        if properties is None:
+            properties = {}
+        key = tuple(sorted(properties.items()))
+        if key not in self._format_cache:
+            self._format_cache[key] = super().add_format(properties)
+        return self._format_cache[key]
 
     def add_worksheet(
         self, name: str = None, gridlines: str = "hide_all"

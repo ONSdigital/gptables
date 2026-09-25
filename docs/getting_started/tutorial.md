@@ -470,6 +470,44 @@ The code is combined into a full example below in an extendable tab.
         contentsheet_options={"additional_elements": ["subtitles", "scope"]},
     )
     ```
+
+## Setting table position
+
+By default, `GPTable` automatically positions the table below all descriptive elements such as titles and subtitles. The exact starting row is determined by the number and content of these elements.
+
+If you need more control over where the table appears on the worksheet, you can specify the starting row using the `table_row_index` parameter. This parameter uses 0-based indexing, where row 0 is the first row of the worksheet.
+
+The worksheet layout follows this pattern by default:
+- Row 0: Title
+- Row 1: Subtitles (if present)
+- Row 2: Scope (if present)
+- Row 3+: Source, legend, and other elements
+- Row N: Table headings begin
+
+To position your table at a specific row, set `table_row_index` to a value that is greater than the position of the last descriptive element:
+
+```python
+penguins_table = gpt.GPTable(
+    table = penguins_data,
+    table_name = "penguins_statistics",
+    title = "The Palmer Penguins Dataset",
+    subtitles = ["This is the first subtitle", "This is another subtitle"],
+    scope = "Penguins",
+    source = "Palmer Station, Antarctica",
+    table_row_index = 10,  # Table headings start at row 10
+)
+
+penguins_sheets = {"Penguins": penguins_table}
+
+gpt.write_workbook(
+    filename="gpt_table_position.xlsx",
+    sheets=penguins_sheets,
+    contentsheet_options={"additional_elements": ["subtitles", "scope"]},
+)
+```
+
+If you specify a `table_row_index` that is too small (overlapping with descriptive elements), a `ValueError` will be raised. The parameter must be set to a value at least as large as the row needed to accommodate all descriptive elements.
+
 ## Further worked examples
 
 If you are comfortable with the basics above, these examples show complete workflows

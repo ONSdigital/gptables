@@ -1,0 +1,22 @@
+cover:
+  cover_label: "Cover"
+  title: "Palmer Penguins Dataset"
+  intro:
+    - "This spreadsheet contains a table of data obtained from the palmerpenguins package."
+    - "This example demonstrates how to use a config file to define cover and notes page settings."
+  about:
+    - - {bold: true}
+      - "About the data"
+    - "The Palmer Penguins dataset contains size measurements for three penguin species observed on three islands in the Palmer Archipelago, Antarctica."
+    - - {bold: true}
+      - "Notes, blank cells and units"
+    - "Some cells in the tables refer to notes which can be found in the notes worksheet. Note markers are presented in square brackets, for example: [note 1]."
+  contact:
+    - "Tel: 01234 567890"
+    - "Email: example@email.address"
+  width: 85
+
+notesheet:
+  label: "Notes"
+  title: "Notes"
+  instructions: "This worksheet contains one table. Note numbers correspond to references in the data sheets."

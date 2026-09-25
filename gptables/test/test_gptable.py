@@ -58,6 +58,7 @@ def test_init_defaults(create_gptable_with_kwargs):
     assert empty_gptable.subtitles == []
     assert empty_gptable.legend == []
     assert empty_gptable.additional_formatting == []
+    assert empty_gptable.table_row_index is None
     assert (
         empty_gptable.instructions
         == "This worksheet contains one table. Some cells may refer to notes, which can be found on the notes worksheet."
@@ -72,6 +73,45 @@ def test_init_defaults(create_gptable_with_kwargs):
 
 
 class TestAttrValidationGPTable:
+    @pytest.mark.parametrize("row_index", [2, 5, 10])
+    def test_valid_table_row_index(self, row_index, create_gptable_with_kwargs):
+        """
+        Test that table_row_index is accepted when valid.
+        """
+        gptable = create_gptable_with_kwargs({"table_row_index": row_index})
+        assert gptable.table_row_index == row_index
+
+    @pytest.mark.parametrize("row_index", ["2", 2.5, [], {}])
+    def test_invalid_type_table_row_index(self, row_index, create_gptable_with_kwargs):
+        """
+        Test that table_row_index must be an integer.
+        """
+        with pytest.raises(TypeError):
+            create_gptable_with_kwargs({"table_row_index": row_index})
+
+    @pytest.mark.parametrize("row_index", [-1, -5])
+    def test_invalid_value_table_row_index(self, row_index, create_gptable_with_kwargs):
+        """
+        Test that table_row_index cannot be negative.
+        """
+        with pytest.raises(ValueError):
+            create_gptable_with_kwargs({"table_row_index": row_index})
+
+    def test_table_row_index_too_small_for_table_elements(
+        self, create_gptable_with_kwargs
+    ):
+        """
+        Test that table_row_index cannot overlap table descriptive elements.
+        """
+        with pytest.raises(ValueError):
+            create_gptable_with_kwargs(
+                {
+                    "title": "A title",
+                    "subtitles": ["A subtitle"],
+                    "table_row_index": 1,
+                }
+            )
+
     @pytest.mark.parametrize("level", [4, 0, -1])
     def test_invalid_index_level(self, level, create_gptable_with_kwargs):
         """
