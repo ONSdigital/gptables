@@ -11,7 +11,7 @@ with the `gptable.GPTable(..., additional_formatting = ...)` parameter. See the 
     Refer to the Releasing statistics in spreadsheets [guidance](https://analysisfunction.civilservice.gov.uk/policy-store/releasing-statistics-in-spreadsheets/) and consider user needs
     regarding accessiblity before adjusting the formatting.
 
-The sample code can be run from thes
+The sample code can be run from this
 [examples](https://github.com/ONSdigital/gptables/tree/main/gptables/examples) folder.
 
 ## Using `additional_formatting`
@@ -163,7 +163,7 @@ This is combined with a basic example below in an extendable tab.
         table = penguins_data,
         table_name = "penguins_statistics",
         title = "The Palmer Penguins Dataset",
-        subtitles = formatted_subtitles
+        subtitles = formatted_subtitles,
         scope = "Penguins",
         source = "Palmer Station, Antarctica",
     )

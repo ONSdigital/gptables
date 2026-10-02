@@ -59,7 +59,7 @@ Usage
 
 4. Optionally supply a ``notes_table`` with information about any notes.
 
-5. Make you gptable with ``write_workbook``!
+5. Make your gptable with ``write_workbook``!
 
 **Note**: This package create perfectly accessible spreadsheets but will help with many requirements.
 Users should refer to the Analysis Function `spreadsheet guidance`_  and the `spreadsheet accessibility checklist`_.
