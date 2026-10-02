@@ -80,6 +80,8 @@ class GPWorksheet(Worksheet):
         gptable : gptables.GPTable
             object containing elements of the gptable to be written to the
             Worksheet
+        auto_width : bool
+            If True, automatically determine column widths from cell content.
         reference_order : list, optional
             order of annotations in workbook
             must be provided if gptable uses annotations

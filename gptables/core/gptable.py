@@ -21,10 +21,12 @@ class GPTable:
         periods, and underscore characters for the rest of the name.
     title : str
         title of the table
-    subtitles : List[str], optional
-        subtitles as a list of strings
-    instructions : str, optional
-        instructions on how to read the sheet. If not provided, defaults to
+    subtitles : list of str or list, optional
+        List of subtitles. Each item may be a string or a rich-text list of
+        strings and XlsxWriter format dictionaries.
+    instructions : str or list, optional
+        Instructions on how to read the sheet. A list of strings and XlsxWriter
+        format dictionaries enables rich text. If not provided, defaults to
         "This worksheet contains one table. Some cells may refer to notes,
         which can be found on the notes worksheet."
     scope : str, optional
@@ -33,12 +35,16 @@ class GPTable:
         description of the source of the data in table if not included in cover
     units : dict, optional
         units used in each (dict) column of table
+    table_notes : dict, optional
+        mapping column names or 0-indexed column positions to note-reference
+        placeholders, such as ``"$$note_reference$$"``. Note markers are written
+        beneath the corresponding column headings.
     legend : list, optional
         descriptions of special notation used in table
     index_columns : dict, optional
         mapping an index level to a 0-indexed column as {level: column}.
-        Default is a level two index in the first column ({2: 0}).
-    additional_formatting : dict, optional
+        If not provided, no index columns are configured.
+    additional_formatting : list of dict, optional
         table-specific formatting for columns, rows or individual cells
     table_row_index : int, optional
         0-indexed worksheet row for writing table headings and data. If not
