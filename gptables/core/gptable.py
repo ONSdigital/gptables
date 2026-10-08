@@ -71,6 +71,7 @@ class GPTable:
         self.table_notes = None  # str or {units (str):column index (int)} dict
 
         self._VALID_INDEX_LEVELS = [1, 2, 3]
+        self._VALID_HEADER_FORMAT_TARGETS = ["name", "units", "note"]
         self.index_levels = 0
         self.index_columns = {}  # {index level (int): column index (int)}
         self._column_headings = set()  # Non-index column headings
@@ -408,6 +409,72 @@ class GPTable:
 
         self.units = new_units
 
+    def _resolve_column_identifier(self, column_id: Any) -> int:
+        """
+        Resolve a column name or integer position to a current column index.
+        """
+        if isinstance(column_id, int):
+            if not self._valid_column_index(column_id):
+                raise ValueError(
+                    "Out of range - column identifier must be a valid, 0-indexed column number"
+                )
+            return column_id
+
+        try:
+            return self.table.columns.get_loc(column_id)
+        except KeyError:
+            base_headers = [str(header).split("\n")[0] for header in self.table.columns]
+            if column_id in base_headers:
+                return base_headers.index(column_id)
+            raise ValueError(f"Column `{column_id}` not found in table")
+
+    def _get_units_by_column_index(self) -> Dict[int, Any]:
+        """
+        Normalise the units mapping to current integer column indexes.
+        """
+        if not isinstance(self.units, dict):
+            return {}
+
+        return {
+            self._resolve_column_identifier(column_id): unit_text
+            for column_id, unit_text in self.units.items()
+        }
+
+    def _get_table_notes_by_column_index(self) -> Dict[int, Any]:
+        """
+        Normalise the table notes mapping to current integer column indexes.
+        """
+        if not isinstance(self.table_notes, dict):
+            return {}
+
+        return {
+            self._resolve_column_identifier(column_id): note_text
+            for column_id, note_text in self.table_notes.items()
+        }
+
+    def get_header_parts(self, column_index: int) -> Dict[str, Any]:
+        """
+        Return the displayable header parts for a given column.
+        """
+        header = self.table.columns[column_index]
+        units_by_index = self._get_units_by_column_index()
+        notes_by_index = self._get_table_notes_by_column_index()
+
+        name = header
+        unit_text = units_by_index.get(column_index)
+
+        if unit_text is not None and isinstance(header, str):
+            suffix = f"({unit_text})"
+            lines = header.splitlines()
+            if lines and lines[-1] == suffix:
+                name = "\n".join(lines[:-1]) or lines[0]
+
+        return {
+            "name": name,
+            "units": unit_text,
+            "note": notes_by_index.get(column_index),
+        }
+
     def _update_column_names_in_additional_formatting(
         self, col_names: Dict[Any, Any]
     ) -> None:
@@ -607,16 +674,52 @@ class GPTable:
             raise TypeError(msg)
         keys = [key for item in new_formatting for key in item.keys()]
         for key in keys:
-            if key not in ["column", "row", "cell"]:
+            if key not in ["column", "row", "cell", "header"]:
                 msg = (
                     f"`{key}` is not a supported format type. Please use"
-                    " `column`, `row` or `cell`"
+                    " `column`, `row`, `cell` or `header`"
                 )
                 raise ValueError(msg)
 
         self._validate_format_labels(new_formatting)
+        self._validate_header_formatting(new_formatting)
 
         self.additional_formatting = new_formatting
+
+    def _validate_header_formatting(self, format_list: List[Dict[str, Any]]) -> None:
+        """
+        Validate any header-specific formatting descriptors.
+        """
+        for item in format_list:
+            if "header" not in item:
+                continue
+
+            header_desc = item["header"]
+            if not isinstance(header_desc, dict):
+                raise TypeError("`header` formatting must be provided as a dictionary")
+
+            required_keys = {"columns", "target", "format"}
+            missing_keys = required_keys - set(header_desc.keys())
+            if missing_keys:
+                missing = "`, `".join(sorted(missing_keys))
+                raise ValueError(
+                    f"`header` formatting is missing required keys: `{missing}`"
+                )
+
+            columns = header_desc["columns"]
+            if not isinstance(columns, list) or len(columns) == 0:
+                raise TypeError("`header.columns` must be a non-empty list")
+
+            target = header_desc["target"]
+            if target not in self._VALID_HEADER_FORMAT_TARGETS:
+                valid_targets = "`, `".join(self._VALID_HEADER_FORMAT_TARGETS)
+                raise ValueError(
+                    f"`{target}` is not a supported header formatting target. "
+                    f"Please use `{valid_targets}`"
+                )
+
+            if not isinstance(header_desc["format"], dict):
+                raise TypeError("`header.format` must be provided as a dictionary")
 
     def _validate_format_labels(self, format_list: List[Dict[str, Any]]) -> None:
         """
