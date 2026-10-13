@@ -141,3 +141,10 @@ on data from December 2020.
     )
     print("Output written at: ", output_path)
     ```
+
+## Other ONS examples
+
+The following publications include data tables produced using `gptables`:
+
+- [Nature of crime tables England and Wales: Year ending March 2025](https://www.ons.gov.uk/releases/natureofcrimetablesenglandandwalesyearendingmarch2025), containing annual data from the Crime Survey for England and Wales, released in March 2026.
+- [Online weekly price changes](https://www.ons.gov.uk/economy/inflationandpriceindices/datasets/onlineweeklypricechanges), containing data on weekly online price changes for a selection of food and drink products from several large UK retailers, released in July 2021.
