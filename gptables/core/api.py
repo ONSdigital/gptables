@@ -229,9 +229,8 @@ def write_workbook(
     notesheet_options : dict, optional
         dictionary of notesheet customisation parameters. Valid keys are
         `table_name`, `title` and `instructions`.
-    auto_width : bool, optional
-        indicate if column widths should be automatically determined. True by
-        default.
+    auto_width : bool or dict, optional
+        If bool, applies to all sheets. If dict, should map sheet labels to bools.
     gridlines : string, optional
         option to hide or show gridlines on worksheets. "show_all" - don't
         hide gridlines, "hide_printed" - hide printed gridlines only, or
