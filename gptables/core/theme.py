@@ -1,5 +1,6 @@
+from dataclasses import InitVar, dataclass, field, fields
 from functools import wraps
-from typing import Any, Callable, Dict, List, Optional, Union
+from typing import Any, Callable, ClassVar, Dict, List, Union
 
 import yaml
 from xlsxwriter.format import Format
@@ -23,6 +24,7 @@ def validate_single_format(f: Callable) -> Callable:
     return wrapper
 
 
+@dataclass
 class Theme:
     """
     Defines format attributes for table elements for use with XlsxWriter.
@@ -63,7 +65,44 @@ class Theme:
     description_order : list
     """
 
-    def __init__(self, config: Optional[Union[Dict[str, Any], str]] = None) -> None:
+    config: InitVar[Union[Dict[str, Any], str, None]] = None
+    cover_title_format: Dict[str, Any] = field(default_factory=dict)
+    cover_subtitle_format: Dict[str, Any] = field(default_factory=dict)
+    cover_text_format: Dict[str, Any] = field(default_factory=dict)
+    title_format: Dict[str, Any] = field(default_factory=dict)
+    subtitle_format: Dict[str, Any] = field(default_factory=dict)
+    instructions_format: Dict[str, Any] = field(default_factory=dict)
+    scope_format: Dict[str, Any] = field(default_factory=dict)
+    column_heading_format: Dict[str, Any] = field(default_factory=dict)
+    index_1_format: Dict[str, Any] = field(default_factory=dict)
+    index_2_format: Dict[str, Any] = field(default_factory=dict)
+    index_3_format: Dict[str, Any] = field(default_factory=dict)
+    data_format: Dict[str, Any] = field(default_factory=dict)
+    source_format: Dict[str, Any] = field(default_factory=dict)
+    legend_format: Dict[str, Any] = field(default_factory=dict)
+    description_order: List[str] = field(default_factory=list)
+
+    _format_attributes: ClassVar[List[str]] = [
+        "cover_title_format",
+        "cover_subtitle_format",
+        "cover_text_format",
+        "title_format",
+        "subtitle_format",
+        "instructions_format",
+        "scope_format",
+        "column_heading_format",
+        "index_1_format",
+        "index_2_format",
+        "index_3_format",
+        "data_format",
+        "source_format",
+        "legend_format",
+    ]
+
+    _valid_attrs: List[str] = field(init=False, repr=False, compare=False)
+    _valid_format_labels: List[str] = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self, config: Union[Dict[str, Any], str, None]) -> None:
         """
         Initialise theme object.
 
@@ -72,30 +111,6 @@ class Theme:
         config : dict or .yaml/.yml file
             theme specification
         """
-        # Formats
-        self._format_attributes = [
-            "cover_title_format",
-            "cover_subtitle_format",
-            "cover_text_format",
-            "title_format",
-            "subtitle_format",
-            "instructions_format",
-            "scope_format",
-            "column_heading_format",
-            "index_1_format",
-            "index_2_format",
-            "index_3_format",
-            "data_format",
-            "source_format",
-            "legend_format",
-        ]
-
-        for attr in self._format_attributes:
-            setattr(self, attr, {})
-
-        # Other attributes
-        self.description_order = []
-
         # Valid Them format attributes
         self._valid_attrs = [
             x.replace("_format", "") for x in self._format_attributes
@@ -317,25 +332,6 @@ class Theme:
         """
         Print all current format attributes and values to the console.
         """
-        obj_attr = [
-            attr
-            for attr in self.__dir__()
-            if not attr.startswith("_") and not callable(getattr(self, attr))
-        ]
-        for attr in obj_attr:
-            print(attr, ":", getattr(self, attr))
-
-    def __eq__(self, other: object) -> bool:
-        """
-        Comparison operator, for testing.
-        """
-        # don't attempt to compare against unrelated types
-        if not isinstance(other, Theme):
-            return False
-
-        obj_attr = [
-            attr
-            for attr in self.__dir__()
-            if not attr.startswith("_") and not callable(getattr(self, attr))
-        ]
-        return all([getattr(self, attr) == getattr(other, attr) for attr in obj_attr])
+        for field_definition in fields(self):
+            if not field_definition.name.startswith("_"):
+                print(field_definition.name, ":", getattr(self, field_definition.name))

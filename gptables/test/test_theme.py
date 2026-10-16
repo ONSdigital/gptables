@@ -34,6 +34,16 @@ class TestCleanInitTheme:
     def test_default_other_attrs(self, empty_theme):
         assert empty_theme.description_order == []
 
+    def test_repr(self, empty_theme):
+        assert repr(empty_theme) == (
+            "Theme(cover_title_format={}, cover_subtitle_format={}, "
+            "cover_text_format={}, title_format={}, subtitle_format={}, "
+            "instructions_format={}, scope_format={}, column_heading_format={}, "
+            "index_1_format={}, index_2_format={}, index_3_format={}, "
+            "data_format={}, source_format={}, legend_format={}, "
+            "description_order=[])"
+        )
+
     def test_print_attributes(self, empty_theme):
         """Test Theme print_attributes()"""
         from io import StringIO
