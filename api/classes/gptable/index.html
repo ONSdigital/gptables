@@ -1206,22 +1206,24 @@ periods, and underscore characters for the rest of the name.</p>
           <tr class="doc-section-item">
             <td><code><span title="gptables.core.gptable.GPTable.subtitles">subtitles</span></code></td>
             <td>
-                  <code>(<span title="typing.List">List</span>[<span title="str">str</span>], <span title="optional">optional</span>)</code>
+                  <code>list of str or list, optional</code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>subtitles as a list of strings</p>
+                <p>List of subtitles. Each item may be a string or a rich-text list of
+strings and XlsxWriter format dictionaries.</p>
               </div>
             </td>
           </tr>
           <tr class="doc-section-item">
             <td><code><span title="gptables.core.gptable.GPTable.instructions">instructions</span></code></td>
             <td>
-                  <code>(<span title="str">str</span>, <span title="optional">optional</span>)</code>
+                  <code>(<span title="str">str</span> or <span title="list">list</span>, <span title="optional">optional</span>)</code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>instructions on how to read the sheet. If not provided, defaults to
+                <p>Instructions on how to read the sheet. A list of strings and XlsxWriter
+format dictionaries enables rich text. If not provided, defaults to
 "This worksheet contains one table. Some cells may refer to notes,
 which can be found on the notes worksheet."</p>
               </div>
@@ -1261,6 +1263,19 @@ which can be found on the notes worksheet."</p>
             </td>
           </tr>
           <tr class="doc-section-item">
+            <td><code><span title="gptables.core.gptable.GPTable.table_notes">table_notes</span></code></td>
+            <td>
+                  <code>(<span title="dict">dict</span>, <span title="optional">optional</span>)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>mapping column names or 0-indexed column positions to note-reference
+placeholders, such as <code>"$$note_reference$$"</code>. Note markers are written
+beneath the corresponding column headings.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
             <td><code><span title="gptables.core.gptable.GPTable.legend">legend</span></code></td>
             <td>
                   <code>(<span title="list">list</span>, <span title="optional">optional</span>)</code>
@@ -1279,14 +1294,14 @@ which can be found on the notes worksheet."</p>
             <td>
               <div class="doc-md-description">
                 <p>mapping an index level to a 0-indexed column as {level: column}.
-Default is a level two index in the first column ({2: 0}).</p>
+If not provided, no index columns are configured.</p>
               </div>
             </td>
           </tr>
           <tr class="doc-section-item">
             <td><code><span title="gptables.core.gptable.GPTable.additional_formatting">additional_formatting</span></code></td>
             <td>
-                  <code>(<span title="dict">dict</span>, <span title="optional">optional</span>)</code>
+                  <code>list of dict, optional</code>
             </td>
             <td>
               <div class="doc-md-description">

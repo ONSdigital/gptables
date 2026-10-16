@@ -1352,7 +1352,7 @@ of <code>gptables.write_workbook()</code>.</p>
 the workbook:</p>
 <div class="highlight"><pre><span></span><code>    <span class="n">penguins_table</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span>
         <span class="o">...</span>
-        <span class="n">instructions</span><span class="o">=</span><span class="s2">"This workbook contains a single sheet. The name is a link to it."</span>
+        <span class="n">instructions</span><span class="o">=</span><span class="s2">"This workbook contains a single sheet. The name is a link to it."</span><span class="p">,</span>
         <span class="n">subtitles</span><span class="o">=</span><span class="p">[</span><span class="s2">"This is the first subtitle"</span><span class="p">,</span> <span class="s2">"This is another subtitle"</span><span class="p">],</span>
         <span class="n">scope</span><span class="o">=</span><span class="s2">"Penguins"</span><span class="p">,</span>
         <span class="n">source</span><span class="o">=</span><span class="s2">"Palmer Station, Antarctica"</span><span class="p">,</span>
@@ -1389,7 +1389,8 @@ the data. Notes can be attached to tables by supplying <code>notes_table</code> 
 <p>Notes appear on a separate worksheet called Notes. They can be referenced in the <code>title</code>, <code>subtitles</code>,
 <code>scope</code>, <code>source</code>, and <code>legend</code> elements using the notation <code>$$placeholder$$</code>. These placeholders
 are replaced with numbered references in the final output. Notes cannot be added to individual data
-cells or column headings.</p>
+cells. To add notes to column headings, use the <code>table_notes</code> argument of <code>GPTable</code>; do not include
+<code>$$placeholder$$</code> directly in DataFrame column names.</p>
 <p><div class="highlight"><pre><span></span><code><span class="n">penguins_table</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span>
     <span class="o">...</span>
     <span class="n">title</span> <span class="o">=</span> <span class="s2">"The Palmer Penguins Dataset$$note_about_x$$"</span><span class="p">,</span>
@@ -1527,7 +1528,7 @@ This will automatically create a cover sheet with the subheadings "Introductory 
 <p>Supply the <code>Cover</code> to the <code>cover_sheet</code> argument of <code>gptables.write_workbook()</code>:</p>
 <p><div class="highlight"><pre><span></span><code><span class="n">gpt</span><span class="o">.</span><span class="n">write_workbook</span><span class="p">(</span>
     <span class="o">...</span>
-    <span class="n">cover_sheet</span><span class="o">=</span><span class="n">penguins_cover</span><span class="p">,</span>
+    <span class="n">cover</span><span class="o">=</span><span class="n">penguins_cover</span><span class="p">,</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -1666,9 +1667,9 @@ followed by the introduction, information about the data, and contact details.</
 <p>If you need more control over where the table appears on the worksheet, you can specify the starting row using the <code>table_row_index</code> parameter. This parameter uses 0-based indexing, where row 0 is the first row of the worksheet.</p>
 <p>The worksheet layout follows this pattern by default:
 - Row 0: Title
-- Row 1: Subtitles (if present)
-- Row 2: Scope (if present)
-- Row 3+: Source, legend, and other elements
+- Following rows: Subtitles (if present)
+- Next row: Instructions
+- Following rows: Legend, source, and scope (if present), in that order
 - Row N: Table headings begin</p>
 <p>To position your table at a specific row, set <code>table_row_index</code> to a value that is greater than the position of the last descriptive element:</p>
 <div class="highlight"><pre><span></span><code><span class="n">penguins_table</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPTable</span><span class="p">(</span>
