@@ -565,8 +565,19 @@ class GPWorksheet(Worksheet):
             widths = self._calculate_column_widths(data, formats)
             self._set_column_widths(widths)
 
-        if not any(isinstance(header, FormatList) for header in header_row):
-            self._mark_data_as_worksheet_table(gptable, formats, header_row)
+        plain_header_row = [
+            header.string if isinstance(header, FormatList) else header
+            for header in header_row
+        ]
+        self._mark_data_as_worksheet_table(gptable, formats, plain_header_row)
+        for column_index, header in enumerate(header_row):
+            if isinstance(header, FormatList):
+                self._smart_write(
+                    gptable.data_range[0],
+                    column_index,
+                    header,
+                    formats.iloc[0, column_index],
+                )
 
         return pos
 
