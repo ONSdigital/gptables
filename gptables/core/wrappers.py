@@ -627,10 +627,7 @@ class GPWorksheet(Worksheet):
             if index > 0:
                 text = "\n" + text
 
-            if fmt:
-                rich_items.extend([fmt, text])
-            else:
-                rich_items.append(text)
+            rich_items.extend([fmt or {}, text])
 
         return FormatList(rich_items)
 
