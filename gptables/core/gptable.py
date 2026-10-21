@@ -464,10 +464,9 @@ class GPTable:
         unit_text = units_by_index.get(column_index)
 
         if unit_text is not None and isinstance(header, str):
-            suffix = f"({unit_text})"
-            lines = header.splitlines()
-            if lines and lines[-1] == suffix:
-                name = "\n".join(lines[:-1]) or lines[0]
+            suffix = f"\n({unit_text})"
+            if header.endswith(suffix):
+                name = header[: -len(suffix)]
 
         return {
             "name": name,
