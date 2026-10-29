@@ -11,7 +11,7 @@ via [email](mailto:ASAP@ons.gov.uk).
 1. Update relevant documentation:
     - Update Markdown (`.md`) files in the `docs/` folder if necessary.
     - Ensure function and class docstrings are clear and complete - documentation is generated from these using `mkdocs` and `mkdocstrings`.
-    - Update the `README.md` file if needed.
+    - Update the `README.rst` file if needed.
 1. Once you are ready for review please open a pull request to the
    `dev` branch.
     - Please fill in the template as much as possible so the changes are clear to a colleague without

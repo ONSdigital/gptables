@@ -197,7 +197,7 @@ This is combined with a basic example below in an extendable tab.
         table = penguins_data,
         table_name = "penguins_statistics",
         title = "The Palmer Penguins Dataset",
-        subtitles = formatted_subtitles
+        subtitles = formatted_subtitles,
         scope = "Penguins",
         source = "Palmer Station, Antarctica",
     )

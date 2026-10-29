@@ -59,7 +59,7 @@ Usage
 
 4. Optionally supply a ``notes_table`` with information about any notes.
 
-5. Make you gptable with ``write_workbook``!
+5. Make your gptable with ``write_workbook``!
 
 **Note**: This package create perfectly accessible spreadsheets but will help with many requirements.
 Users should refer to the Analysis Function `spreadsheet guidance`_  and the `spreadsheet accessibility checklist`_.
@@ -80,3 +80,16 @@ Requests and fixes are managed according to resource capacity, and we aim to ack
 .. _`aftables`: https://best-practice-and-impact.github.io/aftables/index.html
 .. _`csvcubed`: https://onsdigital.github.io/csvcubed-docs/external/
 .. _`issue`: https://github.com/best-practice-and-impact/gptables/issues
+
+
+Publishing changes
+------------------
+Internal contributors can trigger a new release of ``gptables`` to PyPI.
+
+To publish a new release, follow these steps:
+
+1. Update the version number in ``pyproject.toml`` and commit the change.
+
+2. Create a new version tag using ``git tag <tag_name>``.
+
+3. Push the tag to the remote repository using ``git push origin <tag_name>``.

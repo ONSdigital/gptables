@@ -81,7 +81,7 @@ This is combined into an extendible code block below.
     gpt.write_workbook(
         filename="gpt_custom_theme.xlsx",
         sheets=penguins_sheets,
-        theme=gpt.Theme(example_theme_basic.yaml),
+        theme=gpt.Theme("example_theme_basic.yaml"),
         contentsheet_options={"additional_elements": ["subtitles", "scope"]},
     )
     ```

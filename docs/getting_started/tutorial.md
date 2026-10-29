@@ -114,7 +114,7 @@ the workbook:
 ```python
     penguins_table = gpt.GPTable(
         ...
-        instructions="This workbook contains a single sheet. The name is a link to it."
+        instructions="This workbook contains a single sheet. The name is a link to it.",
         subtitles=["This is the first subtitle", "This is another subtitle"],
         scope="Penguins",
         source="Palmer Station, Antarctica",
@@ -161,7 +161,8 @@ the data. Notes can be attached to tables by supplying `notes_table` to
 Notes appear on a separate worksheet called Notes. They can be referenced in the `title`, `subtitles`,
 `scope`, `source`, and `legend` elements using the notation `$$placeholder$$`. These placeholders
 are replaced with numbered references in the final output. Notes cannot be added to individual data
-cells or column headings.
+cells. To add notes to column headings, use the `table_notes` argument of `GPTable`; do not include
+`$$placeholder$$` directly in DataFrame column names.
 
 ```python
 penguins_table = gpt.GPTable(
@@ -323,7 +324,7 @@ Supply the `Cover` to the `cover_sheet` argument of `gptables.write_workbook()`:
 ```python
 gpt.write_workbook(
     ...
-    cover_sheet=penguins_cover,
+    cover=penguins_cover,
     ...
 )
 ```
@@ -479,9 +480,9 @@ If you need more control over where the table appears on the worksheet, you can 
 
 The worksheet layout follows this pattern by default:
 - Row 0: Title
-- Row 1: Subtitles (if present)
-- Row 2: Scope (if present)
-- Row 3+: Source, legend, and other elements
+- Following rows: Subtitles (if present)
+- Next row: Instructions
+- Following rows: Legend, source, and scope (if present), in that order
 - Row N: Table headings begin
 
 To position your table at a specific row, set `table_row_index` to a value that is greater than the position of the last descriptive element:
