@@ -586,7 +586,10 @@ class GPWorksheet(Worksheet):
             header.string if isinstance(header, FormatList) else header
             for header in header_row
         ]
-        self._mark_data_as_worksheet_table(gptable, formats, plain_header_row)
+
+        if not header_formatting:
+            self._mark_data_as_worksheet_table(gptable, formats, plain_header_row)
+
         for column_index, header in enumerate(header_row):
             if isinstance(header, FormatList):
                 self._smart_write(
