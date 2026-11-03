@@ -367,6 +367,43 @@ class TestAttrValidationGPTable:
         )
         assert getattr(gptable, "additional_formatting") == additional_formatting
 
+    def test_valid_header_additional_formatting(self, create_gptable_with_kwargs):
+        additional_formatting = [
+            {
+                "header": {
+                    "columns": ["columnA"],
+                    "target": "units",
+                    "format": {"italic": True},
+                }
+            }
+        ]
+
+        gptable = create_gptable_with_kwargs(
+            {
+                "table": pd.DataFrame(columns=["columnA"]),
+                "additional_formatting": additional_formatting,
+            }
+        )
+
+        assert gptable.additional_formatting == additional_formatting
+
+    def test_invalid_header_additional_format_target(self, create_gptable_with_kwargs):
+        with pytest.raises(ValueError):
+            create_gptable_with_kwargs(
+                {
+                    "table": pd.DataFrame(columns=["columnA"]),
+                    "additional_formatting": [
+                        {
+                            "header": {
+                                "columns": ["columnA"],
+                                "target": "invalid",
+                                "format": {"italic": True},
+                            }
+                        }
+                    ],
+                }
+            )
+
     @pytest.mark.parametrize("unit_text", valid_text_elements_excl_none)
     @pytest.mark.parametrize("column_id", ["columnA", 0])
     def test_units_placement(self, unit_text, column_id, create_gptable_with_kwargs):
